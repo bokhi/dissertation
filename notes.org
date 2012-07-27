@@ -398,7 +398,8 @@
 *** TODO run [[file:experiment/yiming/verification_ml_test.m][verification_ml_test.m]] with Euclidean distance
 *** TODO convert script to matlab
 *** TODO synchronised linux cluster and local folders
-*** TODO find command to run distant jobs
+*** DONE find command to run distant jobs
+    CLOSED: [2012-07-27 Fri 14:23]
 *** TODO compute dimensionality reductions
 *** TODO trace accuracy/dimension and ROC diagrams
 *** TODO implement LDA reduction
