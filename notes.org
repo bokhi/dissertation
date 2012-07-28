@@ -395,9 +395,12 @@
 
 * <2012-07-26 Thu>
 ** Tasks
-*** TODO run [[file:experiment/yiming/verification_ml_test.m][verification_ml_test.m]] with Euclidean distance
-*** TODO convert script to matlab
-*** TODO synchronised linux cluster and local folders
+*** DONE run [[file:experiment/yiming/verification_ml_test.m][verification_ml_test.m]] with Euclidean distance
+    CLOSED: [2012-07-27 Fri 19:04]
+*** DONE convert script to matlab
+    CLOSED: [2012-07-27 Fri 19:04]
+*** DONE synchronised linux cluster and local folders
+    CLOSED: [2012-07-27 Fri 19:04]
 *** DONE find command to run distant jobs
     CLOSED: [2012-07-27 Fri 14:23]
 *** TODO compute dimensionality reductions

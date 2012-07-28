@@ -7,9 +7,10 @@ function acc = accuracy (file)
   dim = size(Data, 2);
   nEach = size(DataTT1, 1)/2;
 
-  k = 500;
+  k = 300;
 
   for i = 1:k
+    
     acc(i) = verification_ml_test (eye(i), Data(SS(:, 1), 1:i), \
 				   Data(SS(:, 2), 1:i), Data(DD(:, 1), \
 							   1:i), \

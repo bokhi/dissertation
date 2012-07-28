@@ -8,4 +8,4 @@ reduction[4]='Laplacian'
 
 cd ~/dissertation/experiment
 
-octave --silent --eval "dimension_reduction ('view1.bin', '${reduction[${SGE_TASK_ID}]}', 300"
+octave --silent --eval "dimension_reduction ('view1.bin', '${reduction[${SGE_TASK_ID}]}', 300)"
