@@ -1,11 +1,11 @@
 function [] = dimension_reduction (file, technique, dimension)
 
-  addpath ("drtoolbox");
-  addpath ("drtoolbox/techniques/");
+  addpath ('drtoolbox');
+  addpath ('drtoolbox/techniques/');
 
   load(file);
 
-  printf ([technique "-" num2str(dimension) " reduction\n"]);
+  printf ([technique '-' num2str(dimension) ' reduction\n']);
 
   tic
   [DataM, mapping] = compute_mapping (Data, technique, dimension);
@@ -18,7 +18,7 @@ function [] = dimension_reduction (file, technique, dimension)
   
   
 
-  if (isfield(mapping, "conn_comp")) %%length(mapping.conn_comp) ~= n)
+  if (isfield(mapping, 'conn_comp')) %%length(mapping.conn_comp) ~= n)
     filter = 1:n;
     filter(mapping.conn_comp) = 0;
     
@@ -30,12 +30,10 @@ function [] = dimension_reduction (file, technique, dimension)
     conn_comp = mapping.conn_comp;
     
     Data = DataP;
-    save('-mat7-binary', [technique "-" num2str(dimension) "_" file], \
-	 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'conn_comp');
+    save([technique '-' num2str(dimension) '_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'conn_comp');
   else
     Data = DataM;
-    save('-mat7-binary', [technique "-" num2str(dimension) "_" file], \
-	 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');
+    save([technique '-' num2str(dimension) '_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');
   end
   
   

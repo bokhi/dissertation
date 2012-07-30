@@ -1,12 +1,12 @@
 %% extract the training and testing SIFT datavectors from View 1
 
-directory = "~/Exeter/dissertation/";
-data = [directory "database/sift/"];
+directory = '~/Exeter/dissertation/';
+data = [directory 'database/sift/'];
 
-FID = fopen ([directory "database/lfw-info/pairsDevTrain.txt"]);
+FID = fopen ([directory 'database/lfw-info/pairsDevTrain.txt']);
 line = fgets (FID);
 
-dataThisLine = sscanf(line, "%d ");
+dataThisLine = sscanf(line, '%d ');
 nEach = dataThisLine(1); 
 nPair = 2 * nEach;
 
@@ -22,16 +22,16 @@ for i = 1:nEach
   [I1, J1] = find(IndexSpace == 1);
   IDName = Line(1 : J1(1) - 1);
   
-  ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), "%d\t%d");
+  ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), '%d\t%d');
   
-  ImgName = [data IDName sprintf("_%04.0f", ImgNo(1)) ".mat"];
-  load(ImgName, "Data");
+  ImgName = [data IDName sprintf('_%04.0f', ImgNo(1)) '.mat'];
+  load(ImgName, 'Data');
   
   %% Collate the LPB feature
   Data1(i, :) = double(Data(1:nDim));
   
-  ImgName = [data IDName sprintf("_%04.0f", ImgNo(2)) ".mat"];
-  load(ImgName, "Data");
+  ImgName = [data IDName sprintf('_%04.0f', ImgNo(2)) '.mat'];
+  load(ImgName, 'Data');
 
   %% Collate the LPB feature
   Data2(i, :) = double(Data(1:nDim));
@@ -45,18 +45,18 @@ for i = nEach+1 : nPair
   IDName1 = Line(1 : J1(1) - 1);
   IDName2 = Line(J1(2) + 1 : J1(3) - 1);
   
-  ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), "%d\t%d");
-  ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), "%d\t%d");
+  ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), '%d\t%d');
+  ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), '%d\t%d');
         
-  ImgName = [data IDName1 sprintf("_%04.0f", ImgNo(1)) ".mat"];
+  ImgName = [data IDName1 sprintf('_%04.0f', ImgNo(1)) '.mat'];
         
-  load(ImgName, "Data");
+  load(ImgName, 'Data');
         
   %% Collate the LPB feature
   Data1(i, :) = double(Data(1:nDim));
                 
-  ImgName = [data IDName2 sprintf("_%04.0f", ImgNo(2)) ".mat"];
-  load(ImgName, "Data");
+  ImgName = [data IDName2 sprintf('_%04.0f', ImgNo(2)) '.mat'];
+  load(ImgName, 'Data');
 
   %% Collate the LPB feature
   Data2(i, :) = double(Data(1:nDim));
@@ -65,10 +65,10 @@ end
 
 
 
-FID = fopen ([directory "database/lfw-info/pairsDevTest.txt"]);
+FID = fopen ([directory 'database/lfw-info/pairsDevTest.txt']);
 line = fgets (FID);
 
-dataThisLine = sscanf(line, "%d ");
+dataThisLine = sscanf(line, '%d ');
 nEach = dataThisLine(1);
 nPair = 2 * nEach;
 
@@ -81,17 +81,17 @@ for i = 1:nEach
   [I1, J1] = find(IndexSpace == 1);
   IDName = Line(1 : J1(1) - 1);
   
-  ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), "%d\t%d");
+  ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), '%d\t%d');
   
 		 
-  ImgName = [data IDName sprintf("_%04.0f", ImgNo(1)) ".mat"];
-  load(ImgName, "Data");
+  ImgName = [data IDName sprintf('_%04.0f', ImgNo(1)) '.mat'];
+  load(ImgName, 'Data');
   
   %% Collate the LPB feature
   DataTT1(i, :) = double(Data(1:nDim));
   
-  ImgName = [data IDName sprintf("_%04.0f", ImgNo(2)) ".mat"];
-  load(ImgName, "Data");
+  ImgName = [data IDName sprintf('_%04.0f', ImgNo(2)) '.mat'];
+  load(ImgName, 'Data');
 
   %% Collate the LPB feature
   DataTT2(i, :) = double(Data(1:nDim));
@@ -105,18 +105,18 @@ for i = nEach+1 : nPair
   IDName1 = Line(1 : J1(1) - 1);
   IDName2 = Line(J1(2) + 1 : J1(3) - 1);
   
-  ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), "%d\t%d");
-  ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), "%d\t%d");
+  ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), '%d\t%d');
+  ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), '%d\t%d');
         
-  ImgName = [data IDName1 sprintf("_%04.0f", ImgNo(1)) ".mat"];
+  ImgName = [data IDName1 sprintf('_%04.0f', ImgNo(1)) '.mat'];
         
-  load(ImgName, "Data");
+  load(ImgName, 'Data');
         
   %% Collate the LPB feature
   DataTT1(i, :) = double(Data(1:nDim));
                 
-  ImgName = [data IDName2 sprintf("_%04.0f", ImgNo(2)) ".mat"];
-  load(ImgName, "Data");
+  ImgName = [data IDName2 sprintf('_%04.0f', ImgNo(2)) '.mat'];
+  load(ImgName, 'Data');
 
   %% Collate the LPB feature
   DataTT2(i, :) = double(Data(1:nDim));

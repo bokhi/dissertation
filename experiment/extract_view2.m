@@ -1,16 +1,16 @@
 %% extract the view 2 datavectors
 
-directory = "~/Exeter/dissertation/";
-data = [directory "database/sift/"];
+directory = '~/Exeter/dissertation/';
+data = [directory 'database/sift/'];
 
-addpath ([directory "experiment/drtoolbox"]);
-addpath ([directory "experiment/drtoolbox/techniques/"]);
-addpath ([directory "experiment/liblinear-1.91/matlab/"]);
+addpath ([directory 'experiment/drtoolbox']);
+addpath ([directory 'experiment/drtoolbox/techniques/']);
+addpath ([directory 'experiment/liblinear-1.91/matlab/']);
 
-FID = fopen ([directory "database/lfw-info/pairs.txt"]);
+FID = fopen ([directory 'database/lfw-info/pairs.txt']);
 line = fgets (FID);
 
-dataThisLine = sscanf(line, "%d %d ");
+dataThisLine = sscanf(line, '%d %d ');
 nFold = dataThisLine(1);
 nEach = dataThisLine(2);
 nPair = 2 * nEach;
@@ -29,17 +29,17 @@ for f = 1:nFold
     [I1, J1] = find(IndexSpace == 1);
     IDName = Line(1 : J1(1) - 1);
     
-    ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), "%d\t%d");
+    ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), '%d\t%d');
     
     
-    ImgName = [data IDName sprintf("_%04.0f", ImgNo(1)) ".mat"];
-    load(ImgName, "Data");
+    ImgName = [data IDName sprintf('_%04.0f', ImgNo(1)) '.mat'];
+    load(ImgName, 'Data');
     
     %% Collate the LPB feature
     Dataf1{f}(i, :) = double(Data(1:nDim));
     
-    ImgName = [data IDName sprintf("_%04.0f", ImgNo(2)) ".mat"];
-    load(ImgName, "Data");
+    ImgName = [data IDName sprintf('_%04.0f', ImgNo(2)) '.mat'];
+    load(ImgName, 'Data');
 
     %% Collate the LPB feature
     Dataf2{f}(i, :) = double(Data(1:nDim));
@@ -53,18 +53,18 @@ for f = 1:nFold
     IDName1 = Line(1 : J1(1) - 1);
     IDName2 = Line(J1(2) + 1 : J1(3) - 1);
     
-    ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), "%d\t%d");
-    ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), "%d\t%d");
+    ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), '%d\t%d');
+    ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), '%d\t%d');
     
-    ImgName = [data IDName1 sprintf("_%04.0f", ImgNo(1)) ".mat"];
+    ImgName = [data IDName1 sprintf('_%04.0f', ImgNo(1)) '.mat'];
     
-    load(ImgName, "Data");
+    load(ImgName, 'Data');
     
     %% Collate the LPB feature
     Dataf1{f}(i, :) = double(Data(1:nDim));
     
-    ImgName = [data IDName2 sprintf("_%04.0f", ImgNo(2)) ".mat"];
-    load(ImgName, "Data");
+    ImgName = [data IDName2 sprintf('_%04.0f', ImgNo(2)) '.mat'];
+    load(ImgName, 'Data');
 
     %% Collate the LPB feature
     Dataf2{f}(i, :) = double(Data(1:nDim));

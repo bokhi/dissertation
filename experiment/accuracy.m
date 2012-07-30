@@ -1,6 +1,6 @@
 function acc = accuracy (file)
 
-  addpath ("yiming");
+  addpath ('yiming');
 
   load (file);
 
@@ -11,17 +11,17 @@ function acc = accuracy (file)
 
   for i = 1:k
     
-    acc(i) = verification_ml_test (eye(i), Data(SS(:, 1), 1:i), \
-				   Data(SS(:, 2), 1:i), Data(DD(:, 1), \
-							   1:i), \
-				   Data(DD(:, 2), 1:i), DataTT1(1:nEach, \
-							      1:i), \
-				   DataTT2(1:nEach, 1:i), \
-				   DataTT1(nEach+1:end, 1:i), \
+    acc(i) = verification_ml_test (eye(i), Data(SS(:, 1),1:i), ...
+				   Data(SS(:, 2),1:i), ...
+				   Data(DD(:, 1),1:i), ...
+				   Data(DD(:, 2),1:i), ...
+				   DataTT1(1:nEach,1:i), ...
+				   DataTT2(1:nEach, 1:i), ...
+				   DataTT1(nEach+1:end, 1:i), ...
 				   DataTT2(nEach+1:end, 1:i))
   end
   
   plot(1:k, acc)
-  xlabel("dimension")
-  ylabel("accuracy")
+  xlabel('dimension')
+  ylabel('accuracy')
 end
