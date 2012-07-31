@@ -410,7 +410,7 @@
 ** Accuracy
    |          | SIFT-3456 | PCA-300 |
    | accuracy |   0.66800 | 0.67900 |
-   |          |           |         |
+   | time     |           |         |
 
 ** Observations
 *** Non connected neighbourhood graphs
