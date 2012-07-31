@@ -449,3 +449,10 @@
     eigenvectors computed. Therefore by calculating all the
     eigenvectors, several dimensions of the embedding could be
     generated from a single eigen-analysis.
+
+* <2012-07-31 Tue>
+** Tasks
+*** TODO compute accuracy for PCA and SIFT features
+*** TODO reduce dimension for 300-PCA
+
+
