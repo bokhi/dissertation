@@ -23,5 +23,5 @@ function acc = accuracy (file)
     acc{i}.time = toc;
   end
 
-  save('-mat7-binary', ['accuracy_' file], acc)
+  save('-mat7-binary', ['accuracy_' file], 'acc')
 end
