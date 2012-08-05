@@ -1,4 +1,4 @@
-function acc = accuracy (file)
+function [] = accuracy (file)
 
   addpath ('yiming');
 
@@ -12,7 +12,7 @@ function acc = accuracy (file)
   for i = 1:k
     tic;
     
-    [acc{i}.CRTT, acc{i}.ROCTT, acc{i}.DistTTPOS, acc{i}.DistTTNEG, acc{i}.DistTNPOS, acc{i}.DistTNNEG] = verification_ml_test (eye(i), Data(SS(:, 1),1:i), ...
+    [CRTT{i}, ROCTT{i}, DistTTPOS{i}, DistTTNEG{i}, DistTNPOS{i}, DistTNNEG{i}] = verification_ml_test (eye(i), Data(SS(:, 1),1:i), ...
 																Data(SS(:, 2),1:i), ...
 																Data(DD(:, 1),1:i), ...
 																Data(DD(:, 2),1:i), ...
@@ -20,8 +20,8 @@ function acc = accuracy (file)
 																DataTT2(1:nEach, 1:i), ...
 																DataTT1(nEach+1:end, 1:i), ...
 																DataTT2(nEach+1:end, 1:i));
-    acc{i}.time = toc;
+    time{i} = toc;
   end
 
-  save('-mat7-binary', ['accuracy_' file], 'acc')
+  save('-mat7-binary', ['accuracy_' file], 'CRTT', 'ROCTT', 'DistTTPOS', 'DistTTNEG', 'DistTNPOS', 'DistTNNEG');
 end

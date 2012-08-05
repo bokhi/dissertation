@@ -76,5 +76,5 @@ function [mappedX, mapping] = lda(X, labels, no_dims)
     % Store mapping for the out-of-sample extension
     mapping.M = M;
     mapping.val = lambda;
-    
+    mapping.name = 'LDA';
     

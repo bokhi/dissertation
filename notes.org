@@ -408,9 +408,10 @@
 *** TODO implement LDA reduction
 
 ** Accuracy
-   |          | SIFT-3456 | PCA-300 |
-   | accuracy |   0.66800 | 0.67900 |
-   | time     |           |         |
+   |          | SIFT-3456 | PCA-300 |   M_LDA |
+   | accuracy |   0.66800 | 0.67900 | 0.56000 |
+   | time     |           |         |  2.6911 |
+
 
 ** Observations
 *** Non connected neighbourhood graphs
@@ -455,4 +456,17 @@
 *** TODO compute accuracy for PCA and SIFT features
 *** TODO reduce dimension for 300-PCA
 
-
+* <2012-08-01 Wed>
+** Tasks
+*** DONE Implement MDS reduction
+    CLOSED: [2012-08-05 Sun 17:27]
+    MDS and PCA are equivalent 
+*** DONE Implement LDA reduction
+    CLOSED: [2012-08-05 Sun 17:27]
+*** TODO accuracy and ROC diagram
+*** DONE normalise SIFT dataset
+    CLOSED: [2012-08-02 Thu 18:08] The data are standardised,
+    therefore assumed to be related to a gaussian distribution
+*** TODO investigate connected components
+*** TODO render out-of-sample C matrix non-singular
+    
