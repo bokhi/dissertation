@@ -65,5 +65,5 @@ function [] = script (n)
     case 15
       m_lda (file{3})
       accuracy (['M_LDA_' file{3}]);
-
+  end
 		
