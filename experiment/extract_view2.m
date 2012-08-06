@@ -86,8 +86,8 @@ for f = 1:nFold
     else 
       Data((g-1)*nEach + 1:g*nEach, :) = Dataf1{g}(1:nEach, :);
       Data((g-1+nFold-1)*nEach + 1:(g+nFold-1)*nEach, :) = Dataf2{g}(1:nEach, :);
-      Data((g-1+nFold*2-1)*nEach + 1:(g+nFold*2-1)*nEach, :) = Dataf1{g}(nEach+1:end, :);
-      Data((g-1+nFold*3-1)*nEach + 1:(g+nFold*3-1)*nEach, :) = Dataf2{g}(nEach+1:end, :);
+      Data((g-1+nFold*2-1)*nEach + 1:(g+nFold*2-1)*nEach, :) = Dataf1{g}(nEach+1:2*nEach, :);
+      Data((g-1+nFold*3-1)*nEach + 1:(g+nFold*3-1)*nEach, :) = Dataf2{g}(nEach+1:2*nEach, :);
 
       SS = [[1:(nFold-1)*nPair]' [(nFold-1)*nPair + 1:((nFold-1)*2*nPair)]'];
       DD = [[1:(nFold-1)*3*nPair]' [(nFold-1)*nPair + 1:((nFold-1)*4*nPair)]'];

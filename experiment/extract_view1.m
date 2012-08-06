@@ -134,8 +134,8 @@ Data = zeros(nPair*2, nDim);
 Data(SS(:, 1), :) = Data1(1:nEach, :);
 Data(SS(:, 2), :) = Data2(1:nEach, :);
 
-Data(DD(:, 1), :) = Data1(nEach+1:end, :);
-Data(DD(:, 2), :) = Data2(nEach+1:end, :);
+Data(DD(:, 1), :) = Data1(nEach+1:2*nEach, :);
+Data(DD(:, 2), :) = Data2(nEach+1:2*nEach, :);
 
 
 

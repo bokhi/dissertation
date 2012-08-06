@@ -87,8 +87,7 @@ function [mappedX, mapping] = laplacian_eigen(X, no_dims, k, sigma, eig_impl)
         options.disp = 0;
         options.isreal = 1;
         options.issym = 1;
-        %%[mappedX, lambda] = eigs(L, D, no_dims + 1, tol, options);			% only need bottom (no_dims + 1) eigenvectors
-        [mappedX, lambda] = eig(L, D);
+        [mappedX, lambda] = eigs(L, D, no_dims + 1, tol, options);			% only need bottom (no_dims + 1) eigenvectors
     end
     
     % Sort eigenvectors in ascending order
