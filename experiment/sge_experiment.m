@@ -58,13 +58,13 @@ function [] = sge_experiment (n)
       %% M_LDA
     case 13
       m_lda (file{1});
-      accuracy (['M_LDA_' file{1}]);
+      accuracy (['LDA_' file{1}]);
     case 14
       m_lda (file{2});
-      accuracy (['M_LDA_' file{2}]);
+      accuracy (['LDA_' file{2}]);
     case 15
       m_lda (file{3});
-      accuracy (['M_LDA_' file{3}]);
+      accuracy (['LDA_' file{3}]);
 
       %% extract views
     case 16
