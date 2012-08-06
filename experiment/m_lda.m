@@ -4,6 +4,8 @@ function [] = m_lda(file)
 
   load(file);
 
+  fprintf ("LDA reduction\n");
+  tic
   %% Make sure data is zero mean
   mapping.mean = mean(Data, 1);
   Data = bsxfun(@minus, Data, mapping.mean);
@@ -51,6 +53,8 @@ function [] = m_lda(file)
   %% Map the testing data 
   DataTT1 = bsxfun(@minus, DataTT1, mapping.mean) * mapping.M;
   DataTT2 = bsxfun(@minus, DataTT2, mapping.mean) * mapping.M;
+  
+  toc
 
   save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');
 end
