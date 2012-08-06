@@ -5,9 +5,9 @@ function [] = sge_experiment (n)
   reduction{3} = 'Laplacian';
   reduction{4} = 'Isomap';
 
-  file{1} = 'view1.bin';
-  file{2} = 's_view1.bin';
-  file{3} = 'PCA-300_view1.bin';
+  file{1} = 'view1.mat';
+  file{2} = 's_view1.mat';
+  file{3} = 'PCA-300_view1.mat';
 
   dimension{1} = 3000;
   dimension{2} = 250;

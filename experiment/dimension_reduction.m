@@ -5,7 +5,7 @@ function [] = dimension_reduction (file, technique, dimension)
 
   load(file);
 
-  printf ([technique '-' num2str(dimension) ' reduction\n']);
+  fprintf ([technique '-' num2str(dimension) ' reduction\n']);
 
   tic
   [DataM, mapping] = compute_mapping (Data, technique, dimension);
