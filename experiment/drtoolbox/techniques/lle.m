@@ -105,7 +105,7 @@ function [mappedX, mapping] = lle(X, no_dims, k, eig_impl)
     
     % The embedding is computed from the bottom eigenvectors of this cost matrix
 	disp('Compute embedding (solve eigenproblem)...');
-    tol = 0;
+    tol = 'sm';
     if strcmp(eig_impl, 'JDQR')
         options.Disp = 0;
         options.LSolver = 'bicgstab';
@@ -114,8 +114,7 @@ function [mappedX, mapping] = lle(X, no_dims, k, eig_impl)
         options.disp = 0;
         options.isreal = 1;
         options.issym = 1;
-%%        [mappedX, eigenvals] = eigs(M + eps * eye(n), no_dims + 1, tol, options);          % only need bottom (no_dims + 1) eigenvectors
-        [mappedX, eigenvals] = eigs(M + eps * eye(n), no_dims + 1, options);          % only need bottom (no_dims + 1) eigenvectors
+        [mappedX, eigenvals] = eigs(M + eps * eye(n), no_dims + 1, tol, options);          % only need bottom (no_dims + 1) eigenvectors
     end
     [eigenvals, ind] = sort(diag(eigenvals), 'ascend');
     if size(mappedX, 2) < no_dims + 1
