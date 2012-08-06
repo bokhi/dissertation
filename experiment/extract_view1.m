@@ -1,6 +1,6 @@
 %% extract the training and testing SIFT datavectors from View 1
 
-directory = '~/Exeter/dissertation/';
+directory = '~/dissertation/';
 data = [directory 'database/sift/'];
 
 FID = fopen ([directory 'database/lfw-info/pairsDevTrain.txt']);
@@ -139,4 +139,4 @@ Data(DD(:, 2), :) = Data2(nEach+1:end, :);
 
 
 
-save('-mat7-binary', 'view1.bin', 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
+save('view1', 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  

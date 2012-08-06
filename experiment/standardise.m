@@ -9,4 +9,4 @@ function [] = standardise (file)
   DataTT1 = D(size(Data, 1)+1:size(Data, 1)+size(DataTT1, 1), :);
   DataTT2 = D(size(Data, 1)+size(DataTT1, 1):end, :);
 
-  save('-mat7-binary', ['s_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
+  save(['s_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  

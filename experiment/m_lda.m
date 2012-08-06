@@ -9,7 +9,7 @@ function [] = m_lda(file)
   Data = bsxfun(@minus, Data, mapping.mean);
 
   %% Intialize Sw
-  printf ("Compute Sw\n");
+  printf ('Compute Sw\n');
   Sw = zeros (size(Data, 2), size(Data, 2));
 
   %% Sum over similarity pairs
@@ -20,7 +20,7 @@ function [] = m_lda(file)
   end
 
   %% Intialize Sb
-  printf ("Compute Sb\n");
+  printf ('Compute Sb\n');
   Sb = zeros (size(Data, 2), size(Data, 2));
 
   %% Sum over dissimilarity pairs
@@ -31,7 +31,7 @@ function [] = m_lda(file)
   end
 
   %% Perform eigendecomposition of inv(Sw)*Sb
-  printf ("perform eigendecomposition\n");
+  printf ('perform eigendecomposition\n');
   [M, lambda] = eig(Sb, Sw);
 
   %% Sort eigenvalues and eigenvectors in descending order
@@ -41,7 +41,7 @@ function [] = m_lda(file)
   M = M(:,ind(1:min([no_dims size(M, 2)])));    
   
   %% Compute mapped data
-  printf ("compute mapped data\n");
+  printf ('compute mapped data\n');
   Data = Data * M;
     
   %% Store mapping for the out-of-sample extension
@@ -52,4 +52,4 @@ function [] = m_lda(file)
   DataTT1 = bsxfun(@minus, DataTT1, mapping.mean) * mapping.M;
   DataTT2 = bsxfun(@minus, DataTT2, mapping.mean) * mapping.M;
 
-  save('-mat7-binary', ['M_LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');
+  save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');

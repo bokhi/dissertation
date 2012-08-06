@@ -23,5 +23,5 @@ function [] = accuracy (file)
     time{i} = toc;
   end
 
-  save('-mat7-binary', ['accuracy_' file], 'CRTT', 'ROCTT', 'DistTTPOS', 'DistTTNEG', 'DistTNPOS', 'DistTNNEG');
+  save(['accuracy_' file], 'CRTT', 'ROCTT', 'DistTTPOS', 'DistTTNEG', 'DistTNPOS', 'DistTNNEG');
 end

@@ -65,5 +65,12 @@ function [] = sge_experiment (n)
     case 15
       m_lda (file{3});
       accuracy (['M_LDA_' file{3}]);
+
+      %% extract views
+    case 16
+      extract_view1 ();
+      standardise ('view1');
+    case 17
+      extract_view2 ();
   end
 		

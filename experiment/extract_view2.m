@@ -1,6 +1,6 @@
 %% extract the view 2 datavectors
 
-directory = '~/Exeter/dissertation/';
+directory = '~/dissertation/';
 data = [directory 'database/sift/'];
 
 addpath ([directory 'experiment/drtoolbox']);
@@ -97,7 +97,7 @@ for f = 1:nFold
     end
   end
 %%  save('-mat7-binary', ['view2_' num2str(f) '.mat'], 'Data1', 'Data2', 'DataTT1', 'DataTT2');  
-  save('-mat7-binary', ['view2_' num2str(f) '.bin'], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
+  save(['view2_' num2str(f)], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
   
 end
 

@@ -108,7 +108,7 @@ function t_point = out_of_sample(point, mapping)
                     (repmat(point(i,:), [mapping.k 1]) - mapping.X(ind(i, 2:mapping.k + 1),:))';
 
                 % Compute reconstruction weights
-                invC = inv(C);
+                invC = inv(C+eye(length(C))*eps);
                 W = sum(invC, 2) ./ sum(sum(invC));
 
                 % Compute kernel matrix
