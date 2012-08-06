@@ -4,7 +4,7 @@ function [] = m_lda(file)
 
   load(file);
 
-  fprintf ("LDA reduction\n");
+  fprintf ('LDA reduction\n');
   tic
   %% Make sure data is zero mean
   mapping.mean = mean(Data, 1);
