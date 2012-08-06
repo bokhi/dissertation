@@ -37,5 +37,5 @@ function [] = dimension_reduction (file, technique, dimension)
   end
   
   
-endfunction
+end
   

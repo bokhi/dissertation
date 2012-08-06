@@ -10,3 +10,4 @@ function [] = standardise (file)
   DataTT2 = D(size(Data, 1)+size(DataTT1, 1):end, :);
 
   save(['s_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
+end
