@@ -1,7 +1,7 @@
 %% extract the training and testing SIFT datavectors from view1 while
 %% preventing redundancy in the Data matrix
 
-directory = '~/Exeter/dissertation/';
+directory = '~/dissertation/';
 data = [directory 'database/sift/'];
 
 FID = fopen ([directory 'database/lfw-info/pairsDevTrain.txt']);
