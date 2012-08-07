@@ -2,6 +2,8 @@ function [] = standardise (file)
   
   load (file)
 
+  tic
+
   D = [Data; DataTT1; DataTT2];
   D = zscore (D);
 
@@ -9,5 +11,7 @@ function [] = standardise (file)
   DataTT1 = D(size(Data, 1)+1:size(Data, 1)+size(DataTT1, 1), :);
   DataTT2 = D(size(Data, 1)+size(DataTT1, 1):size(D, 1), :);
 
-  save(['s_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
+  time = time + toc;
+
+  save(['s_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'time');  
 end

@@ -54,7 +54,7 @@ function [] = m_lda(file)
   DataTT1 = bsxfun(@minus, DataTT1, mapping.mean) * mapping.M;
   DataTT2 = bsxfun(@minus, DataTT2, mapping.mean) * mapping.M;
   
-  toc
+  time = toc
 
-  save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');
+  save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', time);
 end

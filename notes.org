@@ -403,9 +403,11 @@
     CLOSED: [2012-07-27 Fri 19:04]
 *** DONE find command to run distant jobs
     CLOSED: [2012-07-27 Fri 14:23]
-*** TODO compute dimensionality reductions
+*** DONE compute dimensionality reductions
+    CLOSED: [2012-08-07 Tue 15:54]
 *** TODO trace accuracy/dimension and ROC diagrams
-*** TODO implement LDA reduction
+*** DONE implement LDA reduction
+    CLOSED: [2012-08-07 Tue 15:54]
 
 ** Accuracy
    |          | SIFT-3456 | PCA-300 |   M_LDA |
@@ -453,8 +455,10 @@
 
 * <2012-07-31 Tue>
 ** Tasks
-*** TODO compute accuracy for PCA and SIFT features
-*** TODO reduce dimension for 300-PCA
+*** DONE compute accuracy for PCA and SIFT features
+    CLOSED: [2012-08-07 Tue 15:54]
+*** DONE reduce dimension for 300-PCA
+    CLOSED: [2012-08-07 Tue 15:54]
 
 * <2012-08-01 Wed>
 ** Tasks
@@ -468,5 +472,152 @@
     CLOSED: [2012-08-02 Thu 18:08] The data are standardised,
     therefore assumed to be related to a gaussian distribution
 *** TODO investigate connected components
-*** TODO render out-of-sample C matrix non-singular
+*** DONE render out-of-sample C matrix non-singular
+    CLOSED: [2012-08-07 Tue 15:53]
     
+* <2012-08-07 Tue>
+** Tasks
+*** TODO analyse the results of the experiment
+*** TODO trace diagrams
+*** TODO fix failed experiments
+
+** Experiments
+***  
+| id | file                            | fail | best accuracy | dimension | reduction time | wallclock time |
+|----+---------------------------------+------+---------------+-----------+----------------+----------------|
+|  1 | PCA-3000_view1.mat              |      |        0.6910 |       125 |     386.447100 |       04:05:00 |
+|  2 | LLE-3000_view1.mat              |      |       0.49300 |         1 |    1630.722747 |       04:27:28 |
+|  3 | Laplacian-3000_view1.mat        |      |       0.50000 |         1 |    4008.473076 |       10:00:56 |
+|  4 | Isomap-3000_view1.mat           |      |       0.60100 |       184 |    1607.231163 |       04:32:17 |
+|  5 | PCA-3000_s_view1.mat            |      |       0.57800 |        51 |     392.492133 |       04:06:05 |
+|  6 |                                 | X    |               |           |                |       00:04:11 |
+|  7 |                                 | X    |               |           |                |       00:02:14 |
+|  8 |                                 | X    |               |           |    1044.003716 |       00:17:40 |
+|  9 | PCA-250_PCA-300_view1.mat       |      |       0.69100 |       125 |       1.085379 |       00:06:06 |
+| 10 | LLE-250_PCA-300_view1.mat       |      |       0.49500 |         1 |     199.411542 |       00:09:42 |
+| 11 | Laplacian-250_PCA-300_view1.mat |      |       0.50100 |        37 |     138.775787 |                |
+| 12 | Isomap-250_PCA-300_view1.mat    |      |       0.60700 |       103 |     401.509205 |       00:13:19 |
+| 13 | LDA_view1.mat                   |      |        0.5460 |         1 |    6792.695376 |       01:53:22 |
+| 14 | LDA_s_view1.mat                 |      |       0.50300 |         1 |    1604.669209 |                |
+| 15 | LDA_PCA-300_view1.mat           |      |       0.56800 |         1 |       1.153220 |       00:00:07 |
+
+*** errors
+**** PCA
+     no error
+**** LLE
+***** view1
+Matrix is singular or close to singular for reduction and out-of-sample
+
+{^HWarning: Matrix is singular to working precision.}^H
+{^H> In lle at 83
+  In compute_mapping at 202
+  In dimension_reduction at 11
+  In sge_experiment at 21}^H
+
+{^HWarning: Matrix is singular to working precision.}^H
+{^H> In out_of_sample at 111
+  In dimension_reduction at 28
+  In sge_experiment at 21}^H
+***** s_view1
+
+File Edit Options Buffers Tools Help                                                                                                                                      
+{^HError using eigs/checkInputs (line 571)
+Number of eigenvalues requested, k, must be a positive integer <= n.
+
+Error in eigs (line 94)
+[A,Amatrix,isrealprob,issymA,n,B,classAB,k,eigs_sigma,whch, ...
+
+Error in lle (line 117)
+        [mappedX, eigenvals] = eigs(M + eps * eye(n), no_dims + 1, tol,
+        options);          % only need bottom (no_dims + 1) eigenvectors
+
+Error in compute_mapping (line 202)
+                        if isempty(varargin), [mappedA, mapping] = lle(A,
+                        no_dims, 12, eig_impl);
+
+Error in dimension_reduction (line 11)
+  [DataM, mapping] = compute_mapping (Data, technique, dimension);
+
+Error in sge_experiment (line 35)
+      dimension_reduction (file{2}, reduction{2}, dimension{1});
+}^H
+^G
+***** PCA-300
+
+Matrix is singular or close to singular for reduction and out-of-sample
+
+**** Laplacian
+***** view1
+{^HWarning: Colon operands must be real scalars.}^H
+{^H> In verification_ml_test>PLDA_Learning_Threshold at 48
+  In verification_ml_test at 26
+  In accuracy at 15
+  In sge_experiment at 25}^H
+{^HWarning: Colon operands must be real scalars.}^H
+{^H> In verification_ml_test>Verification_Test_Given_Likelihood at 86
+  In verification_ml_test at 27
+  In accuracy at 15
+  In sge_experiment at 25}^H
+
+***** s_view1
+^HError using eigs/checkInputs (line 571)
+Number of eigenvalues requested, k, must be a positive integer <= n.
+
+Error in eigs (line 94)
+[A,Amatrix,isrealprob,issymA,n,B,classAB,k,eigs_sigma,whch, ...
+
+Error in laplacian_eigen (line 90)
+        [mappedX, lambda] = eigs(L, D, no_dims + 1, tol, options);
+        % only need bottom (no_dims + 1) eigenvectors
+
+Error in compute_mapping (line 189)
+            if isempty(varargin), [mappedA, mapping] = laplacian_eigen(A,
+            no_dims, 12, 1, eig_impl);
+
+Error in dimension_reduction (line 11)
+  [DataM, mapping] = compute_mapping (Data, technique, dimension);
+
+Error in sge_experiment (line 38)
+      dimension_reduction (file{2}, reduction{3}, dimension{1});
+}^H
+^G
+
+***** PCA-300
+similar view1
+
+
+
+
+
+**** Isomap
+***** view1
+^HWarning: Matrix is close to singular or badly scaled. Results may be
+inaccurate. RCOND =  2.796467e-35.}^H
+{^H> In out_of_sample at 58
+  In dimension_reduction at 13
+  In sge_experiment at 27}^H
+
+***** s_view1
+^HSubscripted assignment dimension mismatch.
+
+Error in dimension_reduction (line 27)
+    DataP(mapping.conn_comp, :) = DataM;
+
+Error in sge_experiment (line 41)
+      dimension_reduction (file{2}, reduction{4}, dimension{1});
+}^H
+^G
+
+***** PCA-300
+no problem
+
+**** LDA
+no problem
+*** solutions
+    Data is a redundant matrix as might be DataTT1 and DataTT2,
+    therefore singular matrices appears as the covariance matrix of
+    neighbouring points is computed.
+
+    The solution is to construct a non redundant Data matrix, and use
+    indices to symbolise similarity and dissimilarity
+    pairs. extract_view1 and extract_view2 have to be rewritten.
