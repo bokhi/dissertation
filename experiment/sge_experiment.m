@@ -83,16 +83,16 @@ function [] = sge_experiment (n)
       
    %% file{4}
     case 20
-      dimension_reduction (file{4}, reduction{1}, dimension{2});
+      dimension_reduction (file{4}, reduction{1}, dimension{1});
       accuracy ([reduction{1} '-' num2str(dimension{2}) '_' file{4}]);
     case 21
-      dimension_reduction (file{4}, reduction{2}, dimension{2});
+      dimension_reduction (file{4}, reduction{2}, dimension{1});
       accuracy ([reduction{2} '-' num2str(dimension{2}) '_' file{4}]);
     case 22
-      dimension_reduction (file{4}, reduction{3}, dimension{2});
+      dimension_reduction (file{4}, reduction{3}, dimension{1});
       accuracy ([reduction{3} '-' num2str(dimension{2}) '_' file{4}]);
     case 23
-      dimension_reduction (file{4}, reduction{4}, dimension{2});
+      dimension_reduction (file{4}, reduction{4}, dimension{1});
       accuracy ([reduction{4} '-' num2str(dimension{2}) '_' file{4}]);
 
     case 24
