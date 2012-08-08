@@ -9,7 +9,9 @@ function [] = dimension_reduction (file, technique, dimension)
 
   tic
   [DataM, mapping] = compute_mapping (Data, technique, dimension);
-  dimension = mapping.no_dims;
+  if (isfield(mapping, 'no_dims')) 
+    dimension = mapping.no_dims;
+  end
 
   DataTT1 = out_of_sample (DataTT1, mapping);
   DataTT2 = out_of_sample (DataTT2, mapping);

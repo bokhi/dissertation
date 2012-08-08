@@ -78,7 +78,7 @@ function [mappedX, mapping] = laplacian_eigen(X, no_dims, k, sigma, eig_impl)
     
     % Construct eigenmaps (solve Ly = lambda*Dy)
     disp('Constructing Eigenmaps...');
-	tol = 'sm';
+	tol = 0;
     if strcmp(eig_impl, 'JDQR')
         options.Disp = 0;
         options.LSolver = 'bicgstab';

@@ -125,7 +125,7 @@ function [mappedA, mapping] = compute_mapping(A, type, no_dims, varargin)
 % (C) Laurens van der Maaten, Delft University of Technology
 
 
-%    welcome;
+    welcome;
     
     % Check inputs
     if nargin < 2

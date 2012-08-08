@@ -24,7 +24,7 @@ function [X, labels, t] = generate_data(dataname, n, noise)
 % (C) Laurens van der Maaten, Delft University of Technology
 
 
-  %welcome;
+    welcome;
     
 	if ~exist('n', 'var')
 		n = 1000;
@@ -128,6 +128,6 @@ function [X, labels, t] = generate_data(dataname, n, noise)
             tt = 1 + round(t);
             labels = rem(sum(tt, 2), 2);
             
-	  otherwise
+		otherwise
 			error('Unknown dataset name.');
 	end
