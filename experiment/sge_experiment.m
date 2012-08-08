@@ -76,10 +76,10 @@ function [] = sge_experiment (n)
       standardise ('view1');
     case 18
       unique_extract_view1 ();
-      standardise ('unique_view1');
+      standardise ('unique_view1.mat');
     case 19
       unique_extract_view2 ();
-      standardise ('unique_view2');
+      standardise ('unique_view2.mat');
       
    %% file{4}
     case 20
