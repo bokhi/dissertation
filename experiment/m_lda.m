@@ -56,5 +56,5 @@ function [] = m_lda(file)
   
   time = toc
 
-  save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', time);
+  save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'time');
 end
