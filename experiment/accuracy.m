@@ -7,7 +7,7 @@ function [] = accuracy (file)
   dim = size(Data, 2);
   nEach = size(DataTT1, 1)/2;
 
-  k = 300;
+  k = min (dim, 300);
 
   for i = 1:k
     tic;
