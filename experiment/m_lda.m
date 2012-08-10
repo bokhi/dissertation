@@ -1,4 +1,4 @@
-function [] = m_lda(file)
+function [] = m_lda(file, no_dims)
   %% Perform a modified version of the LDA algorithm where Sw is defined
   %% by the similarity pairs whereas Sb is based on dissimilarity pairs
 
@@ -15,7 +15,7 @@ function [] = m_lda(file)
   Sw = zeros (size(train_Data, 2), size(train_Data, 2));
 
   %% Sum over similarity pairs
-  for i = 1:size(SS, 1)
+  for i = 1:size(train_SS, 1)
     x_i = train_Data(train_SS(i, 1), :);
     x_j = train_Data(train_SS(i, 2), :);
     Sw = Sw + (x_i - x_j) * (x_i - x_j)';
@@ -37,7 +37,6 @@ function [] = m_lda(file)
   [M, lambda] = eig(Sb, Sw);
 
   %% Sort eigenvalues and eigenvectors in descending order
-  no_dims = 1;
   lambda(isnan(lambda)) = 0;
   [lambda, ind] = sort(diag(lambda), 'descend');
   M = M(:,ind(1:min([no_dims size(M, 2)])));    

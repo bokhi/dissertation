@@ -477,9 +477,12 @@
     
 * <2012-08-07 Tue>
 ** Tasks
-*** TODO analyse the results of the experiment
-*** TODO trace diagrams
-*** TODO fix failed experiments
+*** DONE analyse the results of the experiment
+    CLOSED: [2012-08-10 Fri 20:52]
+*** DONE trace diagrams
+    CLOSED: [2012-08-10 Fri 20:52]
+*** DONE fix failed experiments
+    CLOSED: [2012-08-10 Fri 20:52]
 
 ** Experiments
 ***  
@@ -629,6 +632,7 @@ no problem
 *** Play with k
     - Test the accuracy obtained for different values of k
     - Implement an adaptative algorithm for neighbourhood finder
+    - experiment with find_nn_adaptative
 *** PCA reduction
     - PCA pre-reduction for non-linear methods
 *** find explanation for results of LDA, Non-linear method
@@ -636,11 +640,18 @@ no problem
 *** Solve dimension error
     - Find right LLE dimension reduction
     - Study automatic dimension selection from Isomap
-*** Eigenproblem and dimension reduction for nonlinear methods
+*** DONE Eigenproblem and dimension reduction for nonlinear methods
+    CLOSED: [2012-08-10 Fri 20:22]
     - can the dimension be further reduced by simply removing additional features?
-*** convert extract_view2
-*** similar "unique" modification for testing dataset
+    - PCA Isomap LDA and LLE can be further reduced that way
+    - Laplacian_eigen seems to be non stable
+*** DONE convert extract_view2
+    CLOSED: [2012-08-10 Fri 18:55]
+*** DONE similar "unique" modification for testing dataset
+    CLOSED: [2012-08-10 Fri 18:55]
     - in order to reduce redundancy, increase time and memory performances
     - make sure that the rest of the code is not impacted
     - find a new nomenclature for the variables
       train_Data test_Data train_DD train_SS test_DD test_SS
+*** understand why Laplacian_eigen is unstable
+    - and whether the result of the reduction is affected
