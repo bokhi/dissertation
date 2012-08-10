@@ -4,14 +4,13 @@ function [] = standardise (file)
 
   tic
 
-  D = [Data; DataTT1; DataTT2];
+  D = [train_Data; test_Data];
   D = zscore (D);
 
-  Data = D(1:size(Data, 1), :);
-  DataTT1 = D(size(Data, 1)+1:size(Data, 1)+size(DataTT1, 1), :);
-  DataTT2 = D(size(Data, 1)+size(DataTT1, 1):size(D, 1), :);
+  train_Data = D(1:size(train_Data, 1), :);
+  test_Data = D(size(train_Data, 1)+1:size(train_Data, 1)+size(test_Data, 1), :);
 
   time = time + toc;
 
-  save(['s_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'time');  
+  save(['s_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
 end

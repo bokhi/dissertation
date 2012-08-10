@@ -8,33 +8,35 @@ function [] = dimension_reduction (file, technique, dimension)
   fprintf ([technique '-' num2str(dimension) ' reduction\n']);
 
   tic
-  [DataM, mapping] = compute_mapping (Data, technique, dimension);
+  [DataM, mapping] = compute_mapping (train_Data, technique, dimension);
   if (isfield(mapping, 'no_dims')) 
-    dimension = mapping.no_dims;
+    no_dims = mapping.no_dims;
+  else
+    no_dims = dimension;
   end
 
-  DataTT1 = out_of_sample (DataTT1, mapping);
-  DataTT2 = out_of_sample (DataTT2, mapping);
+  test_Data = out_of_sample (test_Data, mapping);
+
   time = toc
 
-  n = size(Data, 1);
+  n = size(train_Data, 1);
 
   if (isfield(mapping, 'conn_comp')) 
     filter = 1:n;
     filter(mapping.conn_comp) = 0;
     
-    DataP = zeros(n, dimension);
+    DataP = zeros(n, no_dims);
     
     DataP(mapping.conn_comp, :) = DataM;
-    DataP(filter ~= 0, :) = out_of_sample (Data(filter ~= 0, :), mapping);
+    DataP(filter ~= 0, :) = out_of_sample (train_Data(filter ~= 0, :), mapping);
 
     conn_comp = mapping.conn_comp;
     
-    Data = DataP;
-    save([technique '-' num2str(dimension) '_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'conn_comp', 'time');
+    train_Data = DataP;
+    save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'conn_comp', 'time');
   else
-    Data = DataM;
-    save([technique '-' num2str(dimension) '_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'time');
+    train_Data = DataM;
+    save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
   end
 end
   

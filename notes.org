@@ -621,3 +621,26 @@ no problem
     The solution is to construct a non redundant Data matrix, and use
     indices to symbolise similarity and dissimilarity
     pairs. extract_view1 and extract_view2 have to be rewritten.
+* <2012-08-08 Wed>
+** Tasks
+*** Experiment with LDA
+    - Test different dimensionality for LDA
+    - Test a pre-reduction with PCA
+*** Play with k
+    - Test the accuracy obtained for different values of k
+    - Implement an adaptative algorithm for neighbourhood finder
+*** PCA reduction
+    - PCA pre-reduction for non-linear methods
+*** find explanation for results of LDA, Non-linear method
+*** Test algorithms on swiss-roll dataset
+*** Solve dimension error
+    - Find right LLE dimension reduction
+    - Study automatic dimension selection from Isomap
+*** Eigenproblem and dimension reduction for nonlinear methods
+    - can the dimension be further reduced by simply removing additional features?
+*** convert extract_view2
+*** similar "unique" modification for testing dataset
+    - in order to reduce redundancy, increase time and memory performances
+    - make sure that the rest of the code is not impacted
+    - find a new nomenclature for the variables
+      train_Data test_Data train_DD train_SS test_DD test_SS

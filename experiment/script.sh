@@ -1,5 +1,4 @@
 #!/bin/bash
-#$ -m be -M mrpb201@ex.ac.uk
 
 cd ~/dissertation/experiment
 

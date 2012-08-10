@@ -7,28 +7,28 @@ function [] = m_lda(file)
   fprintf ('LDA reduction\n');
   tic
   %% Make sure data is zero mean
-  mapping.mean = mean(Data, 1);
-  Data = bsxfun(@minus, Data, mapping.mean);
+  mapping.mean = mean(train_Data, 1);
+  Data = bsxfun(@minus, train_Data, mapping.mean);
 
   %% Intialize Sw
   fprintf ('Compute Sw\n');
-  Sw = zeros (size(Data, 2), size(Data, 2));
+  Sw = zeros (size(train_Data, 2), size(train_Data, 2));
 
   %% Sum over similarity pairs
   for i = 1:size(SS, 1)
-    x_i = Data(SS(i, 1), :);
-    x_j = Data(SS(i, 2), :);
+    x_i = train_Data(train_SS(i, 1), :);
+    x_j = train_Data(train_SS(i, 2), :);
     Sw = Sw + (x_i - x_j) * (x_i - x_j)';
   end
 
   %% Intialize Sb
   fprintf ('Compute Sb\n');
-  Sb = zeros (size(Data, 2), size(Data, 2));
+  Sb = zeros (size(train_Data, 2), size(train_Data, 2));
 
   %% Sum over dissimilarity pairs
-  for i = 1:size(DD, 1)
-    x_i = Data(DD(i, 1), :);
-    x_j = Data(DD(i, 2), :);
+  for i = 1:size(train_DD, 1)
+    x_i = train_Data(train_DD(i, 1), :);
+    x_j = train_Data(train_DD(i, 2), :);
     Sb = Sb + (x_i - x_j) * (x_i - x_j)';
   end
 
@@ -44,17 +44,16 @@ function [] = m_lda(file)
   
   %% Compute mapped data
   fprintf ('compute mapped data\n');
-  Data = Data * M;
+  train_Data = train_Data * M;
     
   %% Store mapping for the out-of-sample extension
   mapping.M = M;
   mapping.val = lambda;
 
   %% Map the testing data 
-  DataTT1 = bsxfun(@minus, DataTT1, mapping.mean) * mapping.M;
-  DataTT2 = bsxfun(@minus, DataTT2, mapping.mean) * mapping.M;
-  
+  test_Data = bsxfun(@minus, test_Data, mapping.mean) * mapping.M;
+
   time = toc
 
-  save(['LDA_' file], 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD', 'time');
+  save(['LDA_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
 end

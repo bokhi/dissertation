@@ -1,5 +1,10 @@
-%% extract the training and testing SIFT datavectors from View 1
+%% extract the training and testing SIFT datavectors from view1 while
+%% preventing image redundancy in the train and test Data matrices
 
+fprintf ('view1 data extraction\n');
+tic
+
+%%directory = '~/Exeter/dissertation/';
 directory = '~/dissertation/';
 data = [directory 'database/sift/'];
 
@@ -7,15 +12,19 @@ FID = fopen ([directory 'database/lfw-info/pairsDevTrain.txt']);
 line = fgets (FID);
 
 dataThisLine = sscanf(line, '%d ');
-nEach = dataThisLine(1); 
-nPair = 2 * nEach;
+nEach = dataThisLine(1); %%number of similarity pairs (same as dissimilarity)
+nPair = 2 * nEach; 
 
 nDim = 3456; %number of features to extract from the datavectors
+train_Data = zeros (nPair*2, nDim);
+train_SS = zeros(nEach, 2);
+train_DD = zeros(nEach, 2);
+
+uniqueName = {}; %
+index = 1; %
 
 
-Data1 = zeros (nPair, nDim);
-Data2 = zeros (nPair, nDim);
-
+%% training similarity pairs extraction
 for i = 1:nEach
   Line = fgets(FID);
   IndexSpace = isspace(Line);
@@ -23,47 +32,56 @@ for i = 1:nEach
   IDName = Line(1 : J1(1) - 1);
   
   ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), '%d\t%d');
-  
-  ImgName = [data IDName sprintf('_%04.0f', ImgNo(1)) '.mat'];
-  load(ImgName, 'Data');
-  
-  %% Collate the LPB feature
-  Data1(i, :) = double(Data(1:nDim));
-  
-  ImgName = [data IDName sprintf('_%04.0f', ImgNo(2)) '.mat'];
-  load(ImgName, 'Data');
 
-  %% Collate the LPB feature
-  Data2(i, :) = double(Data(1:nDim));
+  for j = 1:2  
+    name = [IDName ImgNo(j)];
+    ind = find (strcmp(name, uniqueName));	
+			 
+    if isempty (ind)
+      ImgName = [data IDName sprintf('_%04.0f', ImgNo(j)) '.mat'];
+      load(ImgName, 'Data');
+
+      uniqueName{index} = name;
+      train_Data(index, :) = double(Data(1:nDim));
+      train_SS(i, j) = index;				 
+      index = index + 1;
+    else
+     train_SS(i, j) = ind;
+    end
+  end
 end
-    
-%% Find the number of images for test - Not-Match
-for i = nEach+1 : nPair
+
+%% training dissimilarity pairs extraction
+for i = 1:nEach
+  IDName = [];				     
   Line = fgets(FID);
   IndexSpace = isspace(Line);
   [I1, J1] = find(IndexSpace == 1);
-  IDName1 = Line(1 : J1(1) - 1);
-  IDName2 = Line(J1(2) + 1 : J1(3) - 1);
+  IDName{1} = Line(1 : J1(1) - 1);
+  IDName{2} = Line(J1(2) + 1 : J1(3) - 1);
   
   ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), '%d\t%d');
   ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), '%d\t%d');
-        
-  ImgName = [data IDName1 sprintf('_%04.0f', ImgNo(1)) '.mat'];
-        
-  load(ImgName, 'Data');
-        
-  %% Collate the LPB feature
-  Data1(i, :) = double(Data(1:nDim));
-                
-  ImgName = [data IDName2 sprintf('_%04.0f', ImgNo(2)) '.mat'];
-  load(ImgName, 'Data');
 
-  %% Collate the LPB feature
-  Data2(i, :) = double(Data(1:nDim));
-end    
+  for j = 1:2  
+    name = [IDName{j} ImgNo(j)];
+    ind = find (strcmp(name, uniqueName));	
+			 
+    if isempty (ind)
+      ImgName = [data IDName{j} sprintf('_%04.0f', ImgNo(j)) '.mat'];
+      load(ImgName, 'Data');
 
+      uniqueName{index} = name;
+      train_Data(index, :) = double(Data(1:nDim));
+      train_DD(i, j) = index;				 
+      index = index + 1;
+    else
+     train_DD(i, j) = ind;
+    end
+  end
+end
 
-
+train_Data = train_Data(1:index-1, :);
 
 FID = fopen ([directory 'database/lfw-info/pairsDevTest.txt']);
 line = fgets (FID);
@@ -72,9 +90,14 @@ dataThisLine = sscanf(line, '%d ');
 nEach = dataThisLine(1);
 nPair = 2 * nEach;
 
-DataTT1 = zeros (nEach, nDim);
-DataTT2 = zeros (nEach, nDim);
+test_Data = zeros (nPair*2, nDim);
+test_SS = zeros(nEach, 2);
+test_DD = zeros(nEach, 2);
 
+uniqueName = {}; %
+index = 1; %
+
+%% testing similarity pairs extraction
 for i = 1:nEach
   Line = fgets(FID);
   IndexSpace = isspace(Line);
@@ -83,60 +106,57 @@ for i = 1:nEach
   
   ImgNo = sscanf(Line(J1(1) + 1: J1(3) - 1), '%d\t%d');
   
-		 
-  ImgName = [data IDName sprintf('_%04.0f', ImgNo(1)) '.mat'];
-  load(ImgName, 'Data');
-  
-  %% Collate the LPB feature
-  DataTT1(i, :) = double(Data(1:nDim));
-  
-  ImgName = [data IDName sprintf('_%04.0f', ImgNo(2)) '.mat'];
-  load(ImgName, 'Data');
+  for j = 1:2  
+    name = [IDName ImgNo(j)];
+    ind = find (strcmp(name, uniqueName));	
+			 
+    if isempty (ind)
+      ImgName = [data IDName sprintf('_%04.0f', ImgNo(j)) '.mat'];
+      load(ImgName, 'Data');
 
-  %% Collate the LPB feature
-  DataTT2(i, :) = double(Data(1:nDim));
+      uniqueName{index} = name;
+      test_Data(index, :) = double(Data(1:nDim));
+      test_SS(i, j) = index;				 
+      index = index + 1;
+    else
+     test_SS(i, j) = ind;
+    end
+  end
+
 end
     
-%% Find the number of images for test - Not-Match
-for i = nEach+1 : nPair
+%% testing dissimilarity pairs extraction
+for i = 1:nEach
+  IDName = [];				     
   Line = fgets(FID);
   IndexSpace = isspace(Line);
   [I1, J1] = find(IndexSpace == 1);
-  IDName1 = Line(1 : J1(1) - 1);
-  IDName2 = Line(J1(2) + 1 : J1(3) - 1);
+  IDName{1} = Line(1 : J1(1) - 1);
+  IDName{2} = Line(J1(2) + 1 : J1(3) - 1);
   
   ImgNo(1) = sscanf(Line(J1(1) + 1: J1(2) - 1), '%d\t%d');
   ImgNo(2) = sscanf(Line(J1(3) + 1: J1(4) - 1), '%d\t%d');
-        
-  ImgName = [data IDName1 sprintf('_%04.0f', ImgNo(1)) '.mat'];
-        
-  load(ImgName, 'Data');
-        
-  %% Collate the LPB feature
-  DataTT1(i, :) = double(Data(1:nDim));
-                
-  ImgName = [data IDName2 sprintf('_%04.0f', ImgNo(2)) '.mat'];
-  load(ImgName, 'Data');
 
-  %% Collate the LPB feature
-  DataTT2(i, :) = double(Data(1:nDim));
+  for j = 1:2  
+    name = [IDName{j} ImgNo(j)];
+    ind = find (strcmp(name, uniqueName));	
+			 
+    if isempty (ind)
+      ImgName = [data IDName{j} sprintf('_%04.0f', ImgNo(j)) '.mat'];
+      load(ImgName, 'Data');
+
+      uniqueName{index} = name;
+      test_Data(index, :) = double(Data(1:nDim));
+      test_DD(i, j) = index;				 
+      index = index + 1;
+    else
+     test_DD(i, j) = ind;
+    end
+  end
 end    
 
-nEach = size(Data1, 1)/2;
-nPair = nEach * 2;
+test_Data = test_Data(1:index-1, :);
 
-SS = [[1:nEach]' [nEach + 1:2*nEach]'];
-DD = [[2*nEach+1:3*nEach]' [3*nEach+1:4*nEach]'];
+time = toc
 
-Data = zeros(nPair*2, nDim);
-
-
-Data(SS(:, 1), :) = Data1(1:nEach, :);
-Data(SS(:, 2), :) = Data2(1:nEach, :);
-
-Data(DD(:, 1), :) = Data1(nEach+1:2*nEach, :);
-Data(DD(:, 2), :) = Data2(nEach+1:2*nEach, :);
-
-
-
-save('view1', 'Data', 'DataTT1', 'DataTT2', 'SS', 'DD');  
+save('view1', 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');          
