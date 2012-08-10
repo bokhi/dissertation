@@ -3,7 +3,7 @@ function [] = estimate_dimension(file, n)
   addpath ('drtoolbox');
   addpath ('drtoolbox/techniques');
 
-  load file;
+  load (file);
 
   method{1} = 'CorrDim';
   method{2} = 'NearNbDim';

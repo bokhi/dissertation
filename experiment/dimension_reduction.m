@@ -9,7 +9,7 @@ function [] = dimension_reduction (file, technique, dimension)
 
   tic
 
-  if technique == 'LDA'
+  if (strcmp (technique,'LDA'))
     m_lda (file, dimension);
   else
     [DataM, mapping] = compute_mapping (train_Data, technique, dimension);
