@@ -7,9 +7,9 @@ function [] = k_experiment (k)
     load k_result;
   end
   acc{k} = CRTT;
-  max(k) = max(CRTT);
-  min(k) = min(CRTT);
+  maximum(k) = max(CRTT);
+  minimum(k) = min(CRTT);
   mean(k) = mean(CRTT);
-  save ('k_result', 'acc', 'max', 'min', 'mean');
+  save ('k_result', 'acc', 'maximum', 'minimum', 'mean');
 
   
