@@ -1,4 +1,4 @@
-load ('k_result');
+load ('lle_k_result');
 
 figure;
 hold all;
@@ -10,4 +10,4 @@ xlabel ('k');
 ylabel ('accuracy');
 legend ('maximum', 'minimum', 'average');
 
-print -dpng k_result.png
+print -dpng lle_k_result.png
