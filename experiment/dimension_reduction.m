@@ -1,4 +1,8 @@
-function [] = dimension_reduction (file, technique, dimension)
+function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction (file, technique, dimension, parameter)
+
+  if nargin < 4
+    parameter = [];
+  end
 
   addpath ('drtoolbox');
   addpath ('drtoolbox/techniques/');
@@ -12,7 +16,7 @@ function [] = dimension_reduction (file, technique, dimension)
   if (strcmp (technique,'LDA'))
     m_lda (file, dimension);
   else
-    [DataM, mapping] = compute_mapping (train_Data, technique, dimension);
+    [DataM, mapping] = compute_mapping (train_Data, technique, dimension, parameter);
     if (isfield(mapping, 'no_dims')) 
       no_dims = mapping.no_dims;
     else
@@ -37,10 +41,10 @@ function [] = dimension_reduction (file, technique, dimension)
       conn_comp = mapping.conn_comp;
       
       train_Data = DataP;
-      save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'conn_comp', 'time');
+%%      save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'conn_comp', 'time');
     else
       train_Data = DataM;
-      save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
+%%      save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
     end
   end
 end

@@ -1,4 +1,4 @@
-function [] = accuracy (file, k)
+function [CRTT] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, k)
 
   if nargin < 2
     k = 300;
@@ -6,7 +6,7 @@ function [] = accuracy (file, k)
 
   addpath ('yiming');
 
-  load (file);
+  %%load (file);
 
   dim = size(train_Data, 2);
 
@@ -28,5 +28,5 @@ function [] = accuracy (file, k)
     time(i) = toc;
   end
 
-  save(['accuracy_' file], 'CRTT', 'ROCTT', 'time');
+  %%save(['accuracy_' file], 'CRTT', 'ROCTT', 'time');
 end
