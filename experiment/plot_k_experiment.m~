@@ -1,0 +1,7 @@
+load ('k_result');
+
+figure;
+hold all;
+plot (1:length(acc), max);
+plot (1:length(acc), min);
+plot (1:length(acc), mean);

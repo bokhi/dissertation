@@ -664,13 +664,28 @@ no problem
 
 *** Influence of k
 
-    | k | accuracy | dimension |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
-    |   |          |           |
+| method     | Isomap | LLE | Laplacian |
+| acccuracy  |   0.65 |     |           |
+| k          |     53 |     |           |
+| dimension  |     84 |     |           |
+|------------+--------+-----+-----------|
+| adaptative |        |     |           |
+
+    - if the adaptative method is successful, precompute the
+      neighbourhood graph for each of the views or pre-reduced views
+      and modify the code accordingly
+
+*** Dimensionality parameter
+
+    given the best k-value, trace an accuracy/dimension graph for PCA,
+    LDA, Isomap, LLE, Laplacian for no_dims=1:2000?
+    - trace first for PCA to find the appropriate interval
+
+*** PCA pre-reduction
+
+    - influence of PCA pre-reduction on k, is it modified?
+    - best PCA dimension to reducte to? same for every techniques?
+    - relation between best PCA dimension accuracy and best PCA
+      dimension pre-reduction
+    - 
+

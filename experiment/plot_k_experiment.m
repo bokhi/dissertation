@@ -1,13 +1,17 @@
-load ('lle_k_result');
+function [] = plot_k_experiment (method)
 
-figure;
-hold all;
-plot (1:length(acc), maximum);
-plot (1:length(acc), minimum);
-plot (1:length(acc), average);
+  load ([method '_k_result']);
 
-xlabel ('k');
-ylabel ('accuracy');
-legend ('maximum', 'minimum', 'average');
+  figure;
+  hold all;
+  plot (1:length(acc), maximum(2:end));
+  plot (1:length(acc), minimum(2:end));
+  plot (1:length(acc), average(2:end));
+  plot ([1 length(acc)], [maximum(1) maximum(1)]);
 
-print -dpng lle_k_result.png
+  xlabel ('k');
+  ylabel ('accuracy');
+  legend ('maximum', 'minimum', 'average', 'adaptative');
+  
+  print ('-dpng', [method '_k_result.png']);
+end
