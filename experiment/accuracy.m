@@ -1,6 +1,6 @@
 function [CRTT] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, k)
 
-  if nargin < 2
+  if nargin < 7
     k = 300;
   end
 
