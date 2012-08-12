@@ -8,10 +8,10 @@ function [] = lda_experiment (no_dims)
 
   for i = no_dims:no_dims+k-1
     
-    train_Data = train_Data(:, 1:i);
-    test_Data = test_Data(:, 1:i);
+    pca_train_Data = train_Data(:, 1:i);
+    pca_test_Data = test_Data(:, 1:i);
     
-    [lda_train_Data, lda_test_Data] = M_lda(train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
+    [lda_train_Data, lda_test_Data] = M_lda(pca_train_Data, pca_test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
     
     CRTT{i} = accuracy (lda_train_Data, lda_test_Data, train_SS, train_DD, test_SS, test_DD, i);
     
