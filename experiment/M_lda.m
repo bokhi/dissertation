@@ -52,5 +52,4 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = M_lda(t
 
   time = toc
 
-  save(['LDA_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
 end
