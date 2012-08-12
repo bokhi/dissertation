@@ -1,4 +1,4 @@
-function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = M_lda(train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims)
+function [train_Data, test_Data] = M_lda(train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims)
   %% Perform a modified version of the LDA algorithm where Sw is defined
   %% by the similarity pairs whereas Sb is based on dissimilarity pairs
 

@@ -687,5 +687,3 @@ no problem
     - best PCA dimension to reducte to? same for every techniques?
     - relation between best PCA dimension accuracy and best PCA
       dimension pre-reduction
-    - 
-
