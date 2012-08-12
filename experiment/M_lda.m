@@ -2,8 +2,6 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = M_lda(t
   %% Perform a modified version of the LDA algorithm where Sw is defined
   %% by the similarity pairs whereas Sb is based on dissimilarity pairs
 
-  load(file);
-
   fprintf ('LDA reduction\n');
   tic
   %% Make sure data is zero mean
