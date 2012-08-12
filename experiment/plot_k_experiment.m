@@ -4,9 +4,9 @@ function [] = plot_k_experiment (method)
 
   figure;
   hold all;
-  plot (1:length(acc), maximum(2:end));
-  plot (1:length(acc), minimum(2:end));
-  plot (1:length(acc), average(2:end));
+  plot (1:length(acc)-1, maximum(2:end));
+  plot (1:length(acc)-1, minimum(2:end));
+  plot (1:length(acc)-1, average(2:end));
   plot ([1 length(acc)], [maximum(1) maximum(1)]);
 
   xlabel ('k');
