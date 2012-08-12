@@ -12,7 +12,7 @@ function [] = k_experiment (method, k)
   CRTT = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
 
   if (exist ([method '_k_result.mat'], 'file'))
-    load ([method '_k_result.mat']);
+
   end
 
   acc{k+1} = CRTT;

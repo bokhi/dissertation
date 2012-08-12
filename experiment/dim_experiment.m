@@ -1,12 +1,16 @@
-function [] = dim_experiment (no_method, no_dims)
+function [] = dim_experiment (no_method)
   %% estimate the influence of the number of features on the
   %% performances of dimension reduction methods
+
+  load ('view1');
 
   method{1} = 'PCA';
   method{2} = 'LDA';
   method{3} = 'Isomap';
   method{4} = 'LLE';
   method{5} = 'Laplacian';
+
+  no_dims = 1000;
 
   method = method{no_method};
 
