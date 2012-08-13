@@ -20,7 +20,7 @@ function [] = f_accuracy (file, dim, nb_dim)
   
   pid = feature('getpid')
   
-  save ([pid '_accuracy_' file], 'CRTT', 'ROCTT');
+  save ([num2str(pid) '_accuracy_' file], 'CRTT', 'ROCTT');
 
-  movefile([pid '_accuracy_' file], ['accuracy_' file]);
+  movefile([num2str(pid) '_accuracy_' file], ['accuracy_' file]);
 end
