@@ -17,6 +17,6 @@ function [CRTT, ROCTT] = accuracy (train_Data, test_Data, train_SS, train_DD, te
 						test_Data(test_DD(:, 1),1:i), ...
 						test_Data(test_DD(:, 2),1:i));
 
-    fprintf ('dimension %d/%d : %f\n', i, k, toc);
+    fprintf ('dimension %d/%d : %f\n', i, dim+nb_dim-1, toc);
   end
 end
