@@ -1,19 +1,15 @@
-function [CRTT] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, k)
-
-  if nargin < 7
-    k = 300;
-  end
+function [CRTT, ROCTT] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim)
 
   addpath ('yiming');
 
-  %%load (file);
+  fprintf ('Compute accuracy\n');
 
-  dim = size(train_Data, 2);
+  no_dims = size(train_Data, 2);
 
-  k = min (dim, k);
+  k = min (dim+nb_dim-1, no_dims);
 
-  for i = 1:k
-    tic;
+  for i = dim:k
+    tic
     
     [CRTT(i), ROCTT{i}] = verification_ml_test (eye(i), ...
 						train_Data(train_SS(:, 1),1:i), ...
@@ -25,8 +21,6 @@ function [CRTT] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, 
 						test_Data(test_DD(:, 1),1:i), ...
 						test_Data(test_DD(:, 2),1:i));
 
-    time(i) = toc;
+    fprintf ('dimension %d/%d : %f\n', i, k, toc);
   end
-
-  %%save(['accuracy_' file], 'CRTT', 'ROCTT', 'time');
 end

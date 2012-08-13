@@ -159,4 +159,4 @@ test_Data = test_Data(1:index-1, :);
 
 time = toc
 
-save('view1', 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');          
+save([directory '/database/view1', 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD');          

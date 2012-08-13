@@ -1,13 +1,11 @@
-function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction (file, technique, dimension, parameter)
+function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, technique, dimension, parameter)
 
-  if nargin < 4
+  if nargin < 9
     parameter = [];
   end
 
   addpath ('drtoolbox');
   addpath ('drtoolbox/techniques/');
-
-  load(file);
 
   fprintf ([technique '-' num2str(dimension) ' reduction\n']);
 
@@ -25,7 +23,7 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimensi
 
     test_Data = out_of_sample (test_Data, mapping);
 
-    time = toc
+
 
     n = size(train_Data, 1);
 
@@ -41,11 +39,12 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimensi
       conn_comp = mapping.conn_comp;
       
       train_Data = DataP;
-%%      save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'conn_comp', 'time');
     else
       train_Data = DataM;
-%%      save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD', 'time');
     end
   end
+
+  toc
+  
 end
 
