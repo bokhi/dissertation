@@ -4,11 +4,7 @@ function [CRTT, ROCTT] = accuracy (train_Data, test_Data, train_SS, train_DD, te
 
   fprintf ('Compute accuracy\n');
 
-  no_dims = size(train_Data, 2);
-
-  k = min (dim+nb_dim-1, no_dims);
-
-  for i = dim:k
+  for i = dim:dim+nb_dim-1
     tic
     
     [CRTT(i), ROCTT{i}] = verification_ml_test (eye(i), ...

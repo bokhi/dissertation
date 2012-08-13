@@ -2,7 +2,7 @@ function [] = f_accuracy (file, dim, nb_dim)
 
   load (file);
 
-  [crtt, roctt] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim)
+  [crtt, roctt] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim);
 
   if (exist (['accuracy_' file], 'file'))
     try 
@@ -13,8 +13,8 @@ function [] = f_accuracy (file, dim, nb_dim)
     end
   end
     
-  CRTT(dim:dim+nb_dim-1) = crtt;
   for i = dim:dim+nb_dim-1
+    CRTT(i) = crtt(i);
     ROCTT{i} = roctt{i};
   end
   
