@@ -13,9 +13,9 @@ function [] = f_accuracy (file, dim, nb_dim)
     end
   end
     
-  for i = dim:dim+nb_dim-1
-    CRTT(i) = crtt(i);
-    ROCTT{i} = roctt{i};
+  CRTT(dim:dim+nb_dim-1) = crtt;
+  for i = 1:nb_dim
+    ROCTT{i+dim-1} = roctt{i};
   end
   
   pid = feature('getpid')
