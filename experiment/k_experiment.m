@@ -21,5 +21,7 @@ function [] = k_experiment (method, no_dims, k)
   CRTT{i} = crtt;
 
   save (['k_' method '.mat'], 'CRTT');
+
+  delete (['k_' method '.mat.lock']);
 end
   
