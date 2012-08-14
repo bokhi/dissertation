@@ -16,7 +16,7 @@ function [] = plot_dim_experiment ()
   
   xlabel ('no_dims');
   ylabel ('accuracy');
-  legend (method);
+  legend (method, 'Location', 'SouthEast');
 
   print ('-dpng', 'dim_result.png');
 end

@@ -6,5 +6,5 @@ function [] = f_dimension_reduction (file, technique, dimension, parameter)
 
   dimension = size(train_Data, 2);
 
-  save([technique '-' num2str(dimension) '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD');
+  save([technique '_' file], 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD');
 end
