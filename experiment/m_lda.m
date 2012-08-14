@@ -30,7 +30,7 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
   option.Disp = 0;
   options.isreal = 1;
   options.issym = 1;
-  [M, lambda] = eigs(Sb, Sw, no_dims, 'lm', options);
+  [M, lambda] = eig(Sb, Sw)%, no_dims, 'lm', options);
 
   %% Sort eigenvalues and eigenvectors in descending order
   lambda(isnan(lambda)) = 0;
