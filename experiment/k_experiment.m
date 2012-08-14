@@ -1,25 +1,25 @@
-function [] = k_experiment (method, k)
+function [] = k_experiment (method, no_dims, k)
   %% estimate the influence of the k-neighbourhood parameters on the
   %% performances of non-linear dimension reduction methods
+
+  load ('view1');
   
-  no_dims = 300;
+  [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, method, no_dims, k);
+  
+  crtt = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
 
-  if (k == 0)
-    [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction ('view1', method, no_dims, 'k');
-  else
-    [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction ('view1', method, no_dims, k);
-  end
-  CRTT = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
-
-  if (exist ([method '_k_result.mat'], 'file'))
-    load ([method '_k_result.mat']);
+  while (exist(['k_' method '.mat.lock'], 'file'))
+    pause (rand () * 10);
   end
 
-  acc{k+1} = CRTT;
-  maximum(k+1) = max(CRTT);
-  minimum(k+1) = min(CRTT);
-  average(k+1) = mean(CRTT);
+  fclose(fopen(['k_' method '.mat.lock'], 'w'));
 
-  save ([method '_k_result.mat'], 'acc', 'maximum', 'minimum', 'average');
+  if (exist ('k_' method '.mat'], 'file'))
+    load (['k_' method '.mat']);
+  end
+
+  CRTT{i} = crtt;
+
+  save (['k_' method '.mat'], 'CRTT');
 end
   

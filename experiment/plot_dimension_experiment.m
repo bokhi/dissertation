@@ -4,7 +4,7 @@ function [] = plot_dimension_experiment ()
   method{2} = 'PCA';
   method{3} = 'LDA';
   method{4} = 'Isomap';
-%%  method{5} = 'LLE';
+  method{5} = 'LLE';
 
   
   figure;
