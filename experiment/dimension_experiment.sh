@@ -14,7 +14,7 @@ qsub -N ACC_Isomap -hold_jid Isomap -t 1:$DIM:50 -v FILE='Isomap_view1.mat',NB_D
 qsub -N ACC_LLE -hold_jid LLE -t 1:$DIM:50 -v FILE='LLE_view1.mat',NB_DIM=50 accuracy.sh
 qsub -N ACC_SIFT -t 1:$DIM:50 -v FILE='view1.mat',NB_DIM=50 accuracy.sh
 
-qsub -N PLOT -hold_jid ACC_PCA,ACC_LDA,ACC_Isomap,ACC_LLE,ACC_SIFT run-matlab.sh "plot_dimension_experiment ();quit"
+qsub -N PLOT -hold_jid ACC_PCA,ACC_LDA,ACC_Isomap,ACC_LLE,ACC_SIFT run-matlab.sh "plot_dimension_experiment();quit"
 
 
 

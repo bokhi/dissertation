@@ -1,4 +1,4 @@
-function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims)
+function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_DD,  no_dims)
   %% Perform a modified version of the LDA algorithm where Sw is defined
   %% by the similarity pairs whereas Sb is based on dissimilarity pairs
 
@@ -13,26 +13,24 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
   Sw = zeros (size(train_Data, 2), size(train_Data, 2));
 
   %% Sum over similarity pairs
-  for i = 1:size(train_SS, 1)
-    x_i = train_Data(train_SS(i, 1), :);
-    x_j = train_Data(train_SS(i, 2), :);
-    Sw = Sw + (x_i - x_j) * (x_i - x_j)';
-  end
+  x = train_Data(train_SS(:, 1), :) - train_Data(train_SS(:, 2), :);
+  Sw = x' * x;
 
   %% Intialize Sb
   fprintf ('Compute Sb\n');
   Sb = zeros (size(train_Data, 2), size(train_Data, 2));
 
   %% Sum over dissimilarity pairs
-  for i = 1:size(train_DD, 1)
-    x_i = train_Data(train_DD(i, 1), :);
-    x_j = train_Data(train_DD(i, 2), :);
-    Sb = Sb + (x_i - x_j) * (x_i - x_j)';
-  end
+  x = train_Data(train_DD(:, 1), :) - train_Data(train_DD(:, 2), :)
+  Sb = x' * x;
 
   %% Perform eigendecomposition of inv(Sw)*Sb
   fprintf ('perform eigendecomposition\n');
-  [M, lambda] = eig(Sb, Sw);
+  tol = 0;
+  option.Disp = 0;
+  options.isreal = 1;
+  options.issym = 1;
+  [M, lambda] = eigs(Sb, Sw, no_dims, 'lm', options);
 
   %% Sort eigenvalues and eigenvectors in descending order
   lambda(isnan(lambda)) = 0;
