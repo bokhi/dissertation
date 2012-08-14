@@ -13,8 +13,9 @@ function [] = plot_dimension_experiment ()
   for i = 1:length (method)
     if (i == 1)
       load ('accuracy_view1.mat');
+    else
+      load (['accuracy_' method{i} '_view1.mat']);
     end
-    load (['accuracy_' method{i} '_view1.mat']);
     plot (1:length (CRTT), CRTT);
   end
   
