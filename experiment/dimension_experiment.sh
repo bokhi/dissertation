@@ -1,7 +1,7 @@
 #!/bin/bash
 cd ~/dissertation/experiment
 
-DIM=3000
+DIM=$1
 
 qsub -N PCA -v FILE=view1.mat,TECHNIQUE=PCA,DIMENSION=$DIM,PARAMETER=[] dimension_reduction.sh
 qsub -N LDA -v FILE=view1.mat,TECHNIQUE=LDA,DIMENSION=$DIM,PARAMETER=[] dimension_reduction.sh
