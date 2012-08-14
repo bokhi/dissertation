@@ -12,7 +12,7 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimensi
   tic
 
   if (strcmp (technique,'LDA'))
-    m_lda (file, dimension);
+    m_lda(train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
   else
     [DataM, mapping] = compute_mapping (train_Data, technique, dimension, parameter);
     if (isfield(mapping, 'no_dims')) 
