@@ -8,7 +8,7 @@ function [] = f_accuracy (file, dim, nb_dim)
     pause (rand () * 10);
   end
   
-  fclose(fopen(['accuracy_' file '.lock'], 'w'))
+  fclose(fopen(['accuracy_' file '.lock'], 'w'));
 
   if (exist (['accuracy_' file], 'file'))
     load (['accuracy_' file]);
