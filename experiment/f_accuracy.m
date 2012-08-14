@@ -1,11 +1,12 @@
 function [] = f_accuracy (file, dim, nb_dim)
 
-  pid = feature('getpid')
+  pid = feature('getpid');
 
   load (file);
 
   [crtt, roctt] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim);
 
+  pause (rand () * 10);
   if (exist (['accuracy_' file], 'file'))
     try 
       load (['accuracy_' file]);
