@@ -1,17 +1,23 @@
 function [] = plot_k_experiment (method)
 
-  load ([method '_k_result']);
+  load (['k_' method]);
+
+  for i = 1:length(CRTT)
+    [maximum(i), max_ind(i)] = max (CRTT{i});
+    minimum(i) = min(CRTT{i});
+    average = mean (CRTT{i});
+  end
 
   figure;
   hold all;
-  plot (1:length(acc)-1, maximum(2:end));
-  plot (1:length(acc)-1, minimum(2:end));
-  plot (1:length(acc)-1, average(2:end));
-  plot ([1 length(acc)], [maximum(1) maximum(1)]);
-
-  xlabel ('k');
-  ylabel ('accuracy');
-  legend ('maximum', 'minimum', 'average', 'adaptative');
   
-  print ('-dpng', [method '_k_result.png']);
+  plot (1:length(CRTT), maximum);
+  plot (1:length(CRTT), minimum);
+  plot (1:length(CRTT), average);
+
+  xlabel ('no_dims');
+  ylabel ('accuracy');
+  legend ('maximum', 'minimum', 'average');
+
+  print ('-dpng', ['k_' method '_result.png']);
 end
