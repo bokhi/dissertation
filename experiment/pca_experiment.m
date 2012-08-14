@@ -17,7 +17,7 @@ function [] = pca_experiment (method, no_dims, k)
 
   fclose(fopen(['pca_' method '.mat.lock'], 'w'));
 
-  if (exist ('pca_' method '.mat'], 'file'))
+  if (exist (['pca_' method '.mat'], 'file'))
     load (['pca_' method '.mat']);
   end
   

@@ -14,7 +14,7 @@ function [] = k_experiment (method, no_dims, k)
 
   fclose(fopen(['k_' method '.mat.lock'], 'w'));
 
-  if (exist ('k_' method '.mat'], 'file'))
+  if (exist (['k_' method '.mat'], 'file'))
     load (['k_' method '.mat']);
   end
 
