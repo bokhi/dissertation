@@ -21,7 +21,7 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
   Sb = zeros (size(train_Data, 2), size(train_Data, 2));
 
   %% Sum over dissimilarity pairs
-  x = train_Data(train_DD(:, 1), :) - train_Data(train_DD(:, 2), :)
+  x = train_Data(train_DD(:, 1), :) - train_Data(train_DD(:, 2), :);
   Sb = x' * x;
 
   %% Perform eigendecomposition of inv(Sw)*Sb
