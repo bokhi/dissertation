@@ -1,6 +1,6 @@
 function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, technique, dimension, parameter)
 
-  if nargin < 9
+  if nargin < 7
     parameter = [];
   end
 
