@@ -14,7 +14,6 @@ function [] = plot_k_experiment (method)
     average(i) = mean (CRTT{i});
   end
   
-  figure;
   hold all;
   
   plot (no_dims:length(CRTT), maximum(no_dims:length(CRTT)));
