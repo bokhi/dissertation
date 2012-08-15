@@ -3,7 +3,7 @@ function [] = plot_k_experiment (method)
   load (['k_' method]);
 
   no_dims=1;
-  while (isempty(CRTT{i}))
+  while (isempty(CRTT{no_dims}))
     no_dims = no_dims+1;
   end
   
