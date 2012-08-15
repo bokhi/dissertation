@@ -12,7 +12,7 @@ function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, t
   tic
 
   if (strcmp (technique,'LDA'))
-    m_lda(train_Data, test_Data, train_SS, train_DD, dimension);
+    [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_DD, dimension);
   else
     [DataM, mapping] = compute_mapping (train_Data, technique, dimension, parameter);
     if (isfield(mapping, 'no_dims')) 
@@ -22,8 +22,6 @@ function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, t
     end
 
     test_Data = out_of_sample (test_Data, mapping);
-
-
 
     n = size(train_Data, 1);
 
