@@ -17,9 +17,9 @@ function [] = plot_k_experiment (method)
   figure;
   hold all;
   
-  plot (no_dims:length(CRTT), maximum(no_dims:length(CRTT));
-  plot (no_dims:length(CRTT), minimum(no_dims:length(CRTT));
-  plot (no_dims:length(CRTT), average(no_dims:length(CRTT));
+  plot (no_dims:length(CRTT), maximum(no_dims:length(CRTT)));
+  plot (no_dims:length(CRTT), minimum(no_dims:length(CRTT)));
+  plot (no_dims:length(CRTT), average(no_dims:length(CRTT)));
 
   xlabel ('k');
   ylabel ('accuracy');
