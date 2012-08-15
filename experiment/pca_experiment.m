@@ -21,7 +21,7 @@ function [] = pca_experiment (method, no_dims, k)
     load (['pca_' method '.mat']);
   end
   
-  CRTT{i} = crtt;
+  CRTT{no_dims} = crtt;
 
   save (['pca_' method '.mat'], 'CRTT');
 

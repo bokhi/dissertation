@@ -2,13 +2,13 @@ function [] = plot_k_experiment (method)
 
   load (['k_' method]);
 
-  dim=1;
+  no_dims=1;
   while (isempty(CRTT{i}))
-    dim = dim+1;
+    no_dims = no_dims+1;
   end
   
 
-  for i = dim:length(CRTT)
+  for i = no_dims:length(CRTT)
     [maximum(i), max_ind(i)] = max (CRTT{i});
     minimum(i) = min(CRTT{i});
     average = mean (CRTT{i});
@@ -17,11 +17,11 @@ function [] = plot_k_experiment (method)
   figure;
   hold all;
   
-  plot (dim:length(CRTT), maximum(dim:length(CRTT));
-  plot (dim:length(CRTT), minimum(dim:length(CRTT));
-  plot (dim:length(CRTT), average(dim:length(CRTT));
+  plot (no_dims:length(CRTT), maximum(no_dims:length(CRTT));
+  plot (no_dims:length(CRTT), minimum(no_dims:length(CRTT));
+  plot (no_dims:length(CRTT), average(no_dims:length(CRTT));
 
-  xlabel ('no_dims');
+  xlabel ('k');
   ylabel ('accuracy');
   legend ('maximum', 'minimum', 'average');
 
