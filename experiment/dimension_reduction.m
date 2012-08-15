@@ -1,4 +1,4 @@
-function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, technique, dimension, parameter)
+function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, technique, dimension, parameter)
 
   if nargin < 9
     parameter = [];

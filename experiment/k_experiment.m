@@ -4,9 +4,9 @@ function [] = k_experiment (method, no_dims, k)
 
   load ('view1');
   
-  [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, method, no_dims, k);
+  [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, method, no_dims, k);
   
-  crtt = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
+  crtt = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, 1, no_dims);
 
   while (exist(['k_' method '.mat.lock'], 'file'))
     pause (rand () * 10);

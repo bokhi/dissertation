@@ -6,9 +6,9 @@ function [] = pca_experiment (method, no_dims, k)
   pca_train_Data = train_Data(:, 1:no_dims);
   pca_test_Data = test_Data(:, 1:no_dims);
     
-  [lda_train_Data, lda_test_Data] = dimension_reduction(pca_train_Data, pca_test_Data, train_SS, train_DD, method, no_dims, k);
+  [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data, pca_test_Data, train_SS, train_DD, method, no_dims, k);
 
-  crtt = accuracy (lda_train_Data, lda_test_Data, train_SS, train_DD, test_SS, test_DD, no_dims);
+  crtt = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, 1, no_dims);
 
   
   while (exist(['pca_' method '.mat.lock'], 'file'))
