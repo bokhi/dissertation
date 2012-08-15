@@ -34,9 +34,6 @@ function [D, max_k_val, no_dims] = find_nn_adaptive(X)
     
     % For all datapoints
     for i=1:n
-       tic 
- 
-      
         % current data point
         p = X(:,i);
 
@@ -98,6 +95,4 @@ function [D, max_k_val, no_dims] = find_nn_adaptive(X)
         if max_k_val < k
             max_k_val = k;
         end
-
-	fprintf ('datapoints %d/%d : %f\n', i, n, toc);
     end
