@@ -8,20 +8,20 @@ function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, t
   addpath ('drtoolbox/techniques/');
 
   fprintf ([technique '-' num2str(dimension) ' reduction\n']);
-
+  
   tic
-
+  
   if (strcmp (technique,'LDA'))
     [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_DD, dimension);
   else
     [DataM, mapping] = compute_mapping (train_Data, technique, dimension, parameter);
+    test_Data = out_of_sample (test_Data, mapping);
+
     if (isfield(mapping, 'no_dims')) 
       no_dims = mapping.no_dims;
     else
       no_dims = dimension;
     end
-
-    test_Data = out_of_sample (test_Data, mapping);
 
     n = size(train_Data, 1);
 
