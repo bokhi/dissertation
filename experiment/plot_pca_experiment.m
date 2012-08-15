@@ -13,7 +13,7 @@ function [] = plot_pca_experiment (method)
     minimum(i) = min(CRTT{i});
     average(i) = mean (CRTT{i});
   end
-  
+
   hold all;
   
   plot (no_dims:length(CRTT), maximum(no_dims:length(CRTT)));

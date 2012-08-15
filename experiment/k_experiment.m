@@ -18,7 +18,7 @@ function [] = k_experiment (method, no_dims, k)
     load (['k_' method '.mat']);
   end
 
-  CRTT{no_dims} = crtt;
+  CRTT{k} = crtt;
 
   save (['k_' method '.mat'], 'CRTT');
 
