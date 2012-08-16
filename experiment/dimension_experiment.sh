@@ -5,7 +5,7 @@ DIM=$1
 
 qsub -N PCA -v FILE=view1.mat,TECHNIQUE=PCA,DIMENSION=$DIM,PARAMETER=[] dimension_reduction.sh
 qsub -N LDA -v FILE=view1.mat,TECHNIQUE=LDA,DIMENSION=$DIM,PARAMETER=[] dimension_reduction.sh
-qsub -N Isomap -v FILE=view1.mat,TECHNIQUE=Isomap,DIMENSION=$DIM,PARAMETER=23 dimension_reduction.sh
+qsub -N Isomap -v FILE=view1.mat,TECHNIQUE=Isomap,DIMENSION=$DIM,PARAMETER=22 dimension_reduction.sh
 qsub -N LLE -v FILE=view1.mat,TECHNIQUE=LLE,DIMENSION=$DIM,PARAMETER=23 dimension_reduction.sh
 
 qsub -N ACC_PCA -hold_jid PCA -t 1:$DIM:50 -v FILE='PCA_view1.mat',NB_DIM=50 accuracy.sh

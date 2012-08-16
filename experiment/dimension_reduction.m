@@ -6,7 +6,7 @@ function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, t
   %% to the principal graph component for Isomap and LLE
 
   addpath ('drtoolbox');
-  addpath ('drtoolbox/methods/');
+  addpath ('drtoolbox/techniques/');
 
   fprintf ([method '-' num2str(dimension) ' reduction\n']);
   
