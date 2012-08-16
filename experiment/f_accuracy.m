@@ -1,11 +1,14 @@
 function [] = f_accuracy (file, dim, nb_dim)
+  %% compute the accuracy of a given dataset
+  %% can be run concurrently to speed the computation
 
   load (file);
 
   [crtt] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim);
 
+  %% prevent overwritting by another parallel instance using a lock
   while (exist (['accuracy_' file '.lock'], 'file'))
-    pause (rand () * 10);
+    pause (rand () * 10); 
   end
   
   fclose(fopen(['accuracy_' file '.lock'], 'w'));

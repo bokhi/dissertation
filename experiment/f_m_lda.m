@@ -1,6 +1,4 @@
 function [] = f_m_lda(file, no_dims)
-  %% Perform a modified version of the LDA algorithm where Sw is defined
-  %% by the similarity pairs whereas Sb is based on dissimilarity pairs
 
   load(file);
 

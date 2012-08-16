@@ -5,7 +5,6 @@ function [] = plot_dimension_experiment ()
   method{3} = 'LDA';
   method{4} = 'Isomap';
   method{5} = 'LLE';
-
   
   figure;
   hold all;
@@ -19,7 +18,7 @@ function [] = plot_dimension_experiment ()
     plot (1:length (CRTT), CRTT);
   end
   
-  xlabel ('no_dims');
+  xlabel ('no\_dims');
   ylabel ('accuracy');
   legend (method, 'Location', 'SouthEast');
   

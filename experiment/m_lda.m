@@ -4,46 +4,32 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
 
   fprintf ('LDA reduction\n');
   tic
+  
   %% Make sure data is zero mean
   mapping.mean = mean(train_Data, 1);
   Data = bsxfun(@minus, train_Data, mapping.mean);
-
-  %% Intialize Sw
+  
   fprintf ('Compute Sw\n');
-  Sw = zeros (size(train_Data, 2), size(train_Data, 2));
-
-  %% Sum over similarity pairs
-  x = train_Data(train_SS(:, 1), :) - train_Data(train_SS(:, 2), :);
-  Sw = x' * x;
-
-  %% Intialize Sb
+  SS = train_Data(train_SS(:, 1), :) - train_Data(train_SS(:, 2), :);
+  Sw = SS' * SS;
+  
   fprintf ('Compute Sb\n');
-  Sb = zeros (size(train_Data, 2), size(train_Data, 2));
-
-  %% Sum over dissimilarity pairs
-  x = train_Data(train_DD(:, 1), :) - train_Data(train_DD(:, 2), :);
-  Sb = x' * x;
+  DD = train_Data(train_DD(:, 1), :) - train_Data(train_DD(:, 2), :);
+  Sb = DD' * DD;
 
   %% Perform eigendecomposition of inv(Sw)*Sb
   fprintf ('perform eigendecomposition\n');
-  [M, lambda] = eig(Sb, Sw);
+  [mapping.M, lambda] = eig(Sb, Sw);
 
   %% Sort eigenvalues and eigenvectors in descending order
   lambda(isnan(lambda)) = 0;
-  [lambda, ind] = sort(diag(lambda), 'descend');
-  M = M(:,ind(1:min([no_dims size(M, 2)])));    
+  [mapping.lambda, ind] = sort(diag(lambda), 'descend');
+  mapping.M = mapping.M(:,ind(1:min([no_dims size(mapping.M, 2)])));    
   
   %% Compute mapped data
   fprintf ('compute mapped data\n');
-  train_Data = train_Data * M;
-    
-  %% Store mapping for the out-of-sample extension
-  mapping.M = M;
-  mapping.val = lambda;
-
-  %% Map the testing data 
+  train_Data = train_Data * mapping.M;
   test_Data = bsxfun(@minus, test_Data, mapping.mean) * mapping.M;
-
+    
   toc
-
 end

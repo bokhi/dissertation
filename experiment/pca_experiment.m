@@ -1,5 +1,6 @@
 function [] = pca_experiment (method, no_dims, k)
-  %% perform PCA pre-reduction 
+  %% perform a PCA pre-reduction before applying the given dimension reduction method
+  %% computation can be distributed
   
   load ('PCA_view1');
 

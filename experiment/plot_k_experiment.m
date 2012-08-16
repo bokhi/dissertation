@@ -6,7 +6,6 @@ function [] = plot_k_experiment (method)
   while (isempty(CRTT{no_dims}))
     no_dims = no_dims+1;
   end
-  
 
   for i = no_dims:length(CRTT)
     [maximum(i), max_ind(i)] = max (CRTT{i});

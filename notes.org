@@ -1,3 +1,4 @@
+
 * Dimensionality Reduction Methods
 
 ** Principal Component Analysis
@@ -626,17 +627,22 @@ no problem
     pairs. extract_view1 and extract_view2 have to be rewritten.
 * <2012-08-08 Wed>
 ** Tasks
-*** Experiment with LDA
+*** DONE Experiment with LDA
+    CLOSED: [2012-08-16 Thu 15:19]
     - Test different dimensionality for LDA
     - Test a pre-reduction with PCA
-*** Play with k
+*** DONE Play with k
+    CLOSED: [2012-08-16 Thu 15:19]
     - Test the accuracy obtained for different values of k
     - Implement an adaptative algorithm for neighbourhood finder
     - experiment with find_nn_adaptative
-*** PCA reduction
+*** DONE PCA reduction
+    CLOSED: [2012-08-16 Thu 15:19]
     - PCA pre-reduction for non-linear methods
-*** find explanation for results of LDA, Non-linear method
-*** Test algorithms on swiss-roll dataset
+*** DONE find explanation for results of LDA, Non-linear method
+    CLOSED: [2012-08-16 Thu 15:19]
+*** DONE Test algorithms on swiss-roll dataset
+    CLOSED: [2012-08-16 Thu 15:19]
 *** Solve dimension error
     - Find right LLE dimension reduction
     - Study automatic dimension selection from Isomap
@@ -693,3 +699,16 @@ no problem
 	| accuracy      | 0.72 |        |     |           |
 	| dimension     |   47 |        |     |           |
 	| PCA-reduction | 88   |        |     |           |
+      
+* <2012-08-16 Thu>
+** Tasks
+*** TODO extract view2
+*** TODO proper data from view1
+*** TODO relauch view1 experiments
+*** TODO producte 3D representation of the parameters
+*** TODO clean code
+*** TODO prepare code for view2 experiments
+*** TODO select k* parameters 
+*** TODO perform view2 experiments
+*** TODO compute accuracy and variance/ ROCC diagram
+*** TODO think of data/results presentation

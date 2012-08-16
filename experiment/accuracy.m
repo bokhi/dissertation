@@ -1,4 +1,5 @@
 function [CRTT] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim)
+  %% Compute the accuracy of the given dataset for dimension from dim to dim+nb_dim-1
 
   addpath ('yiming');
 
