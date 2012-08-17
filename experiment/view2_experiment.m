@@ -1,6 +1,6 @@
 function [] = view2_experiment (method, fold)
 
-  [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = construct_view2 (fold)
+  [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = construct_view2 (fold);
 
   switch (method)
     case 'LDA'
