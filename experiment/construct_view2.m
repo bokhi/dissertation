@@ -3,7 +3,7 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = constru
   load (['fold_' num2str(fold)], 'nFold');
 
   for i = 1:nFold
-    load (['fold_' num2str(fold)]);
+    load (['fold_' num2str(i)]);
     train_Dataf{i} = data;
     train_SSf{i} = SS;
     train_DDf{i} = DD;

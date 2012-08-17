@@ -702,7 +702,8 @@ no problem
       
 * <2012-08-16 Thu>
 ** Tasks
-*** TODO extract view2
+*** DONE extract view2
+    CLOSED: [2012-08-17 Fri 14:01]
 *** DONE proper data from view1
     CLOSED: [2012-08-17 Fri 09:46]
 *** DONE relauch view1 experiments
@@ -710,10 +711,12 @@ no problem
 *** DONE producte 3D representation of the parameters
     CLOSED: [2012-08-17 Fri 09:46]
 *** TODO clean code
-*** TODO prepare code for view2 experiments
+*** DONE prepare code for view2 experiments
+    CLOSED: [2012-08-17 Fri 14:01]
 *** DONE select k* parameters 
     CLOSED: [2012-08-17 Fri 10:14]
-*** TODO perform view2 experiments
+*** DONE perform view2 experiments
+    CLOSED: [2012-08-17 Fri 14:01]
 *** TODO compute accuracy and variance/ ROCC diagram
 *** TODO think of data/results presentation
 
