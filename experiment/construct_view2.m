@@ -19,7 +19,7 @@ function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = constru
   
   for g = 1:nFold
     nb = size(train_Dataf{g}, 1);
-    if (g == f)
+    if (g == fold)
       test_Data = train_Dataf{g};
       test_DD = train_DDf{g};
       test_SS = train_SSf{g};
