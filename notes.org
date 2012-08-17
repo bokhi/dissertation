@@ -703,12 +703,28 @@ no problem
 * <2012-08-16 Thu>
 ** Tasks
 *** TODO extract view2
-*** TODO proper data from view1
-*** TODO relauch view1 experiments
-*** TODO producte 3D representation of the parameters
+*** DONE proper data from view1
+    CLOSED: [2012-08-17 Fri 09:46]
+*** DONE relauch view1 experiments
+    CLOSED: [2012-08-17 Fri 09:46]
+*** DONE producte 3D representation of the parameters
+    CLOSED: [2012-08-17 Fri 09:46]
 *** TODO clean code
 *** TODO prepare code for view2 experiments
-*** TODO select k* parameters 
+*** DONE select k* parameters 
+    CLOSED: [2012-08-17 Fri 10:14]
 *** TODO perform view2 experiments
 *** TODO compute accuracy and variance/ ROCC diagram
 *** TODO think of data/results presentation
+
+*** k-parameters
+**** k-neighbourhood graph
+     - Isomap : 22
+     - LLE : 17
+**** PCA pre-reduction
+     - LDA : reduce PCA to 78 first, run LDA to dimension 25
+     - Isomap : reduce PCA to 73 then 56
+                           or 77 then 64
+     - LLE : reducte PCA to 66 then 15
+
+
