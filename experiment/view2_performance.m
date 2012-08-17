@@ -4,9 +4,9 @@ function [] = view2_performance (method)
 
   nb_fold = length(CRTT);
 
-  roc = zeros (size(ROCTT{1}{}(:,1)), 2);
+  roc = zeros (size(ROCTT{1}{:}(:,1)), 2);
   for i = 1:nb_fold
-    roc = roc + ROCTT{i}{};
+    roc = roc + ROCTT{i}{:};
   end
 
   roc = fliplr(roc)/nb_fold;
