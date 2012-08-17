@@ -1,7 +1,7 @@
 #!/bin/bash
 cd ~/dissertation/experiment
 
-asub -N extract_fold run-matlab.sh "extract_fold();quit"
+qsub -N extract_fold run-matlab.sh "extract_fold();quit"
 
 qsub -N view2_LDA -hold_jid extract_fold -t 1-10 -v METHOD=LDA view2_experiment.sh
 qsub -N view2_Isomap -hold_jid extract_fold -t 1-10 -v METHOD=Isomap view2_experiment.sh
