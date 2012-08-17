@@ -1,6 +1,6 @@
 function [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = construct_view2 (fold)
 
-  load (['fold_' nub2str(fold)], nFold);
+  load (['fold_' num2str(fold)], nFold);
 
   for i = 1:nFold
     load ([fold_' nub2str(fold)]);
