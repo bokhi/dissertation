@@ -10,5 +10,5 @@ function [] = view2_performance (method)
 
   standard_error = standard_deviation / sqrt (nb_fold);
 
-  save(file, 'CRTT', 'ROCTT', 'mean_accuracy', 'standard_error');
+  save(['view2_' method], 'CRTT', 'ROCTT', 'mean_accuracy', 'standard_error');
 end
