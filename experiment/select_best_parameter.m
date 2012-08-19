@@ -2,7 +2,7 @@ function [] = select_best_parameter (fold, cross, method, k)
   %% select the best parameters for the fold by performing a fold-1
   %% cross-validation scheme
 
-  dims = [50 150];
+  dims = [50 150]; %% PCA dimension to test
 
   load (['fold_' num2str(fold)], 'nFold');
   
@@ -10,7 +10,7 @@ function [] = select_best_parameter (fold, cross, method, k)
   Cross(fold) = []; %% this one will be used for testing phase
 
   for i = 1:length(Cross)
-    load (['fold_' num2str(i)]);
+    load (['fold_' num2str(Cross(i))]);
     train_Dataf{i} = data;
     train_SSf{i} = SS;
     train_DDf{i} = DD;
