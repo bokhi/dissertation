@@ -2,7 +2,6 @@ function [] = pca_experiment (file, method, no_dims, k)
   %% perform a PCA pre-reduction before applying the given dimension reduction method
   %% computation can be distributed
   
-  load ('PCA_view1');
   load (file);
 
   pca_train_Data = train_Data(:, 1:no_dims);
