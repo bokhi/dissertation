@@ -717,7 +717,8 @@ no problem
     CLOSED: [2012-08-17 Fri 10:14]
 *** DONE perform view2 experiments
     CLOSED: [2012-08-17 Fri 14:01]
-*** TODO compute accuracy and variance/ ROCC diagram
+*** DONE compute accuracy and variance/ ROCC diagram
+    CLOSED: [2012-08-18 Sat 14:04]
 *** TODO think of data/results presentation
 
 *** k-parameters
@@ -730,4 +731,12 @@ no problem
                            or 77 then 64
      - LLE : reducte PCA to 66 then 15
 
-
+* <2012-08-18 Sat>
+** TASKS
+*** algorithm to fix parameters for each experiment
+*** test the adaptative k-neighbourhood graph finder (if possible)
+*** launch view2 for SIFT only and for selected PCA dimension
+*** view2 for LDA, Isomap and LLE without PCA reduction (if possible)
+*** what about non-SIFT image representation
+*** apply another algorithm (learn mahalanobis distance) after dimensionality reduction
+*** square root values of SIFT features
