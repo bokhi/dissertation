@@ -2,7 +2,8 @@ function [] = select_best_parameter (fold, cross, method, k)
   %% select the best parameters for the fold by performing a fold-1
   %% cross-validation scheme
 
-  dims = [50 150]; %% PCA dimension to test
+  pca_dims = [50 100]; %% PCA dimension to test
+  method_dims = [1 50];
 
   load (['fold_' num2str(fold)], 'nFold');
   
@@ -49,17 +50,17 @@ function [] = select_best_parameter (fold, cross, method, k)
   size(test_SS)
   size(test_DD)
   
-  [pca_train_Data, pca_test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, 'PCA', dims(2), []);
+  [pca_train_Data, pca_test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dims(2), []);
 
   size(pca_train_Data)
   size(pca_test_Data)
   
-  acc = zeros(dims(2));
+  acc = zeros(pca_dims(2));
   
-  for j = dims(1):dims(2)
+  for j = pca_dims(1):pca_dims(2)
     j
     [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data(:,1:j), pca_test_Data(:,1:j), train_SS, train_DD, method, j, k);
-    acc(j, :) = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, 1, j);
+    acc(j, method_dims(1):min(j, method_dims(2))) = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, method_dims(1), min(j,method_dims(2)));
   end
 
   while (exist(['parameter_' fold '_' method '.mat.lock'], 'file'))

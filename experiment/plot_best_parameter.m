@@ -1,4 +1,4 @@
-function [acc] = plot_best_parameter (file, epsilon)
+function [] = plot_best_parameter (file, epsilon)
 
   load (file);
 
