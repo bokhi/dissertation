@@ -19,13 +19,13 @@ function [] = pca_experiment (file, method, no_dims, k)
 
   fclose(fopen(['pca_' method '.mat.lock'], 'w'));
 
-  if (exist (['pca_' method '_' file'.mat'], 'file'))
-    load (['pca_' method '_' file'.mat']);
+  if (exist (['pca_' method '_' file '.mat'], 'file'))
+    load (['pca_' method '_' file '.mat']);
   end
   
   CRTT{no_dims} = crtt;
 
-  save (['pca_' method '_' file'.mat'], 'CRTT');
+  save (['pca_' method '_' file '.mat'], 'CRTT');
 
   delete (['pca_' method '.mat.lock']);
 end

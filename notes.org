@@ -733,6 +733,7 @@ no problem
 
 * <2012-08-18 Sat>
 ** TASKS
+*** scatter plot for best parameter extraction
 *** algorithm to fix parameters for each experiment
 *** test the adaptative k-neighbourhood graph finder (if possible)
 *** launch view2 for SIFT only and for selected PCA dimension
