@@ -7,12 +7,8 @@ function [] = select_best_parameter (fold, cross, method, k)
 
   load (['fold_' num2str(fold)], 'nFold');
   
-  fold 
-  cross
-  nFold
-
-  Cross = 1:nFold %% indices of the folds being used to perform the cross-validation
-  Cross(fold) = [] %% this one will be used for testing phase
+  Cross = 1:nFold; %% indices of the folds being used to perform the cross-validation
+  Cross(fold) = []; %% this one will be used for testing phase
 
   for i = 1:length(Cross)
     load (['fold_' num2str(Cross(i))]);
@@ -31,7 +27,7 @@ function [] = select_best_parameter (fold, cross, method, k)
   
   for i = 1:length(Cross)
     nb = size(train_Dataf{i}, 1);
-    if (i == Cross(cross)) %% this fold is used as training set
+    if (i == cross) %% this fold is used as training set
       test_Data = train_Dataf{i};
       test_DD = train_DDf{i};
       test_SS = train_SSf{i};
