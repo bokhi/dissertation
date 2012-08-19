@@ -7,8 +7,12 @@ function [] = select_best_parameter (fold, cross, method, k)
 
   load (['fold_' num2str(fold)], 'nFold');
   
-  Cross = 1:nFold; %% indices of the folds being used to perform the cross-validation
-  Cross(fold) = []; %% this one will be used for testing phase
+  fold 
+  cross
+  nFold
+
+  Cross = 1:nFold %% indices of the folds being used to perform the cross-validation
+  Cross(fold) = [] %% this one will be used for testing phase
 
   for i = 1:length(Cross)
     load (['fold_' num2str(Cross(i))]);
