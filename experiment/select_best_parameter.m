@@ -73,13 +73,13 @@ function [] = select_best_parameter (fold, cross, method, k)
   
   fclose(fopen(['parameter_' fold '_' method '.mat.lock'], 'w'));
 
-  if (exist (['parameter_' fold '_' method '_' file '.mat'], 'file'))
-    load (['parameter_' fold '_' method '_' file '.mat']);
+  if (exist (['parameter_' fold '_' method '.mat'], 'file'))
+    load (['parameter_' fold '_' method '.mat']);
   end
   
   ACC{cross} = acc;
 
-  save (['parameter_' fold '_' method '_' file '.mat'], 'ACC');
+  save (['parameter_' fold '_' method '.mat'], 'ACC');
   
   delete (['parameter_' fold '_' method '.mat.lock']);
 end
