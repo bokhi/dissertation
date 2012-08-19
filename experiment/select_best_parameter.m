@@ -17,8 +17,8 @@ function [] = select_best_parameter (fold, cross, method, k)
   end
   
   train_Data = zeros(2 * nPair * (nFold - 1), nDim);
-  train_DD = zeros (nEach * (nFold - 1), 2);					  
-  train_SS = zeros (nEach * (nFold - 1), 2);					  
+  train_DD = zeros (nEach * (nFold - 2), 2);					  
+  train_SS = zeros (nEach * (nFold - 2), 2);					  
   
   index = 1;
   ind = 1;		
