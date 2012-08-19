@@ -1,6 +1,6 @@
-function [] = plot_pca_experiment (method)
+function [] = plot_pca_experiment (file)
 
-  load (['pca_' method]);
+  load (file);
 
   no_dims=1;
   while (isempty(CRTT{no_dims}))
@@ -23,5 +23,5 @@ function [] = plot_pca_experiment (method)
   ylabel ('accuracy');
   legend ('maximum', 'minimum', 'average');
   
-  print ('-dpng', ['pca_' method '_result.png']);
+  print ('-dpng', [file '_result.png']);
 end
