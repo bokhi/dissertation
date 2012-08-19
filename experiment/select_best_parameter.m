@@ -25,16 +25,16 @@ function [] = select_best_parameter (fold, cross, method, k)
   sum = 0;			  
   
   for i = 1:length(Cross)
-    nb = size(train_Dataf{Cross(i)}, 1);
+    nb = size(train_Dataf{i}, 1);
     if (i == Cross(cross)) %% this fold is used as training set
-      test_Data = train_Dataf{Cross(i)};
-      test_DD = train_DDf{Cross(i)};
-      test_SS = train_SSf{Cross(i)};
+      test_Data = train_Dataf{i};
+      test_DD = train_DDf{i};
+      test_SS = train_SSf{i};
     else 
-      train_Data(index:index+nb-1, :) = train_Dataf{Cross(i)};
+      train_Data(index:index+nb-1, :) = train_Dataf{i};
       index = index+nb;
-      train_DD (ind:ind+nEach-1, :) = train_DDf{Cross(i)} + sum;
-      train_SS (ind:ind+nEach-1, :) = train_SSf{Cross(i)} + sum;
+      train_DD (ind:ind+nEach-1, :) = train_DDf{i} + sum;
+      train_SS (ind:ind+nEach-1, :) = train_SSf{i} + sum;
       ind = ind + nEach;
       sum = sum + nb;
     end
