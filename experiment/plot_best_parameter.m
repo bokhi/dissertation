@@ -1,4 +1,4 @@
-function [] = plot_best_parameter (file, epsilon)
+function [acc] = plot_best_parameter (file, epsilon)
 
   load (file);
 
@@ -6,7 +6,7 @@ function [] = plot_best_parameter (file, epsilon)
   while (isempty(CRTT{n}))
     n = n + 1;
   end
-
+  
   m = 1;
   for i = n:length(CRTT)
     m = max(m, length(CRTT{i}));
@@ -18,10 +18,16 @@ function [] = plot_best_parameter (file, epsilon)
     acc(i, 1:length(CRTT{i})) = CRTT{i};
   end
 
+  
   maximum = max(max(acc))
+  [x, y] = find(acc == maximum)
 
   [x, y] = find(double(acc>(maximum-epsilon)));
-  plot(x, y, 'o');
+  for i = 1:length (x)
+    best(i) = acc(x(i), y(i));
+  end
+  scatter(x, y, [], best);
+  colorbar;
 
   title(sprintf('accuracy greater than %f', maximum-epsilon));
 
