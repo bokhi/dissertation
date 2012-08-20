@@ -43,18 +43,8 @@ function [] = select_best_parameter (fold, cross, method, k)
   
   train_Data = train_Data(1:index-1, :);
 
-  size(train_Data)
-  size(test_Data)
-  size(train_SS)
-  size(train_DD)
-  size(test_SS)
-  size(test_DD)
-  
   [pca_train_Data, pca_test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dims(2), []);
 
-  size(pca_train_Data)
-  size(pca_test_Data)
-  
   acc = zeros(pca_dims(2));
   
   for j = pca_dims(1):pca_dims(2)
