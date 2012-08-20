@@ -742,3 +742,12 @@ no problem
 *** TODO what about non-SIFT image representation
 *** TODO apply another algorithm (learn mahalanobis distance) after dimensionality reduction
 *** TODO square root values of SIFT features
+
+*** best parameter LDA
+    
+    | fold          |       1 |       2 |       3 |       4 |       5 |       6 |       7 |       8 |       9 |      10 |
+    | accuracy      | 0.80574 | 0.80444 | 0.80611 | 0.81074 | 0.80444 | 0.80389 | 0.80611 | 0.80481 | 0.80722 | 0.80463 |
+    | PCA-dimension |      93 |     100 |      94 |      92 |      97 |      92 |      90 |      87 |      97 |      85 |
+    | LDA-dimension |      11 |      19 |      16 |      11 |      21 |      17 |      16 |      21 |      17 |      15 |
+
+    

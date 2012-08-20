@@ -4,8 +4,8 @@
 
 fprintf ('view2 data extraction\n');
 
-directory = '~/dissertation/';
-%%directory = '~/Exeter/dissertation/';
+%%directory = '~/dissertation/';
+directory = '~/Exeter/dissertation/';
 data = [directory 'database/sift/'];
 
 FID = fopen ([directory 'database/lfw-info/pairs.txt']);
