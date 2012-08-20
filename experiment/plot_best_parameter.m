@@ -7,6 +7,7 @@ function [] = plot_best_parameter (file, epsilon)
     for i = 2:length(ACC)
       acc = acc+ACC{i};
     end
+    acc = acc / length(ACC);
   else
 
     n = 1;
