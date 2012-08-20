@@ -761,4 +761,9 @@ no problem
  - Accuracy with square root of SIFT features
  - Accuracy with adaptative k parameter
  
-
+** Dataset intrinsic dimensionality
+    
+    | method    |  CorrDim | NearNbDim | PackingNumbers |     GMST | EigValue |      MLE |
+    | dimension |   4.3531 |    0.0244 |                |  19.7681 |        3 |  47.4317 |
+    | time      | 285.4606 |  145.2794 |                | 215.8538 |  82.1499 | 140.8669 |
+    

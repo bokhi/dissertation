@@ -34,7 +34,8 @@ function [] = plot_best_parameter (file, epsilon)
   for i = 1:length (x)
     best(i) = acc(x(i), y(i));
   end
-  scatter(x, y, [], best);
+  scatter(x, y, 20, best, 's');
+  axis([min(x)-1 max(x)+1 min(y)-1 max(y)+1]);
   colorbar;
   
   title(sprintf('accuracy greater than %f', maximum-epsilon));
@@ -42,7 +43,7 @@ function [] = plot_best_parameter (file, epsilon)
   if (~isempty(strfind(file, 'k')))
     xlabel('k-neighbourhood parameter');
     ylabel([file(3:end) '-reduction dimensionality']);
-  elseif (~isempty(strfind(file, 'pca')))
+  else%%if (~isempty(strfind(file, 'pca')))
     xlabel('PCA-reduction dimensionality');
     ylabel([file(5:end) '-reduction dimensionality']);
   end

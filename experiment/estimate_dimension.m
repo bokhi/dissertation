@@ -16,7 +16,7 @@ function [] = estimate_dimension(file, n)
 
   tic
 
-  no_dims = intrinsic_dim(train_Data, method{n})
+  no_dims = intrinsic_dim(data, method{n})
 
   toc
 end
