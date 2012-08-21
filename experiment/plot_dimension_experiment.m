@@ -1,4 +1,4 @@
-function [] = plot_dimension_experiment ()
+function [] = plot_dimension_experiment (file)
 
   method{1} = 'SIFT';
   method{2} = 'PCA';
@@ -11,9 +11,9 @@ function [] = plot_dimension_experiment ()
   
   for i = 1:length (method)
     if (i == 1)
-      load ('accuracy_view1.mat');
+      load (['accuracy_' file]);
     else
-      load (['accuracy_' method{i} '_view1.mat']);
+      load (['accuracy_' method{i} '_' file]);
     end
     plot (1:length (CRTT), CRTT);
   end
@@ -22,5 +22,5 @@ function [] = plot_dimension_experiment ()
   ylabel ('accuracy');
   legend (method, 'Location', 'SouthEast');
   
-  print ('-dpng', 'dimension_result.png');
+  print ('-dpng', ['dimension_result_' file '.png']);
 end
