@@ -4,7 +4,7 @@ function [] = k_experiment (file, method, no_dims, k)
 
   load (file);
   
-  [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, method, no_dims, k);
+  [train_Data, test_Data, conn_comp] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, method, no_dims, k);
   
   crtt = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, 1, no_dims);
 
@@ -19,8 +19,9 @@ function [] = k_experiment (file, method, no_dims, k)
   end
 
   CRTT{k} = crtt;
+  CONN_COMP(k) = conn_comp;
 
-  save (['k_' method '_' file '.mat'], 'CRTT');
+  save (['k_' method '_' file '.mat'], 'CRTT', 'CONN_COMP');
 
   delete (['k_' method '_' file '.mat.lock']);
 end

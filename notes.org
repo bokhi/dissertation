@@ -766,4 +766,11 @@ no problem
     | method    | CorrDim | NearNbDim | PackingNumbers |   GMST | EigValue |     MLE |
     | dimension |  4.4150 |    0.0236 |              0 | 4.9100 |        3 | 48.9705 |
 
-    
+** view1 accuracy
+
+   | method         |   SIFT |    PCA |    LDA | Isomap |    LLE |
+   | accuracy       | 0.6960 | 0.6910 | 0.5020 | 0.6150 | 0.6200 |
+   | dimension      |    655 |     96 |      2 |     79 |     12 |
+   | sqrt-accuracy  | 0.6940 | 0.6900 | 0.5010 | 0.6270 | 0.6230 |
+   | sqrt-dimension |    875 |     85 |      7 |     48 |      2 |
+

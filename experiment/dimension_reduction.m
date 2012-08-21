@@ -1,4 +1,4 @@
-function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, method, dimension, parameter)
+function [train_Data, test_Data, conn_comp] = dimension_reduction (train_Data, test_Data, train_SS, train_DD, method, dimension, parameter)
 
   %% Perform the specified dimension reduction method on the training
   %% and testing data set the out-of-sample extension is used to compute
@@ -29,6 +29,7 @@ function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, t
     if (isfield(mapping, 'conn_comp')) %% training set was not completely reduced, map the rest using out-of-sample
       filter = 1:n;
       filter(mapping.conn_comp) = 0;
+      conn_comp = length(mapping.conn_comp)/size(train_Data, 1);
       
       DataP = zeros(n, no_dims);
       
@@ -37,6 +38,7 @@ function [train_Data, test_Data] = dimension_reduction (train_Data, test_Data, t
 
       train_Data = DataP;
     else
+      conn_comp = 1;
       train_Data = DataM;
     end
   end
