@@ -18,7 +18,7 @@ function [] = plot_dimension_experiment (file)
     plot (1:length (CRTT), CRTT);
   end
   
-  xlabel ('no\_dims');
+  xlabel ('reduction dimension');
   ylabel ('accuracy');
   legend (method, 'Location', 'SouthEast');
   
