@@ -91,4 +91,6 @@ for f = 1:nFold
   SS = train_SSf{f};
   DD = train_DDf{f};					  
   save (['fold_' num2str(f)], 'data', 'SS', 'DD', 'nPair', 'nEach', 'nFold', 'nDim');
+  data = sqrt(data);					  
+  save (['sqrt_fold_' num2str(f)], 'data', 'SS', 'DD', 'nPair', 'nEach', 'nFold', 'nDim');
 end

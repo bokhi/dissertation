@@ -160,3 +160,8 @@ test_Data = test_Data(1:index-1, :);
 time = toc
 
 save('view1', 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD');          
+train_Data = sqrt(train_Data);
+test_Data = sqrt(test_Data);
+
+save('sqrt_view1', 'train_Data', 'test_Data', 'train_SS', 'train_DD', 'test_SS', 'test_DD');          
+					
