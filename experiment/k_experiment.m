@@ -15,7 +15,7 @@ function [] = k_experiment (file, method, no_dims, k)
   fclose(fopen(['k_' method '_' file '.mat.lock'], 'w'));
 
   if (exist (['k_' method '_' file '.mat'], 'file'))
-    load (['k_' method '.mat']);
+    load (['k_' method '_' file '.mat']);
   end
 
   CRTT{k} = crtt;
