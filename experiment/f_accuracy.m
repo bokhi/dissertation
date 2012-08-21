@@ -6,17 +6,14 @@ function [] = f_accuracy (file, dim, nb_dim)
 
   [crtt] = accuracy (train_Data, test_Data, train_SS, train_DD, test_SS, test_DD, dim, nb_dim);
 
-  crtt
-
   %% prevent overwritting by another parallel instance using a lock
   while (exist (['accuracy_' file '.lock'], 'file'))
     pause (rand () * 10); 
-    fprintf('wait\n');
   end
   
   fclose(fopen(['accuracy_' file '.lock'], 'w'));
 
-  if (exist (['accuracy_' file], 'file'))
+  if (exist (['accuracy_' file '.mat'], 'file'))
     load (['accuracy_' file]);
   end
   
@@ -24,6 +21,6 @@ function [] = f_accuracy (file, dim, nb_dim)
   
   save (['accuracy_' file], 'CRTT');
   fprintf('save\n');
-
+  
   delete (['accuracy_' file '.lock']);
 end
