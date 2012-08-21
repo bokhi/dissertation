@@ -11,6 +11,7 @@ function [] = f_accuracy (file, dim, nb_dim)
   %% prevent overwritting by another parallel instance using a lock
   while (exist (['accuracy_' file '.lock'], 'file'))
     pause (rand () * 10); 
+    fprintf('wait\n');
   end
   
   fclose(fopen(['accuracy_' file '.lock'], 'w'));
@@ -22,6 +23,7 @@ function [] = f_accuracy (file, dim, nb_dim)
   CRTT(dim:dim+nb_dim-1) = crtt(1:nb_dim);
   
   save (['accuracy_' file], 'CRTT');
+  fprintf('save\n');
 
   delete (['accuracy_' file '.lock']);
 end
