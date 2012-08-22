@@ -3,7 +3,7 @@ function [] = pca_experiment (file, method, no_dims, k)
   %% computation can be distributed
 
   pca_dims = [50 100]; %% PCA dimension to test
-  method_dims = [1 50];
+  method_dims = [1 no_dims];
 
   
   load (file);
