@@ -1,11 +1,11 @@
-function [] = select_best_parameter (fold, cross, method, k)
+function [] = select_best_parameter (file, fold, cross, method, k)
   %% select the best parameters for the fold by performing a fold-1
   %% cross-validation scheme
 
   pca_dims = [50 100]; %% PCA dimension to test
   method_dims = [1 50];
 
-  load (['fold_' num2str(fold)], 'nFold');
+  load ([file num2str(fold)], 'nFold');
   
   Cross = 1:nFold; %% indices of the folds being used to perform the cross-validation
   Cross(fold) = []; %% this one will be used for testing phase
@@ -53,19 +53,19 @@ function [] = select_best_parameter (fold, cross, method, k)
     acc(j, method_dims(1):min(j, method_dims(2))) = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, method_dims(1), min(j,method_dims(2)));
   end
 
-  while (exist(['parameter_' num2str(fold) '_' method '.mat.lock'], 'file'))
+  while (exist(['parameter_' num2str(fold) '_' method '_' file '.lock'], 'file'))
     pause (rand () * 10);
   end
   
-  fclose(fopen(['parameter_' num2str(fold) '_' method '.mat.lock'], 'w'));
+  fclose(fopen(['parameter_' num2str(fold) '_' method '_' file '.lock'], 'w'));
 
-  if (exist (['parameter_' num2str(fold) '_' method '.mat'], 'file'))
-    load (['parameter_' num2str(fold) '_' method '.mat']);
+  if (exist (['parameter_' num2str(fold) '_' method '_' file '.mat'], 'file'))
+    load (['parameter_' num2str(fold) '_' method '_' file]);
   end
   
   ACC{cross} = acc;
 
-  save (['parameter_' num2str(fold) '_' method '.mat'], 'ACC');
+  save (['parameter_' num2str(fold) '_' method '_' file], 'ACC');
   
-  delete (['parameter_' num2str(fold) '_' method '.mat.lock']);
+  delete (['parameter_' num2str(fold) '_' method '_' file '.lock']);
 end

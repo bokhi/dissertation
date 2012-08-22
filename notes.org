@@ -1,4 +1,3 @@
-
 * Dimensionality Reduction Methods
 
 ** Principal Component Analysis
@@ -700,67 +699,6 @@ no problem
 	| dimension     |   47 |        |     |           |
 	| PCA-reduction | 88   |        |     |           |
       
-* <2012-08-16 Thu>
-** Tasks
-*** DONE extract view2
-    CLOSED: [2012-08-17 Fri 14:01]
-*** DONE proper data from view1
-    CLOSED: [2012-08-17 Fri 09:46]
-*** DONE relauch view1 experiments
-    CLOSED: [2012-08-17 Fri 09:46]
-*** DONE producte 3D representation of the parameters
-    CLOSED: [2012-08-17 Fri 09:46]
-*** TODO clean code
-*** DONE prepare code for view2 experiments
-    CLOSED: [2012-08-17 Fri 14:01]
-*** DONE select k* parameters 
-    CLOSED: [2012-08-17 Fri 10:14]
-*** DONE perform view2 experiments
-    CLOSED: [2012-08-17 Fri 14:01]
-*** DONE compute accuracy and variance/ ROCC diagram
-    CLOSED: [2012-08-18 Sat 14:04]
-*** TODO think of data/results presentation
-
-*** k-parameters
-**** k-neighbourhood graph
-     - Isomap : 22
-     - LLE : 17
-**** PCA pre-reduction
-     - LDA : reduce PCA to 78 first, run LDA to dimension 25
-     - Isomap : reduce PCA to 73 then 56
-                           or 77 then 64
-     - LLE : reducte PCA to 66 then 15
-
-* <2012-08-18 Sat>
-** TASKS
-*** DONE scatter plot for best parameter extraction
-    CLOSED: [2012-08-19 Sun 12:30]
-*** DONE algorithm to fix parameters for each experiment
-    CLOSED: [2012-08-20 Mon 15:33]
-*** TODO test the adaptative k-neighbourhood graph finder (if possible)
-*** TODO launch view2 for SIFT only and for selected PCA dimension
-*** TODO view2 for LDA, Isomap and LLE without PCA reduction (if possible)
-*** DONE what about non-SIFT image representation
-    CLOSED: [2012-08-20 Mon 18:11]
-*** TODO apply another algorithm (learn mahalanobis distance) after dimensionality reduction
-*** TODO square root values of SIFT features
-
-** best parameter LDA
-    
-    | fold          |       1 |       2 |       3 |       4 |       5 |       6 |       7 |       8 |       9 |      10 |
-    | accuracy      | 0.80574 | 0.80444 | 0.80611 | 0.81074 | 0.80444 | 0.80389 | 0.80611 | 0.80481 | 0.80722 | 0.80463 |
-    | PCA-dimension |      93 |     100 |      94 |      92 |      97 |      92 |      90 |      87 |      97 |      85 |
-    | LDA-dimension |      11 |      19 |      16 |      11 |      21 |      17 |      16 |      21 |      17 |      15 |
-
-** List of experiments
- - Accuracy of PCA, Isomap, LLE, LDA on view1 with default parameters
- - Accuracy of LLE, Isomap with different values of k
- - Accuracy PCA + LDA, LLE, Isomap 
- - Accuracy on view2 with view2 best parameters
- - Accuracy on view2 with cross-validation best parameters
- - Accuracy with square root of SIFT features
- - Accuracy with adaptative k parameter
- 
 ** Dataset intrinsic dimensionality
     
     | method    | CorrDim | NearNbDim | PackingNumbers |   GMST | EigValue |     MLE |
