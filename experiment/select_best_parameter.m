@@ -11,7 +11,7 @@ function [] = select_best_parameter (file, fold, cross, method, k)
   Cross(fold) = []; %% this one will be used for testing phase
 
   for i = 1:length(Cross)
-    load (['file' num2str(Cross(i))]);
+    load ([file num2str(Cross(i))]);
     train_Dataf{i} = data;
     train_SSf{i} = SS;
     train_DDf{i} = DD;
