@@ -1,6 +1,6 @@
-function [] = view2_performance (method)
+function [] = view2_performance (file, method)
 
-  load (['view2_' method]);
+  load (['view2_' method '_' file]);
 
   nb_fold = length(CRTT);
 
@@ -11,7 +11,7 @@ function [] = view2_performance (method)
 
   roc = fliplr(roc)/nb_fold;
 
-  dlmwrite([method '.txt'], roc, 'delimiter', ' ')
+  dlmwrite([method '_' file '.txt'], roc, 'delimiter', ' ')
 
   mean_accuracy = sum(CRTT) / nb_fold;
 
@@ -19,5 +19,5 @@ function [] = view2_performance (method)
 
   standard_error = standard_deviation / sqrt (nb_fold);
 
-  save(['view2_' method], 'CRTT', 'ROCTT', 'roc', 'mean_accuracy', 'standard_error');
+  save(['view2_' method '_' file], 'CRTT', 'ROCTT', 'roc', 'mean_accuracy', 'standard_error');
 end
