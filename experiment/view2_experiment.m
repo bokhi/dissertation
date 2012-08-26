@@ -13,13 +13,25 @@ function [] = view2_experiment (file, method, fold)
       end
       parameter = [];      
     case 'Isomap'
-      pca_dim = zeros(1,10)+73;
-      method_dim = zeros(1,10)+56;
-      parameter = 22;
+      if (isempty(strfind(file, 'sqrt')))
+	pca_dim = zeros(1,10)+50;
+	method_dim = zeros(1,10)+42;
+	parameter = 107;
+      else
+	pca_dim = zeros(1,10)+55;
+	method_dim = zeros(1,10)+44;
+	parameter = 93;
+      end
     case 'LLE'
-      pca_dim = zeros(1,10)+66;
-      method_dim = zeros(1,10)+15;
-      parameter = 17;
+      if (isempty(strfind(file, 'sqrt')))
+	pca_dim = zeros(1,10)+58;
+	method_dim = zeros(1,10)+35;
+	parameter = 136;
+      else
+	pca_dim = zeros(1,10)+51;
+	method_dim = zeros(1,10)+29;
+	parameter = 78;
+      end
   end
 
   [pca_train_Data, pca_test_Data] = dimension_reduction(train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dim(fold), []);
