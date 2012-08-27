@@ -34,7 +34,10 @@ function [] = view2_experiment (file, method, fold)
       end
     case 'PCA'
       pca_dim = [];
+      method_dim = pca_dim;
     case 'SIFT'
+      pca_dim = []
+      method_dim = zeros(1,10)+3456;
   end
 
   if (method == 'SIFT')

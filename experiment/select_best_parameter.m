@@ -61,7 +61,7 @@ function [] = select_best_parameter (file, fold, cross, method, k)
     else
       [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data(:,1:j), pca_test_Data(:,1:j), train_SS, train_DD, method, j, k);
     end
-    acc(j, method_dims(1):min(j, method_dims(2))) = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, method_dims(1), min(j,method_dims(2)));
+    acc(j, method_dims(1):method_dims(1)+min(j, method_dims(2))) = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, method_dims(1), min(j,method_dims(2)));
   end
 
   while (exist(['parameter_' num2str(fold) '_' method '_' file '.lock'], 'file'))
