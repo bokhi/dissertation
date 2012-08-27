@@ -33,11 +33,17 @@ function [] = view2_experiment (file, method, fold)
 	parameter = 78;
       end
     case 'PCA'
-      pca_dim = [];
+      if (isempty(strfind(file, 'sqrt')))      
+	pca_dim = [146, 135, 140, 145, 147, 134, 142, 133, 125, 148];
+      else
+	pca_dim = [100, 112, 130, 127, 96, 134, 148, 119, 114, 149];
+      end
       method_dim = pca_dim;
+      parameter = [];
     case 'SIFT'
       pca_dim = []
       method_dim = zeros(1,10)+3456;
+      parameter = [];
   end
 
   if (method == 'SIFT')
