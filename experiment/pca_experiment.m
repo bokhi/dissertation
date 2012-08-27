@@ -5,6 +5,10 @@ function [] = pca_experiment (file, method, no_dims, k)
   pca_dims = [50 100]; %% PCA dimension to test
   method_dims = [1 no_dims];
 
+  if (k == 0)
+    k = 'k';
+  end
+
   
   load (file);
 
