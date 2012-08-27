@@ -47,10 +47,10 @@ function [] = view2_experiment (file, method, fold)
   end
   method
 
-  if (method == 'SIFT')
+  if (strcmp(method,'SIFT'))
     method_train_Data = train_Data;
     method_test_Data = test_Data;
-  elseif (method == 'PCA')
+  elseif (strcmp(method,'PCA'))
     [method_train_Data, method_test_Data] = dimension_reduction(train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dim(fold), []);
   else
     [pca_train_Data, pca_test_Data] = dimension_reduction(train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dim(fold), []);

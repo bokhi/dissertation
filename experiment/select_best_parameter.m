@@ -2,7 +2,7 @@ function [] = select_best_parameter (file, fold, cross, method, k)
   %% select the best parameters for the fold by performing a fold-1
   %% cross-validation scheme
 
-  if (method == 'PCA')
+  if (strcmp(method'PCA'))
     pca_dims = [150 150];
     method_dims = [51 100];
   else
@@ -55,7 +55,7 @@ function [] = select_best_parameter (file, fold, cross, method, k)
   
   for j = pca_dims(1):pca_dims(2)
     j
-    if (method == 'PCA')
+    if (strcmp(method,'PCA'))
       method_train_Data = pca_train_Data(:,1:j);
       method_test_Data = pca_test_Data(:,1:j);
     else
