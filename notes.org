@@ -699,6 +699,36 @@ no problem
 	| dimension     |   47 |        |     |           |
 	| PCA-reduction | 88   |        |     |           |
       
+* <2012-08-18 Sat>
+** TASKS
+*** DONE scatter plot for best parameter extraction
+    CLOSED: [2012-08-19 Sun 12:30]
+*** DONE algorithm to fix parameters for each experiment
+    CLOSED: [2012-08-20 Mon 15:33]
+*** TODO test the adaptative k-neighbourhood graph finder (if possible)
+*** TODO launch view2 for SIFT only and for selected PCA dimension
+*** TODO view2 for LDA, Isomap and LLE without PCA reduction (if possible)
+*** DONE what about non-SIFT image representation
+    CLOSED: [2012-08-20 Mon 18:11]
+*** TODO apply another algorithm (learn mahalanobis distance) after dimensionality reduction
+*** TODO square root values of SIFT features
+
+** best parameter LDA
+    
+    | fold          |       1 |       2 |       3 |       4 |       5 |       6 |       7 |       8 |       9 |      10 |
+    | accuracy      | 0.80574 | 0.80444 | 0.80611 | 0.81074 | 0.80444 | 0.80389 | 0.80611 | 0.80481 | 0.80722 | 0.80463 |
+    | PCA-dimension |      93 |     100 |      94 |      92 |      97 |      92 |      90 |      87 |      97 |      85 |
+    | LDA-dimension |      11 |      19 |      16 |      11 |      21 |      17 |      16 |      21 |      17 |      15 |
+
+** List of experiments
+ - Accuracy of PCA, Isomap, LLE, LDA on view1 with default parameters
+ - Accuracy of LLE, Isomap with different values of k
+ - Accuracy PCA + LDA, LLE, Isomap 
+ - Accuracy on view2 with view2 best parameters
+ - Accuracy on view2 with cross-validation best parameters
+ - Accuracy with square root of SIFT features
+ - Accuracy with adaptative k parameter
+
 ** Dataset intrinsic dimensionality
     
     | method    | CorrDim | NearNbDim | PackingNumbers |   GMST | EigValue |     MLE |
@@ -748,8 +778,54 @@ no problem
    | k         |      93 |      78 |
    | dimension |      24 |       8 |
 
-** view1 accuracy
+** view2
+   | method | SIFT | PCA | LDA | Isomap | LLE |
+   |--------+------+-----+-----+--------+-----|
 
-   | method | Isomap | LLE |
-   |--------+--------+-----|
-   | acc    |        |     |
+   compute view2 mean_accuracy for SIFT 3456 and best PCA dimension with and without cross-validation parameter selection
+
+   sqrt_LDA : re-run error with fold parameter:
+
+   {^HAttempted to access pca_dim(10); index out of bounds because numel(pca_dim)=9.
+
+   Error in view2_experiment (line 37)
+   [pca_train_Data, pca_test_Data] = dimension_reduction(train_Data, test_Data,
+   train_SS, train_DD, 'PCA', pca_dim(fold), []);
+   }^H
+   ^G
+
+
+** adaptative k
+   
+*** does not work for LLE :
+
+   {^HError using ones
+   Leading inputs must be numeric.
+   
+   Error in repmat (line 84)
+   B = A(ones(siz(1), 1), :);
+   
+   Error in out_of_sample (line 107)
+   C = (repmat(point(i,:), [mapping.k 1]) - mapping.X(ind(i,
+   2:mapping.k + 1),:)) * ...
+   
+   Error in dimension_reduction (line 19)
+   test_Data = out_of_sample (test_Data, mapping);
+   
+   Error in pca_experiment (line 18)
+   [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data,
+   pca_test_Data, train_SS, train_DD, method, method_dims(2), k);
+   }^H
+   ^G
+
+***   work for Isomap
+
+      pca_Isomap-k_PCA_view1
+
+      maximum =  0.65100
+      PCA =  20
+      Isomap =  17
+
+      less than best score with selected k
+
+

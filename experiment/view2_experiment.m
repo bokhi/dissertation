@@ -8,7 +8,7 @@ function [] = view2_experiment (file, method, fold)
 	pca_dim = [93,100,94,92,97,92,90,87,97,85];
 	method_dim = [11,19,16,11,21,17,16,21,17,15];
       else 
-	pca_dim = [86,81,74,90,97,98,73,90.97,89];
+	pca_dim = [86,81,74,90,97,98,73,90,97,89];
 	method_dim = [11,19,15,11,8,12,16,21,15,21];
       end
       parameter = [];      
