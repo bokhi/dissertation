@@ -2,7 +2,11 @@ function [] = select_best_parameter (file, fold, cross, method, k)
   %% select the best parameters for the fold by performing a fold-1
   %% cross-validation scheme
 
-  pca_dims = [50 150]; %% PCA dimension to test
+  if (method == 'PCA')
+    pca_dims = [150 150];
+  else
+    pca_dims = [50 100]; %% PCA dimension to test
+  end
   method_dims = [1 50];
 
   load ([file num2str(fold)], 'nFold');
