@@ -4,10 +4,12 @@ function [] = select_best_parameter (file, fold, cross, method, k)
 
   if (method == 'PCA')
     pca_dims = [150 150];
+    method_dims = [50 150];
   else
     pca_dims = [50 100]; %% PCA dimension to test
+    method_dims = [1 50];
   end
-  method_dims = [1 50];
+
 
   load ([file num2str(fold)], 'nFold');
   
