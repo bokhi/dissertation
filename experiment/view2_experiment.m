@@ -1,7 +1,7 @@
 function [] = view2_experiment (file, method, fold)
 
   [train_Data, test_Data, train_SS, train_DD, test_SS, test_DD] = construct_view2 (file, fold);
-
+  
   switch (method)
     case 'LDA'
       if (isempty(strfind(file, 'sqrt')))
@@ -41,10 +41,11 @@ function [] = view2_experiment (file, method, fold)
       method_dim = pca_dim;
       parameter = [];
     case 'SIFT'
-      pca_dim = []
+      pca_dim = [];
       method_dim = zeros(1,10)+3456;
       parameter = [];
   end
+  method
 
   if (method == 'SIFT')
     method_train_Data = train_Data;
