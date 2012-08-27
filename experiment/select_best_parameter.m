@@ -2,7 +2,7 @@ function [] = select_best_parameter (file, fold, cross, method, k)
   %% select the best parameters for the fold by performing a fold-1
   %% cross-validation scheme
 
-  pca_dims = [50 100]; %% PCA dimension to test
+  pca_dims = [50 150]; %% PCA dimension to test
   method_dims = [1 50];
 
   load ([file num2str(fold)], 'nFold');
@@ -49,7 +49,12 @@ function [] = select_best_parameter (file, fold, cross, method, k)
   
   for j = pca_dims(1):pca_dims(2)
     j
-    [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data(:,1:j), pca_test_Data(:,1:j), train_SS, train_DD, method, j, k);
+    if (method == 'PCA')
+      method_train_Data = pca_train_Data(:,1:j);
+      method_test_Data = pca_test_Data(:,1:j);
+    else
+      [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data(:,1:j), pca_test_Data(:,1:j), train_SS, train_DD, method, j, k);
+    end
     acc(j, method_dims(1):min(j, method_dims(2))) = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, method_dims(1), min(j,method_dims(2)));
   end
 

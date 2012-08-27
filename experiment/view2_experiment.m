@@ -32,10 +32,21 @@ function [] = view2_experiment (file, method, fold)
 	method_dim = zeros(1,10)+29;
 	parameter = 78;
       end
+    case 'PCA'
+      pca_dim = [];
+    case 'SIFT'
   end
 
-  [pca_train_Data, pca_test_Data] = dimension_reduction(train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dim(fold), []);
-  [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data, pca_test_Data, train_SS, train_DD, method, method_dim(fold), parameter);
+  if (method == 'SIFT')
+    method_train_Data = train_Data;
+    method_test_Data = test_Data;
+  elseif (method == 'PCA')
+    [method_train_Data, method_test_Data] = dimension_reduction(train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dim(fold), []);
+  else
+    [pca_train_Data, pca_test_Data] = dimension_reduction(train_Data, test_Data, train_SS, train_DD, 'PCA', pca_dim(fold), []);
+    [method_train_Data, method_test_Data] = dimension_reduction(pca_train_Data, pca_test_Data, train_SS, train_DD, method, method_dim(fold), parameter);
+  end
+
   [crtt, roctt] = accuracy (method_train_Data, method_test_Data, train_SS, train_DD, test_SS, test_DD, method_dim(fold), 1);
   
   while (exist(['view2_' method '_' file '.lock'], 'file'))
