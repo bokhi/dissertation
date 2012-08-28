@@ -705,13 +705,17 @@ no problem
     CLOSED: [2012-08-19 Sun 12:30]
 *** DONE algorithm to fix parameters for each experiment
     CLOSED: [2012-08-20 Mon 15:33]
-*** TODO test the adaptative k-neighbourhood graph finder (if possible)
-*** TODO launch view2 for SIFT only and for selected PCA dimension
-*** TODO view2 for LDA, Isomap and LLE without PCA reduction (if possible)
+*** DONE test the adaptative k-neighbourhood graph finder (if possible)
+    CLOSED: [2012-08-27 Mon 20:37]
+*** DONE launch view2 for SIFT only and for selected PCA dimension
+    CLOSED: [2012-08-27 Mon 20:37]
+*** DONE view2 for LDA, Isomap and LLE without PCA reduction (if possible)
+    CLOSED: [2012-08-27 Mon 20:37]
 *** DONE what about non-SIFT image representation
     CLOSED: [2012-08-20 Mon 18:11]
 *** TODO apply another algorithm (learn mahalanobis distance) after dimensionality reduction
-*** TODO square root values of SIFT features
+*** DONE square root values of SIFT features
+    CLOSED: [2012-08-27 Mon 20:37]
 
 ** List of experiments
  - Accuracy of PCA, Isomap, LLE, LDA on view1 with default parameters
@@ -748,8 +752,10 @@ no problem
    with k-best parameter
 
    | method         | SIFT-3456 |   SIFT |    PCA |    LDA | Isomap |    LLE |
+   |----------------+-----------+--------+--------+--------+--------+--------|
    | accuracy       |    0.6680 | 0.6960 | 0.6910 | 0.5020 | 0.6150 | 0.6200 |
    | dimension      |      3456 |    655 |     96 |      2 |     79 |     12 |
+   |----------------+-----------+--------+--------+--------+--------+--------|
    | sqrt-accuracy  |    0.6830 | 0.6940 | 0.6900 | 0.5010 | 0.6270 | 0.6230 |
    | sqrt-dimension |      3456 |    875 |     85 |      7 |     48 |      2 |
 
@@ -785,26 +791,32 @@ no problem
       Isomap =  17
 
       less than best score with selected k
-
-
-
-
 ** view1 pca-prereduction
 
-   with k-best parameter
+   with k-best parameter and adaptative neighbourhood
 
-   | method           |     LDA |  Isomap |     LLE | Isomap-adaptative |
-   |------------------+---------+---------+---------+-------------------|
-   | acc              | 0.81000 | 0.65800 | 0.68100 |           0.65100 |
-   | pca              |      78 |      50 |      58 |                20 |
-   | second reduction |      25 |      42 |      35 |                17 |
-   |------------------+---------+---------+---------+-------------------|
-   | sqrt-acc         | 0.81000 | 0.65500 | 0.65400 |                   |
-   | pca              |      62 |      55 |      51 |                   |
-   | second reduction |      29 |      44 |      29 |                   |
+   | method           |     LDA |  Isomap | Isomap-adaptative |     LLE |
+   |------------------+---------+---------+-------------------+---------|
+   | acc              | 0.81000 | 0.65800 |           0.65100 | 0.68100 |
+   | pca              |      78 |      50 |                20 |      58 |
+   | second reduction |      25 |      42 |                17 |      35 |
+   |------------------+---------+---------+-------------------+---------|
+   | sqrt-acc         | 0.81000 | 0.65500 |            0.6580 | 0.65400 |
+   | pca              |      62 |      55 |                33 |      51 |
+   | second reduction |      29 |      44 |                33 |      29 |
+
+** view2 PCA cross-validation PCA dimension selection
+
+ | fold     |      1 |      2 |      3 |      4 |       5 |      6 |      7 |      8 |      9 |     10 |
+ |----------+--------+--------+--------+--------+---------+--------+--------+--------+--------+--------|
+ | acc      | 0.6822 | 0.6848 | 0.6859 | 0.6857 |  0.6867 | 0.6815 | 0.6856 | 0.6869 | 0.6859 | 0.6889 |
+ | pca      |    146 |    135 |    140 |    145 | 147/150 |    134 |    142 |    133 |    125 |    148 |
+ |----------+--------+--------+--------+--------+---------+--------+--------+--------+--------+--------|
+ | sqrt-acc | 0.6844 | 0.6856 | 0.6889 | 0.6878 |  0.6876 | 0.6852 | 0.6900 | 0.6881 | 0.6904 | 0.6885 |
+ | pca      |    100 |    112 |    130 |    127 |      96 |    134 |    148 |    119 |    114 |    149 |
 
 
-** view2 pca-prereduction cross validation
+** view2 LDA with PCA-prereduction cross validation
 
   | fold     |       1 |       2 |       3 |       4 |       5 |       6 |       7 |       8 |       9 |      10 |
   |----------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
@@ -815,21 +827,15 @@ no problem
   | sqrt-acc | 0.80648 | 0.80685 | 0.81093 | 0.81481 | 0.80778 | 0.80630 | 0.80519 | 0.81074 | 0.80963 | 0.80778 |
   | pca      |      86 |      81 |      74 |      90 |   92/97 |      98 |      73 |      90 |      97 |      89 |
   | lda      |      11 |      19 |      15 |      11 |       8 |      12 |      16 |      21 |      15 |      21 |
-  |----------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
-  | acc      |  0.6822 |  0.6848 |  0.6859 |  0.6857 |  0.6867 |  0.6815 |  0.6856 |  0.6869 |  0.6859 |  0.6889 |
-  | pca      |     146 |     135 |     140 |     145 | 147/150 |     134 |     142 |     133 |     125 |     148 |
-  |----------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
-  | sqrt-acc |  0.6844 |  0.6856 |  0.6889 |  0.6878 |  0.6876 |  0.6852 |  0.6900 |  0.6881 |  0.6904 |  0.6885 |
-  | pca      |     100 |     112 |     130 |     127 |      96 |     134 |     148 |     119 |     114 |     149 |
   
-** view2
-   | method             | SIFT | PCA |    LDA | Isomap |    LLE |
-   |--------------------+------+-----+--------+--------+--------|
-   | mean accuracy      |      |     | 0.7998 |        | 0.6325 |
-   | standard error     |      |     | 0.0055 |        | 0.0061 |
-   |--------------------+------+-----+--------+--------+--------|
-   | sqrt mean accuracy |      |     | 0.7950 |        | 0.6210 |
-   |                    |      |     | 0.0057 |        | 0.0048 |
+** view2 final result
+   | method             | SIFT-3456 |    PCA | SP-LDA | Isomap |    LLE |
+   |--------------------+-----------+--------+--------+--------+--------|
+   | mean accuracy      |    0.6755 | 0.6837 | 0.7998 | 0.6327 | 0.6325 |
+   | standard error     |    0.0058 | 0.0056 | 0.0055 | 0.0048 | 0.0061 |
+   |--------------------+-----------+--------+--------+--------+--------|
+   | sqrt mean accuracy |    0.6755 | 0.6815 | 0.7950 | 0.6382 | 0.6210 |
+   | standard error     |    0.0058 | 0.0059 | 0.0057 | 0.0047 | 0.0048 |
    
    compute view2 mean_accuracy for SIFT 3456 and best PCA dimension with and without cross-validation parameter selection
 
