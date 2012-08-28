@@ -840,4 +840,10 @@ no problem
    compute view2 mean_accuracy for SIFT 3456 and best PCA dimension with and without cross-validation parameter selection
 
 
+** LDA
 
+   Sb and Sw are ill-conditioned : condition ~ 4.2314e+20 for SIFT-3456
+                                   condition ~ 35.8514    for PCA-78
+   
+   see http://www.mathworks.com/matlabcentral/newsreader/view_thread/235450
+       http://www.mathworks.com/matlabcentral/newsreader/view_thread/234835

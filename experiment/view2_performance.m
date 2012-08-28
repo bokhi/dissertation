@@ -4,7 +4,7 @@ function [] = view2_performance (file, method)
 
   nb_fold = length(CRTT);
 
-  roc = zeros (size(ROCTT{1}{:}(:,1)), 2);
+  roc = zeros (size(ROCTT{1}{:},1), 2);
   for i = 1:nb_fold
     roc = roc + ROCTT{i}{:};
   end

@@ -12,19 +12,17 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
   fprintf ('Compute Sw\n');
   SS = train_Data(train_SS(:, 1), :) - train_Data(train_SS(:, 2), :);
   Sw = SS' * SS;
-  issym=isequal(Sw,Sw')
-  con = cond(Sw)
+  condition = cond(Sw)
   
   fprintf ('Compute Sb\n');
   DD = train_Data(train_DD(:, 1), :) - train_Data(train_DD(:, 2), :);
   Sb = DD' * DD;
-  issym=isequal(Sb,Sb')
-  con = cond(Sb)
+  condition = cond(Sb)
   
 
   %% Perform eigendecomposition of inv(Sw)*Sb
   fprintf ('perform eigendecomposition\n');
-  [mapping.M, lambda] = eig(Sb, Sw);
+  [mapping.M, lambda] = eig(Sb, Sw,'qz');
 
   %% Sort eigenvalues and eigenvectors in descending order
   lambda(isnan(lambda)) = 0;
