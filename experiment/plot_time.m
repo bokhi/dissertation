@@ -12,6 +12,8 @@ prettyline = @(x, y) plot(x, y, 'k', 'LineWidth', 5);
 
 [ax, h1, h2] = plotyy(1:9, data, 1:9, accuracy, stackedbar, prettyline);
 
+set(ax(2), 'XTick', []);
+
 Labels = {'SIFT-3456', 'PCA', 'LDA-2', 'Isomap-79', 'LLE-12', 'LDA-78/25', 'Isomap-50/42', 'LLE-58/35', 'Isomap-adaptative-20/17'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
