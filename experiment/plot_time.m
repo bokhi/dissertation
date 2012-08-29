@@ -13,7 +13,7 @@ prettyline = @(x, y) plot(x, y, 'k', 'LineWidth', 5);
 [ax, h1, h2] = plotyy(1:9, data, 1:9, accuracy, stackedbar, prettyline);
 
 set(ax(2), 'XTick', []);
-xlabel(ax(1), 'seconds');
+ylabel(ax(1), 'seconds');
 
 Labels = {'LDA', 'ISO', 'LLE','ISO','P-ISO','SIFT','P-LLE','PCA','P-LDA'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
