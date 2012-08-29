@@ -13,11 +13,12 @@ prettyline = @(x, y) plot(x, y, 'k', 'LineWidth', 5);
 [ax, h1, h2] = plotyy(1:9, data, 1:9, accuracy, stackedbar, prettyline);
 
 set(ax(2), 'XTick', []);
+set(ax(1), 'XLabel', 'seconds');
 
 Labels = {'LDA', 'ISO', 'LLE','ISO','P-ISO','SIFT','P-LLE','PCA','P-LDA'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
 
-legend ('Accuracy', 'pca time', 'reduction time', 'accuracy time');
+legend ('accuracy time', 'pca time', 'reduction time', 'accuracy');
 
 print ('-dpng',  'time_result.png');
