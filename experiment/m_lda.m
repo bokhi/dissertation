@@ -3,7 +3,6 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
   %% by the similarity pairs whereas Sb is based on dissimilarity pairs
 
   fprintf ('LDA reduction\n');
-  tic
   
   %% Make sure data is zero mean
   mapping.mean = mean(train_Data, 1);
@@ -34,5 +33,4 @@ function [train_Data, test_Data] = m_lda(train_Data, test_Data, train_SS, train_
   train_Data = train_Data * mapping.M;
   test_Data = bsxfun(@minus, test_Data, mapping.mean) * mapping.M;
     
-  toc
 end
