@@ -7,7 +7,7 @@ data = [pca_time; reduction_time; accuracy_time];
 
 data = data';
 
-stackedbar = @(x, A) bar(x, A, 'stack', 3);
+stackedbar = @(x, A) bar(x, A, 3,'stack');
 prettyline = @(x, y) plot(x, y, 'k', 'LineWidth', 5);
 
 [ax, h1, h2] = plotyy(1:9, data, 1:9, accuracy, stackedbar, prettyline);
