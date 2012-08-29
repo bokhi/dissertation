@@ -19,6 +19,6 @@ Labels = {'LDA', 'ISO', 'LLE','ISO','P-ISO','SIFT','P-LLE','PCA','P-LDA'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
 
-legend ('accuracy time', 'pca time', 'reduction time', 'accuracy');
+legend ('pca time', 'reduction time', 'accuracy time', 'accuracy');
 
 print ('-dpng',  'time_result.png');
