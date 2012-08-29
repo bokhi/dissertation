@@ -16,7 +16,7 @@ function [D, max_k_val, no_dims] = find_nn_adaptive(X)
 %
 % (C) Laurens van der Maaten, Delft University of Technology
 
-
+  
     % First, estimate intrinsic dimensionality using the MLE estimator
     no_dims = round(intrinsic_dim(X, 'MLE'));
 
@@ -34,7 +34,7 @@ function [D, max_k_val, no_dims] = find_nn_adaptive(X)
     
     % For all datapoints
     for i=1:n
-      tic
+
         % current data point
         p = X(:,i);
 
@@ -97,5 +97,5 @@ function [D, max_k_val, no_dims] = find_nn_adaptive(X)
             max_k_val = k;
         end
 
-	fprintf ('adaptative neighbouring %d/%d : %f\n',i,n,toc);
+
     end
