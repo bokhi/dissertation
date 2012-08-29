@@ -847,3 +847,11 @@ no problem
    
    see http://www.mathworks.com/matlabcentral/newsreader/view_thread/235450
        http://www.mathworks.com/matlabcentral/newsreader/view_thread/234835
+
+* <2012-08-29 Wed>
+
+** tasks
+*** time complexity chart for view1
+*** k/accuracy/%ofpoints graph
+*** LLE roc diagram fix
+

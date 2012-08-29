@@ -1,6 +1,6 @@
-function [] = plot_k_experiment (method)
+function [] = plot_k_experiment (file, method)
 
-  load (['k_' method]);
+  load (['k_' method '_' file]);
 
   no_dims=1;
   while (isempty(CRTT{no_dims}))
@@ -13,15 +13,12 @@ function [] = plot_k_experiment (method)
     average(i) = mean (CRTT{i});
   end
   
-  hold all;
+  plotyy(no_dims:length(CRTT), maximum(no_dims:length(CRTT)), no_dims:length(CRTT), CONN_COMP(no_dims:length(CRTT)), 'plot');
+
+  set(get(AX(1),'Ylabel'),'String','best accuracy') 
+  set(get(AX(2),'Ylabel'),'String','graph coverage') 
   
-  plot (no_dims:length(CRTT), maximum(no_dims:length(CRTT)));
-  plot (no_dims:length(CRTT), minimum(no_dims:length(CRTT)));
-  plot (no_dims:length(CRTT), average(no_dims:length(CRTT)));
-
   xlabel ('k');
-  ylabel ('accuracy');
-  legend ('maximum', 'minimum', 'average');
 
-  print ('-dpng', ['k_' method '_result.png']);
+  print ('-dpng', ['k_' method '_' file '_result.png']);
 end
