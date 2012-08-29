@@ -14,7 +14,7 @@ prettyline = @(x, y) plot(x, y, 'k', 'LineWidth', 5);
 
 set(ax(2), 'XTick', []);
 
-Labels = {'SIFT-3456', 'PCA', 'LDA-2', 'Isomap-79', 'LLE-12', 'LDA-78/25', 'Isomap-50/42', 'LLE-58/35', 'Isomap-adaptative-20/17'};
+Labels = {'LDA', 'ISO', 'LLE','ISO','P-ISO','SIFT','P-LLE','PCA','P-LDA'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
 
