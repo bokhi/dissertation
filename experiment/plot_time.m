@@ -15,7 +15,7 @@ prettyline = @(x, y) plot(x, y, 'k', 'LineWidth', 5);
 set(ax(2), 'XTick', []);
 ylabel(ax(1), 'seconds');
 
-Labels = {'LDA', 'ISO', 'LLE','ISO','P-ISO','SIFT','P-LLE','PCA','P-LDA'};
+Labels = {'SP-LDA', 'ISO', 'LLE','ISO','ISO','SIFT','LLE','PCA','SP-LDA'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
 
