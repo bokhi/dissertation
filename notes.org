@@ -642,7 +642,7 @@ no problem
     CLOSED: [2012-08-16 Thu 15:19]
 *** DONE Test algorithms on swiss-roll dataset
     CLOSED: [2012-08-16 Thu 15:19]
-*** Solve dimension error
+*** TODO Solve dimension error
     - Find right LLE dimension reduction
     - Study automatic dimension selection from Isomap
 *** DONE Eigenproblem and dimension reduction for nonlinear methods
@@ -658,7 +658,7 @@ no problem
     - make sure that the rest of the code is not impacted
     - find a new nomenclature for the variables
       train_Data test_Data train_DD train_SS test_DD test_SS
-*** understand why Laplacian_eigen is unstable
+*** TODO understand why Laplacian_eigen is unstable
     - and whether the result of the reduction is affected
 ** Experiments
 *** Dataset intrinsic dimensionality
@@ -718,13 +718,12 @@ no problem
     CLOSED: [2012-08-27 Mon 20:37]
 
 ** List of experiments
- - Accuracy of PCA, Isomap, LLE, LDA on view1 with default parameters
  - Accuracy of LLE, Isomap with different values of k
- - Accuracy PCA + LDA, LLE, Isomap 
- - Accuracy on view2 with view2 best parameters
- - Accuracy on view2 with cross-validation best parameters
- - Accuracy with square root of SIFT features
  - Accuracy with adaptative k parameter
+ - Accuracy of PCA, Isomap, LLE, LDA on view1 with default parameters
+ - Accuracy with square root of SIFT features
+ - Accuracy PCA + LDA, LLE, Isomap 
+ - Accuracy on view2 with cross-validation best parameters
 
 ** Dataset intrinsic dimensionality
     
@@ -791,6 +790,30 @@ no problem
       Isomap =  17
 
       less than best score with selected k
+
+
+** LDA problem
+
+   Sb and Sw are ill-conditioned : condition ~ 4.2314e+20 for SIFT-3456
+                                   condition ~ 35.8514    for PCA-78
+   
+   see http://www.mathworks.com/matlabcentral/newsreader/view_thread/235450
+       http://www.mathworks.com/matlabcentral/newsreader/view_thread/234835
+
+       (A - l.B)*x = 0 (eqt1)
+
+       Select R and C, two appropriate diagonal matrices, and solve (eqt2):
+       R*(A-l.B)*C * x = 0 (eqt2)
+       
+       Which is equivalent to (eqt3):
+       ( [R*A] - l.[R*B] )*y = 0 (eqt3)
+       x = C^{-1}*y
+
+       So in MATLAB syntax do this:
+       
+       [V L] = eig(R*A,R*B);
+       V = inv(C)*V % <- could use bsxfun for that
+
 ** view1 pca-prereduction
 
    with k-best parameter and adaptative neighbourhood
@@ -840,24 +863,18 @@ no problem
    compute view2 mean_accuracy for SIFT 3456 and best PCA dimension with and without cross-validation parameter selection
 
 
-** LDA
-
-   Sb and Sw are ill-conditioned : condition ~ 4.2314e+20 for SIFT-3456
-                                   condition ~ 35.8514    for PCA-78
-   
-   see http://www.mathworks.com/matlabcentral/newsreader/view_thread/235450
-       http://www.mathworks.com/matlabcentral/newsreader/view_thread/234835
-
 * <2012-08-29 Wed>
 
 ** tasks
-*** time complexity chart for view1
-*** k/accuracy/%ofpoints graph
+*** DONE time complexity chart for view1
+    CLOSED: [2012-08-29 Wed 14:27]
+*** DONE k/accuracy/%ofpoints graph
+    CLOSED: [2012-08-29 Wed 14:27]
 *** LLE roc diagram fix
 
 ** time experiment
 
-   | method         |         LDA |         ISO |         LLE |         ISO |      P-ISO |      SIFT |       P-LLE |        PCA |    P-LDA |
+   | method         |         LDA |         ISO |         LLE |       k-ISO |      P-ISO |      SIFT |       P-LLE |        PCA |    P-LDA |
    |----------------+-------------+-------------+-------------+-------------+------------+-----------+-------------+------------+----------|
    | reduction-time | 3590.046512 | 1312.103790 | 1427.979230 | 2582.651400 | 356.005313 |         0 | 1042.893822 | 403.690831 | 0.149054 |
    | accuracy-time  |    1.253261 |    1.347082 |    1.267401 |    1.272666 |   1.287870 | 12.275001 |    1.275466 |   1.356252 | 1.270781 |

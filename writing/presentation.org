@@ -1,0 +1,102 @@
+#+TITLE:     Investigating Dimensionality Reduction Techniques on the LFW Data Set
+#+AUTHOR:    Martin RP Boissier
+#+EMAIL:     mrpb201@exeter.ac.uk
+
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+
+#+latex_header: \mode<beamer>{\usetheme{Warsaw}}
+
+#+BEAMER_FRAME_LEVEL: 3
+
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+* Introduction
+
+** Face Recognition
+
+*** 
+**** Test					      :BMCOL:B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: ignoreheading
+     :END:
+    - Despite over 30 years of research, still one of the most difficult problem in Computer Vison
+    - Many factors affecting the performance: noisy input, training data collection, expression, illumination, pose, speed-accuracy trade-off etc.
+
+**** Faces						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+#+ATTR_LaTeX: width=\textwidth
+[[file:linear-000.png]]
+
+
+
+*** 
+    - Good result for images taken under certain constraints such as frontal faces
+    - No satisfactory method
+      
+
+*** Different Aspects
+
+    - Face 
+
+
+
+** Dimensionality Reduction
+
+*** 
+
+*** Curse of Dimensionality
+
+*** 
+    
+
+* Labeled Faces in the Wild
+
+*** test
+
+* Dimensionality Reduction
+
+** Linear Techniques
+
+*** Principal Component Analysis
+
+*** Linear Discriminant Analysis
+
+*** Matching-LDA
+
+** Manifold Learing
+
+*** Manifold
+
+*** Isomap
+
+*** LLE
+
+* Experiments
+
+** View 1
+
+** View 2
+
+* Conclusion
+
+** 
+
+*** test
+
+

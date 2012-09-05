@@ -1,0 +1,669 @@
+#+LaTeX_CLASS: article
+
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage{lmodern}
+
+#+TITLE: Investigating Dimensionality Reduction Techniques on the LFW Data Set
+#+AUTHOR: Martin RP Boissier
+#+EMAIL: mrpb201@exeter.ac.uk
+
+* abstract
+  \emph{ - M-LDA simple method}
+    
+* introduction
+** face verification
+** dimension reduction
+   Real-world data such as digital photographs, speech signal
+   etc. usually has a high dimensionality. For instance a 250x250
+   pixels images can be represented as a 62500 raw-feature
+   vector. Though access to an abundance of examples is purely
+   beneficial to an algorithm attempting to generalise from the data,
+   managing a large number of features is typically of burden to the
+   algorithm. Dimensionality reduction techniques were developed to
+   address several problems encountered with high dimensional
+   data. First one cannot have an intuitive feel for what the data
+   looks like in an high dimensional space composed of thousands of
+   features, dimension reduction can be used to facilitate data
+   representation. The overwhelmingly complex feature sets will also
+   slow down most machine learning algorithms and make finding global
+   optima difficult. This problem usually referred to as the curse of
+   dimensionality is directly related to the difficulty of sampling a
+   high dimensional space. The number of training samples needed to
+   uniformly cover the feature space is exponentially proportional to
+   the number of features. Therefore, many learning algorithms based
+   on the distance between samples, such as KNN algorithms and other
+   classifier, do not yield good results on high dimensional data.
+
+   The general philosophy sustaining dimensionality techniques is the
+   fact that real-life data contain redundancies and noise and that
+   the intrinsic dimensionality of the data, defined as the minimum
+   number of features needed to account for the observed properties of
+   the data. By performing dimensionality reduction, noise can be
+   suppressed and redundancies removed while the new low dimensional
+   representation of the data still captures most of the information
+   needed for clustering, classification or regression algorithms.
+
+* literature overview
+  - face recognition
+  - Eigen/Fisher-face
+  - LFW papers with PCA reduction
+  - dimension reduction methods
+  - no work on LFW
+
+* LFW
+
+Labeled Faces in the Wild (LFW) is a database of human face images
+designed as an aid in studying the problem of unconstrained face
+recognition\cite{huang2008labeled}. While, many databases have been developed under
+controlled conditions in order to study the influence of specific
+parameters such as position, pose, lighting, expression etc., LFW
+provides an aid in studying face recognition of photographs spanning a
+range of conditions typically encountered by people in their everyday
+life.
+
+Although LFW can be used to study a wide range of face recognition
+paradigms, it was specifically designed to address the following face
+recognition problem : given two pictures, each of which contains a
+face, decide whether the two people pictured represent the same
+individual. This problem is referred to as the pair matching problem.
+
+The unconstrained pair matching problem can be seen as one of the most
+general and fundamental face recognition problem and LFW provides a
+database as well as specific experimental paradigms in an effort to
+make research performed as consistent and comparable as possible.
+
+The face images were automatically collected from Yahoo! News in
+2002-2003, the only constraint being that they were detected by the
+Viola-Jones face detector algorithm.
+
+The data set itself contains more than 13,000 target images. Each face
+has been labeled with the name of the person pictured. In total 5749
+people appear in the images, 1680 of them appear in two or more
+images. The remaining 4069 people have just a single image in the
+database.
+
+In order to allow fair and accurate comparisons, clear guidelines
+concerning the training, validation and testing of pair matching
+algorithms are given to prevent unintended over-fitting problems. The
+data is organised in two "Views" or subset of the database. It is
+important to note that for any given training-testing split, the
+people in each subset are mutually exclusive, therefore it is not
+possible to build a model in the test set at training time. View1 is
+for algorithm development so that different approaches and parameter
+settings can be experimented with without overusing the data, whereas
+View2 should be solely used for formal evaluation of the selected
+methods and parameters. The first view consists of a training set
+composed of 1100 pairs of matched images and 1100 pairs of mismatched
+images. The testing set is composed of 500 pairs of matched and 500
+pairs of mismatched images. View2 comes with a division in ten
+independent subsets of the database. Each subset, or fold, contains
+between 527 and 609 different people, and between 1016 and 1783
+faces. From all possible pairs, a small set of 300 positive and 300
+negative image pairs are provided for each fold. To report accuracy
+results on View2, the performance of the classifier is evaluated on 10
+separate experiments in a leave-one-out cross validation scheme
+obtained by successively concatenating nine of the subsets to form a
+training set, with the tenth subset used for testing.
+
+This experimental paradigm is referred to as the restricted settings
+as only the given matching and mismatching pairs can be used to
+construct the classifier as the name of the persons pictured is not
+explicitly given. The unrestricted configuration gives the
+experimenter access to the actual names of the people (class labels)
+so that as many same/not-same pairs should be constructed. This paper
+solely focuses on the restricted configuration.
+
+As far image representation are concerned, we used SIFT descriptors
+computed at fixed facial key-points (corners of the mouth, eyes, and
+nose) which lead to a 3456 dimensional face descriptor. These data are
+available from Guillaumin \cite{guillaumin2009you} and were also used
+by Ying \cite{ying2012distance}, therefore focusing on SIFT features
+allows a direct comparisons with their methods.
+
+
+* Dimensionality Reduction
+
+  The problem of dimensionality reduction given a data set represented
+  in a $n \times D$ matrix $\mathbf{X}$ consisting of $n$ data-vectors
+  $\{\mathbf{x}_1,\dots,\mathbf{x}_n\} \in R^D$ can be defined as
+  follows. By assuming that this data-set has intrinsic dimensionality
+  d (where $d < D$) which means that the points in data-set
+  $\mathbf{X}$ are lying on or near a manifold of dimensionality d
+  embedded in the D-dimensional space, dimensionality reduction
+  techniques transform data-set $\mathbf{X}$ into a new data-set
+  $\mathbf{Y}$ with dimensionality d.
+
+  In the remainder of this paper we denote the low-dimensional
+  counterpart of the data point $\mathbf{x}_i$ by $\mathbf{y}_i$.
+
+** Linear mapping
+  
+*** PCA
+
+    Principal Component Analysis is a linear technique which means that
+    dimensionality reduction is performed by embedding the data into a
+    linear subspace of lower dimensionality.
+
+    The linear subspace is constructed such as the variance of the
+    low-dimensional representation of the data is maximised. The
+    motivation for performing PCA is often the assumption that
+    directions of high variance will contain more information that
+    directions of low variance. The rationale behind this could be that
+    the noise can be assumed to be uniformly spread. Thus, directions
+    of high variance will have a higher signal-to-noise ratio.
+
+    Formally speaking, PCA attempts to find a linear mapping
+    $\mathbf{M}$ that minimises the cost function $trace\
+    (\mathbf{M}^T \mathbf{S_T}\mathbf{M})$, where $\mathbf{S_T}$ is
+    the total scatter matrix or the sample covariance matrix of the
+    mean-centred data $\mathbf{X}$. 
+
+    \begin{align}
+    \mathbf{S_T} &= \sum_{k=1}^N (\mathbf{x_k} - \boldsymbol{\mu}) \cdot (\mathbf{x_k} - \boldsymbol{\mu}) ^T\\
+    \mathbf{M} &= \operatorname*{arg\,max}_{\mathbf{M}} trace(\mathbf{M}^T \mathbf{S_T}\mathbf{M}) \label{eq:pca}
+    \end{align}
+
+    
+    Where $\boldsymbol{\mu}$ represent the mean vector of
+    $\mathbf{X}$. Using Lagrangian multipliers
+    \cite{bie2005eigenproblems}, it can be shown that Equation
+    \ref{eq:pca} is equivalent to solve the following eigenproblem :
+
+    \begin{equation}
+    \mathbf{S_T}\mathbf{M}=\lambda\mathbf{M}
+    \end{equation}
+
+    The eigenproblem is solved for the $d$ principal eigenvalues
+    $\lambda$ by computing the $d$ principal eigenvectors of the sample
+    covariance matrix of the zero-mean data. The low-dimensional data
+    representations $\mathbf{y}_i$ of the data points $\mathbf{x}_i$ are
+    computed by mapping them onto the linear basis $\mathbf{M}$, i.e.,
+    $\mathbf{Y}=\mathbf{XM}$. PCA is most useful in the case when data
+    lies on or close to a linear subspace of the data set. Given this
+    type of data, PCA will find a basis for the linear subspace and
+    allow one to disregard the irrelevant features.
+
+*** LDA and M-LDA
+    
+**** Linear discriminant Analysis (LDA)
+    When the learning set is labeled, it makes sense to use this
+    information to build a more reliable method for reducing the
+    dimensionality of the feature space. Linear Discriminant Analysis
+    (LDA) -also known as Fisher's linear discriminant (FLD)- is
+    closely related to PCA in that they both look for linear
+    combinations of variables which best explain the data. LDA
+    explicitly attempts to model the difference between the classes of
+    data. PCA on the other hand does not take into account any
+    difference in class, a drawback of this approach it that the
+    scatter being maximised is due not only to the between-class
+    scatter that is useful for classification, but also to the
+    within-class scatter that, for classification purposes, is
+    unwanted information. LDA selects $\mathbf{M}$ in such a way that
+    the ratio of the between-class scatter and the within-class
+    scatter is maximised, in other words LDA searches for the project
+    axes on which the data points of different classes are far from
+    each other while requiring data points of the same class to be
+    close to each other. This difference can lead PCA to badly cluster
+    the points in the projected space, or worse, to smear the classes
+    together as exemplified in Figure \ref{fig:pca} where although PCA
+    achieves larger total scatter, LDA achieves greater between-class
+    scatter, and , consequently, classification is simplified.
+
+    #+CAPTION: A comparison of PCA and FLD for a two class problem where data for each class lies near a linear subspace. Image from \cite{belhumeur1997eigenfaces}.
+    #+ATTR_LaTeX: scale=0.2
+    #+LABEL: fig:pca
+    [[./pca-lda.png]]
+
+    For all samples of all classes the between-class scatter matrix
+    $\mathbf{S_{B}}$ and the within-class scatter matrix $\mathbf{S_{W}}$ are defined
+    by:
+
+
+    \begin{align}
+    \mathbf{S_{B}} &= \sum_{i = 1}^c N_i (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}}) \cdot (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}})^T \\
+    \mathbf{S_W} &= \sum_{i = 1}^c \sum_{\mathbf{x}_k \in C_i} (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}}_i) \cdot (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}}_i)^T
+    \end{align}
+
+
+    where $N_i$ is the number of training samples in class $i$, $c$ is
+    the number of distinct classes, $\boldsymbol{\mu}_i$ is the mean
+    vector of samples belonging to class $i$ and $C_i$ represents the
+    set of samples belonging to class $i$ with $\mathbf{x_k}$ being
+    the $k$-th vector of that class. $\mathbf{S_W}$ represents the
+    scatter of features around the mean of each class and
+    $\mathbf{S_B}$ represents the scatter of features around the
+    overall mean for all classes. As mentioned, the goal is to
+    maximise $\mathbf{S_B}$ while minimising $\mathbf{S_W}$, and
+    therefore to find the projection $\mathbf{M}$ that maximises the
+    following ratio.
+
+    \begin{equation}
+    \mathbf{M} = \operatorname*{arg\,max}_{\mathbf{M}} \frac{trace(\mathbf{M}^T \mathbf{S_B}\mathbf{M})}{trace(\mathbf{M}^T \mathbf{S_W}\mathbf{M})}
+    \end{equation}
+
+    This time the cost function can be assimilated to a generalised
+    eigenvalue problem, with both $S_B$ and $S_W$ symmetric and
+    positive semi-definite.
+
+    \begin{equation}
+    \mathbf{S_B} \mathbf{M} = \lambda \mathbf{S_W} \mathbf{M} \label{eq:lda}
+    \end{equation}
+
+    Also the maximum rank of $\mathbf{S_B}$ in this formulation is
+    $c - 1$ \cite{shylajadimensionality}. Thus LDA cannot produce more
+    than $c - 1$ features. Furthermore in the case that the number of
+    training samples is much smaller that the number of features, the
+    rank of $\mathbf{S_W}$ is at most $N - c$, therefore in order to
+    avoid the complication of singular matrices, the training set is
+    usually first projected onto an $N - c$ orthogonal subspace with
+    PCA before applying LDA \cite{belhumeur1997eigenfaces}.
+
+**** Matching-LDA    
+
+    LDA cannot be applied as such under the restricted configuration
+    of the LFW database as the name of the people pictured is not
+    given. In effect, the class labels are needed to compute the mean
+    vector of each class but cannot be inferred from this
+    paradigm. Nonetheless similarity and dissimilarity pairs
+    constitute partial knowledge of the classes as a matching pair is
+    made of two images picturing the same individual and therefore
+    belonging to the same class label. Similarly to LDA, we would like
+    to find $\mathbf{M}$ such as that the projections $\mathbf{y_i},
+    \mathbf{y_j}$ of the data vectors $\mathbf{x_i}, \mathbf{x_j}$
+    would be close to each other under the metric associated with the
+    projection space when $\mathbf{x_i}$ et $\mathbf{x_j}$ constitute
+    a matching pair, conversely the distance between $\mathbf{y_i}$
+    and $\mathbf{y_j}$ should be "greater" when $\mathbf{x_i}$ and
+    $\mathbf{x_j}$ form a dissimilarity pair. We propose a new
+    supervised linear dimension reduction method closely related to
+    LDA and adapted to the pair matching problem : Matching-LDA
+    (M-LDA). M-LDA defines the aforementioned similarity pair and
+    dissimilarity pair scatter matrices as such :
+    
+    \begin{align}
+    \mathbf{S_{SP}} &= \sum_{(i, j) \in SP} (\mathbf{x}_i - \mathbf{x}_j) \cdot (\mathbf{x}_i - \mathbf{x}_j)^T\\
+    \mathbf{S_{DP}} &= \sum_{(i, j) \in DP} (\mathbf{x}_i - \mathbf{x}_j) \cdot (\mathbf{x}_i - \mathbf{x}_j)^T
+    \end{align}
+
+    where $SP$ contains the indices of similarity pairs and $SP$ of
+    dissimilarity pairs respectively. The associated definition of
+    $\mathbf{M}$ and its related eigenvalue problem under M-LDA are as
+    follows :
+    
+    \begin{align}
+    \mathbf{M} &= \operatorname*{arg\,max}_{\mathbf{M}} \frac{trace(\mathbf{M}^T \mathbf{S_{DP}}\mathbf{M})}{trace(\mathbf{M}^T \mathbf{S_{SP}}\mathbf{M})}\\
+    \mathbf{S_{DP}} \mathbf{M} &= \lambda \mathbf{S_{SP}} \mathbf{M}
+    \end{align}
+
+** Manifold Learning
+
+   Linear dimensionality reduction methods, despite their popularity,
+   also have a number of limitations. Perhaps the most blatant
+   drawback is the requirement that the data lie on linear
+   subspace. What if the plane was curled as it is in Figure
+   \ref{fig:swiss-roll}? Though the data is still intuitively
+   two-dimensional, PCA, LDA and other linear methods, will not
+   correctly extract this two-dimensional structure. In mathematical
+   term, the swiss-roll structure is called a manifold. A manifold is
+   a topological space that is locally Euclidean, therefore, the
+   swiss-roll is considerred to be a two-dimensional manifold because
+   it locally "looks like" a copy of $\mathbb{R}^2$. Manifold learning
+   algorithms essentially attemps to duplicate the behaviour of PCA,
+   but on manifolds instead of linear subspaces. The two manifold
+   learning algorithms presented, Isomap and LLE, requires a
+   neighbourhood-size parameter $k$ corresponding to the number of
+   samples neighbouring a given data point $\mathbf{x}_i$. It is also
+   important to note that usually manifold learning algorithms assume
+   that within each neighbourhood the manifold is approximately flat.
+
+   #+CAPTION: A curled plane: the swiss roll
+   #+ATTR_LaTeX: scale=0.2
+   #+LABEL: fig:swiss-roll
+    [[./swiss-roll.png]]
+
+    
+*** ISOMAP
+
+     If the high-dimensional data lies on a near a curved manifold,
+     the Euclidean distance in the input space may not accurately
+     reflect the intrinsic similarity of two arbitrary points. This
+     problem is manifest for the Swiss roll data set where the
+     geodesic distance (distance along a manifold) is much larger that
+     the typical inter-point distance.
+
+     Isomap -short for isometric feature mapping- was one of the first
+     algorithms introduced for manifold learning. It may be viewed as
+     an extension to Multidimensional Scaling (MDS), a classical
+     method for embedding dissimilarity information into Euclidean
+     space. Isomap consists of two main steps:
+     
+	1. Estimate the geodesic distances between points in the input
+           using shortest-path distances on the data set's $k$-nearest
+           neighbour graph.
+	2. Use MDS to find points in low-dimensional Euclidean space
+           whose interpoint distances match the distances found in
+           step 1.
+
+    Isomap attempts to preserve pairwise geodesic distances between
+    data points. By assuming that the manifold is smooth enough
+    between nearby points and locally linear, the Euclidean distance
+    between nearby points in the high-dimensional data space is
+    assumed to be a good approximation to the geodesic distances
+    between these points. This approximation breaks down as the
+    distance between points increases. Thus, to perform that
+    estimation, the Isomap algorithm first constructs $G$ the
+    $k$-nearest neighbour graph that is weighted by the Euclidean
+    distances in which every data point $\mathbf{x}_i$ is connected
+    with its $k$ nearest neighbours $\mathbf{x}_{i_j}\
+    j\in\{1,\dots,k\}$ in the data set $\mathbf{X}$. Then, the
+    algorithm runs a shortest-path algorithm (such as Dijkstra's or
+    Floyd's) and uses its output as the estimates for the remainder of
+    the geodesic distances.
+
+    Once these geodesic distances are calculated, the Isomap algorithm
+    finds points whose Euclidean distances equal these geodesic
+    distances. Multidimensional Scaling (MDS) is a classical technique
+    that may be used to find such points. MDS finds the rank d
+    projection that best preserves the inter-point distance matrix
+    $\mathbf{D}$ whose entries represent the Euclidean distance
+    between high-dimensional data points or the computed geodesic
+    distances in the present case.
+
+    Classical MDS finds the linear mapping $\mathbf{Y}$ that minimises
+    the cost function
+
+    \begin{equation}
+    \Phi(\mathbf{Y}) = \sum_{ij}\(d_{ij}^2 - \|\mathbf{y}_i - \mathbf{y}_j\|^2\),
+    \end{equation}
+
+    It can be shown that the minimum of this cost function is given by
+    the eigen-decomposition of the Gram matrix $\mathbf{K}$ which
+    entries could be obtained by double-centring the pairwise geodesic
+    distance matrix $\mathbf{D}$ \cite{cayton2005algorithms}.
+
+    \begin{align*}
+    \mathbf{K} &= -\frac{1}{2} \mathbf{H} \mathbf{D} \mathbf{H},\ \mathbf{H} = \mathbf{I} - \frac{1}{n}\mathbf{11}^T\\
+    k_{ij} &= -\frac{1}{2} \left(d_{ij}^2 - \frac{1}{n}\sum_{l}d_{il}^2 - \frac{1}{n}\sum_{l}d_{lj}^2 + \frac{1}{n^2}\sum_{lm}d_{lm}^2 \right)
+    \end{align*}
+
+    The top $d$ eigenvectors of the Gram matrix $\mathbf{K}$ represent
+    the coordinates in the new d-dimensional Euclidean
+    space. Therefore, the low-dimensional representations
+    $\mathbf{y}_i$ of the data points $\mathbf{x}_i$ in the low
+    dimensional space $\mathbf{Y}$ can then be computed by applying
+    MDS to the geodesic distance matrix $\mathbf{D}$. The eigenproblem
+    equivalence is given by
+
+    \begin{equation}
+    \mathbf{K} \mathbf{Y} = \lambda \mathbf{Y} \label{eq:isomap}
+    \end{equation}
+
+*** LLE
+
+     In contrast to Isomap, Local Linear Embedding (LLE) attempts to
+     solely preserve local properties of the data. The manifold is
+     visualised as a collection of overlapping coordinate patches and
+     if the neighbourhood sizes are small and the manifold is
+     sufficiently smooth, then these patches will be approximately
+     linear. The local properties of the data manifold are constructed
+     by writing the high-dimensional data points $\mathbf{x}_i$ as
+     linear combination $\mathbf{w}_i$ of its $k$ nearest neighbours
+     $\mathbf{x}_{i_j}\ j\in\{1,\dots,k\}$. The weight matrix
+     $\mathbf{W}$ can be obtained by minimising
+     
+     \begin{equation}
+     \Phi(\mathbf{W}) = \sum_{i=1}^n \|\mathbf{x}_i - \sum_{j=1}^n w_{ij}\mathbf{x}_{j}\|^2 
+     \end{equation}
+
+     under the conditions $\sum_{j=1}^n w_{ij} = 1$ for any data point
+     $\mathbf{x}_i$ and $w_{ij}=0$ if $\mathbf{x}_j$ is not a
+     neighbour of $\mathbf{x}_i$. The first constraint reflects that
+     each point is represented as a convex combination of its
+     neighbours and that the weights are invariant to global linear
+     transformations , while the second assures that LLE is a local
+     method \cite{cayton2005algorithms}. Under those couple of
+     constraints on the weights, the local linearity assumption
+     implies that the reconstruction weights are invariant to
+     translation, rotation, and rescaling. Because of the invariance
+     to these transformations, any linear mapping of the hyperplane to
+     a space of lower dimensionality preserves the reconstruction
+     weights in the space of lower dimensionality. In other words, if
+     the low-dimensional data representation preserves the local
+     geometry of the manifold, the reconstruction weights
+     $\mathbf{w}_i$ that reconstruct datapoint $\mathbf{x}_i$ from its
+     neighbours in the high-dimensional data representation also
+     reconstruct datapoint $\mathbf{y}_i$ from its neighbours in the
+     low-dimensional data representation. Therefore, in the
+     low-dimensional representation of the data, LLE attempts to
+     retain the reconstruction weights in the linear combinations as
+     good as possible. As consequence, finding the d-dimensional data
+     representation $\mathbf{Y}$ amounts to minimising the cost
+     function in which, this time, $\mathbf{W}$ is fixed
+
+     \begin{equation}
+     \Phi'(\mathbf{Y}) = \sum_{i=1}^n \|\mathbf{y}_i - \sum_{j=1}^n w_{ij}\mathbf{y}_{j}\|^2 \label{eq:lle}
+     \end{equation} 
+
+     There are also a couple of constraints on $\mathbf{Y}$
+     \cite{van2007dimensionality}. First, $\mathbf{Y}^T \mathbf{Y} =
+     \mathbf{I}$, which forces the solution to be of rank $d$ and to
+     exclude the trivial solution $\mathbf{Y} = \mathbf{0}$. Second,
+     $\sum_i \mathbf{Y}_i = \mathbf{0}$; this constraint centers the
+     embedding on the origin. The cost function \ref{eq:lle} may also
+     be rewritten as
+
+     \begin{equation}
+     \mathbf{Y} &= \operatorname*{arg\,min}_{\mathbf{Y}} trace(\mathbf{Y}^T \mathbf{M}\mathbf{Y})
+     \end{equation}
+
+     where
+     
+     \begin{equation}
+     m_{ij} =  \delta_{ij} - w_{ij} - w_{ji} + \sum_k w_{ki} w_{kj}
+     \end{equation}
+
+     and $\delta_{ij} = 1$ if $i=j$ and 0 otherwise.  As shown in
+     Equation \ref{eq:pca}, this problem is equivalent to computing
+     the eigenvectors, which this time, corresponds to the smallest
+     $d$ nonzero eigenvalues of the matrix $\mathbf{M}$ which can also
+     be rewritten as the inproduct $(\mathbf{I} -
+     \mathbf{W})^T(\mathbf{I} - \mathbf{W})$
+     \cite{van2007dimensionality}. The eigenproblem equivalence is
+     given by
+
+     \begin{equation}
+     \mathbf{M} \mathbf{Y} = \lambda \mathbf{Y} \label{eq:lle}
+     \end{equation}
+
+
+*** k-neighbourhood graph/adaptative algorithm
+
+    Neighbourhood definition is the most important step in all
+    bottom-up approaches for data embedding such as Isomap and
+    LLE. The shape of the manifold is in most cases unknown but a
+    common assumption is that in small patches the surface is smooth,
+    and that close neighbors of a data point likely lie on the same
+    part of the manifold and have a similar orientation. Therefore,
+    properties of the locality at each data point are commonly
+    estimated using its nearest neighbours. Two formulations are
+    commonly used: a fixed number of neighbors ($k$-nearest
+    neighbours), or all neighbors within a fixed radius $\epsilon$
+    (hyper-sphere). The $k$-nearest neighbours version is more common
+    since the sparseness of the resulting structures is guaranteed and
+    Efficient versions exist of the Dijkstra algorithm (used in
+    Isomap) that take advantage of the sparseness of the input graph
+    \cite{mekuz2006parameterless}. On the other hand, if an
+    hypersphere is used, it is difficult to predict if a selected
+    radius will include any neighbors at all at every point.
+
+    Two related problems emerges with these methods. First, the choice
+    of parameter typically has a dramatic effect on the
+    transformation. If the neighborhoods are too small, disconnected
+    clusters tend to form. The manifold is mapped in this case as a
+    set of disjoint components and the global structure is lost. Since
+    LLE performs a set of local optimizations, it is highly dependent
+    on links created by sufficiently large neighborhoods to discern
+    global structure. On the other hand, setting the neighborhood to a
+    size that is too large creates links to parts of the manifold that
+    are geodesically far. Isomap is especially sensitive to this
+    problem since the shortest paths algorithm will tend to drain
+    multiple paths through such shortcuts, affecting distance
+    estimates globally. However, with small neighborhood sizes, the
+    computed graph geodesic greatly overestimates the true geodesic
+    distances in linear surfaces. The second related drawback is that
+    those methods do not guarantee that the transitive closure of
+    neighbors of a data point includes all data points. If the
+    neighborhoods do not overlap with each other, LLE and Isomap may
+    fail to embed all data points into a single global coordinate
+    system. For this reason, graph-based methods require that the data
+    are uniformly distributed and well-sampled. In many applications,
+    however, the data set has limited number of records or is unevenly
+    sampled.
+
+    In \cite{mekuz2006parameterless}, the authors describe a strategy
+    for selecting a neighborhood size adaptively that does not require
+    any parameters, based on estimates of intrinsic dimensionality and
+    tangent orientation. Several algorithms making use of
+    spanning-trees and addressing the problem of disconnected
+    components while constructing the neighbourhood graph are
+    presented in \cite{yang2006building}. So far,
+    adaptative-neighbourhood methods do not guarantee that the
+    constructed neighbourhood graph should be connected, and
+    conversely, the construction of connected graphs are not
+    parameterless methods and still requires a $k$
+    parameter. Combining these techniques escapes the scope of the
+    present research and therefore, besides applying the more
+    traditional approach that consists of simply running an algorithm
+    over a variety of choices of neighbourhood size and camparing the
+    ouptuts to pick the appropriate $k$, we also invistigated the use
+    of an adaptative algorithm. The problem of disconnected neighbour
+    graphs and the following data embedding was addressed using the
+    out-of-sample extension as described in the next section.
+
+*** out-of-sample extension
+
+    The two linear dimensionality reduction techniques presented
+    differ from the manifold learning ones in terms of data
+    embedding. Whereas PCA and LDA give a linear mapping $\mathbf{M}$
+    to project the high dimensional data set $\mathbf{X}$ into its low
+    dimension counterpart $\mathbf{Y}$ as showed in Equation
+    \ref{eq:pca} and \ref{eq:lda}, this is not the case for Isomap nor
+    LLE, which do not provide any mapping $\mathbf{M}$ from the high
+    dimensional space to the low dimensional space but directly
+    compute the data embedding $\mathbf{Y}$ by solving the eigproblems
+    from Equation \ref{eq:isomap} and \ref{eq:lle}.
+
+    This problem was already mentioned in
+    \cite{shylajadimensionality}, which states that although Isomap,
+    LLE and other nonlinear methods do yield impressive results on
+    some benchmark artificial data sets, they yield maps that are
+    defined only on the training data points and how to evaluate the
+    maps on novel test data points remains unclear.
+
+    Isomap and LLE can be described as non-parametric dimensionality
+    reduction methods \cite{van2007dimensionality}. This means that
+    those techniques do no specify a direct mapping from the
+    high-dimensional to the low-dimensional space. The non-parametric
+    nature of those algorithms is a disadvantage as it is not possible
+    to generalise to held-out or new test data without performing the
+    dimensionality reduction technique again. As far as learning
+    algorithms are concerned, the training and testing usually being
+    two distinct phases, non-parametric dimension reduction method
+    could not be used without performing unwanted data
+    overfittings. Fortunately, most unsupervised learning algorithms
+    based on an eigendecomposition can be seen as more generally
+    learning eigenfunctions of a kernel which stem extensions to the
+    out-of-sample problem. To obtain an embedding for a new data
+    points, \cite{bengio2004learning} propose to use the Nystrom
+    formula formula. Given the embedding $\mathbf{Y}$ from the data
+    set $\mathbf{X}$, it has been proved that the eigenvectors and
+    eigenvalues computed from the associated eigenproblem, converge as
+    more and more sample points are added to $\mathbf{X}$. Each
+    eigenvector converges to an eigenfunction. Therefore, manifold
+    learning methods based on an eigendecompostion problem can be seen
+    as special cases of a more general learning problem, that of
+    learning the principal eigenfunctions of defined from a specific
+    kernel. \cite{bengio2004out} provides a general framework in which
+    Isomap and LLE are represented by a kernel function which gives
+    rise to the matrices constituting the eigenproblem to solve. 
+
+    The use thas was made of the out-of-sample extension is
+    twofold. Data points from the testing set were embedded by
+    applying the out-of-sample extension obtained from the
+    low-dimensional projection of biggest connected component of
+    training set
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+** General Properties
+
+   Many of the techniques presented are highly interrelated, and in
+   certain cases equivalent. First PCA is identical to performing MDS
+   when the dissimilarity matrix is a Euclidean distance matrix due to
+   the relation between the eigenvectors of the covariance matrix and
+   the doublecentred squared Euclidean distance matrix. Secondly,
+   performing MDS on a pairwise geodesic distance matrix is identical
+   to performing Isomap. Furthermore, as it well be seen when
+   considering the out-of-sample extension, these techniques can also
+   be viewed upon as special cases of the more general problem of
+   learning eigenfunctions.
+
+   | Technique           | Parametric | Parameters | Computational | Memory    |
+   |---------------------+------------+------------+---------------+-----------|
+   | PCA                 | yes        | none       | $O(D^3)$      | $O(D^2)$  |
+   | MDS                 | no         | none       | $O(n^3)$      | $O(n^2)$  |
+   | Isomap              | no         | $k$        | $O(n^3)$      | $O(n^2)$  |
+   | LLE                 | no         | $k$        | $O(pn^2)$     | $O(pn^2)$ |
+
+
+
+* experiment
+
+** view1
+
+*** dataset intrinsic dimensionality
+
+*** k selection
+**** k/accuracy/%ofpoints graph
+**** plot_best_parameter
+
+*** view1 results / ill-conditioned 
+
+*** view1 pca-prereduction
+**** time complexity chart for view1
+
+** view2
+
+*** view2 intractable
+
+*** view2 pca-prereduction results
+* conclusion
+* acknowledgments
+* bibliography
+
+\bibliography{papers}
+\bibliographystyle{plain}
