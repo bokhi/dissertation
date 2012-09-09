@@ -481,8 +481,24 @@
      - adaptative method to select Isomap $k$ parameter (intractable without pre-reduction)
      - perform a second dimensionality reduction
 
-*** 
-    [[file:../experiment/time-result.png]]
+*** Summary view1
+**** time complexity					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_col: 0.5
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:../writing/time-result.png]]
+
+**** best accuracy					      :B_block:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_col: 0.5
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:../writing/accuracy-result.png]]
+     
+    
 ** View2
 *** View2
 **** add view1 parameter selection result for view 2

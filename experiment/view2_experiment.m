@@ -5,8 +5,8 @@ function [] = view2_experiment (file, method, fold)
   switch (method)
     case 'LDA'
       if (isempty(strfind(file, 'sqrt')))
-	pca_dim = [93,100,94,92,97,92,90,87,97,85];
-	method_dim = [11,19,16,11,21,17,16,21,17,15];
+	pca_dim = zeros(1, 10)+78;%%[93,100,94,92,97,92,90,87,97,85];
+	method_dim = zeros(1,10)+25;%%[11,19,16,11,21,17,16,21,17,15];
       else 
 	pca_dim = [86,81,74,90,97,98,73,90,97,89];
 	method_dim = [11,19,15,11,8,12,16,21,15,21];
@@ -34,7 +34,7 @@ function [] = view2_experiment (file, method, fold)
       end
     case 'PCA'
       if (isempty(strfind(file, 'sqrt')))      
-	pca_dim = [146, 135, 140, 145, 147, 134, 142, 133, 125, 148];
+	pca_dim = zeros(1,10)+96;[146, 135, 140, 145, 147, 134, 142, 133, 125, 148];
       else
 	pca_dim = [100, 112, 130, 127, 96, 134, 148, 119, 114, 149];
       end
