@@ -21,4 +21,27 @@ set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
 legend ('pca time', 'reduction time', 'accuracy time', 'accuracy');
 
-print ('-dpng',  'time_result.png');
+%%print ('-dpng',  'time_result.png');
+
+figure;
+
+h = bar(1:9, [pca_time; reduction_time])
+set(h, 'XTick', []);
+ylabel(h, 'seconds');
+
+Labels = {'SP-LDA', 'ISO', 'LLE','ISO','ISO','SIFT','LLE','PCA','SP-LDA'};
+set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
+
+legend ('pca time', 'reduction time');
+
+print ('-dpng', 'time-result.png');
+
+figure;
+h = bar(1:9, accuracy)
+set(h, 'XTick', []);
+ylabel(h, 'accuracy');
+
+Labels = {'SP-LDA', 'ISO', 'LLE','ISO','ISO','SIFT','LLE','PCA','SP-LDA'};
+set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
+
+print ('-dpng', 'accuracy-result.png');

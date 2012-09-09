@@ -736,6 +736,7 @@ no problem
 
    | method    |  Isomap |     LLE |
    |-----------+---------+---------|
+   | /         | <       |         |
    | acc       | 0.64600 | 0.66500 |
    | k         |     107 |     136 |
    | dimension |      49 |      12 |
@@ -752,6 +753,7 @@ no problem
 
    | method         | SIFT-3456 |   SIFT |    PCA |    LDA | Isomap |    LLE |
    |----------------+-----------+--------+--------+--------+--------+--------|
+   | /              | <         |        |        |        |        |        |
    | accuracy       |    0.6680 | 0.6960 | 0.6910 | 0.5020 | 0.6150 | 0.6200 |
    | dimension      |      3456 |    655 |     96 |      2 |     79 |     12 |
    |----------------+-----------+--------+--------+--------+--------+--------|
@@ -820,6 +822,7 @@ no problem
 
    | method           |     LDA |  Isomap | Isomap-adaptative |     LLE |
    |------------------+---------+---------+-------------------+---------|
+   | /                | <       |         |                   |         |
    | acc              | 0.81000 | 0.65800 |           0.65100 | 0.68100 |
    | pca              |      78 |      50 |                20 |      58 |
    | second reduction |      25 |      42 |                17 |      35 |
@@ -832,6 +835,7 @@ no problem
 
  | fold     |      1 |      2 |      3 |      4 |       5 |      6 |      7 |      8 |      9 |     10 |
  |----------+--------+--------+--------+--------+---------+--------+--------+--------+--------+--------|
+ | /        | <      |        |        |        |         |        |        |        |        |        |
  | acc      | 0.6822 | 0.6848 | 0.6859 | 0.6857 |  0.6867 | 0.6815 | 0.6856 | 0.6869 | 0.6859 | 0.6889 |
  | pca      |    146 |    135 |    140 |    145 | 147/150 |    134 |    142 |    133 |    125 |    148 |
  |----------+--------+--------+--------+--------+---------+--------+--------+--------+--------+--------|
@@ -843,6 +847,7 @@ no problem
 
   | fold     |       1 |       2 |       3 |       4 |       5 |       6 |       7 |       8 |       9 |      10 |
   |----------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
+  | /        | <       |         |         |         |         |         |         |         |         |         |
   | acc      | 0.80574 | 0.80444 | 0.80611 | 0.81074 | 0.80444 | 0.80389 | 0.80611 | 0.80481 | 0.80722 | 0.80463 |
   | pca      |      93 |     100 |      94 |      92 |      97 |      92 |      90 |      87 |      97 |      85 |
   | lda      |      11 |      19 |      16 |      11 |      21 |      17 |      16 |      21 |      17 |      15 |
@@ -854,6 +859,7 @@ no problem
 ** view2 final result
    | method             | SIFT-3456 |    PCA | SP-LDA | Isomap |    LLE |
    |--------------------+-----------+--------+--------+--------+--------|
+   | /                  |         < |        |        |        |        |
    | mean accuracy      |    0.6755 | 0.6837 | 0.7998 | 0.6327 | 0.6325 |
    | standard error     |    0.0058 | 0.0056 | 0.0055 | 0.0048 | 0.0061 |
    |--------------------+-----------+--------+--------+--------+--------|
@@ -876,8 +882,41 @@ no problem
 
    | method         |         LDA |         ISO |         LLE |       k-ISO |      P-ISO |      SIFT |       P-LLE |        PCA |    P-LDA |
    |----------------+-------------+-------------+-------------+-------------+------------+-----------+-------------+------------+----------|
+   | /              | <           |             |             |             |            |           |             |            |          |
    | reduction-time | 3590.046512 | 1312.103790 | 1427.979230 | 2582.651400 | 356.005313 |         0 | 1042.893822 | 403.690831 | 0.149054 |
    | accuracy-time  |    1.253261 |    1.347082 |    1.267401 |    1.272666 |   1.287870 | 12.275001 |    1.275466 |   1.356252 | 1.270781 |
    | best accuracy  |      0.5020 |      0.6150 |      0.6200 |     0.65100 |    0.65800 |    0.6680 |     0.68100 |     0.6910 |  0.81000 |
    |                |             |             |             |             |            |           |             |            |          |
 
+* <2012-09-06 Thu>
+
+  - dissertation : verify constraints for the matrices (PCA, ...)
+  - 16-17 slides
+
+  - dimensionality reduction / face recognition links
+    [[http://personalpages.manchester.ac.uk/staff/hujun.yin/pubs/1-s2.0-S0262885612000479-main.pdf]]
+    [[http://www.ryanmwhite.com/research/dimreduct.pdf]]
+    [[http://ieeexplore.ieee.org/xpl/articleDetails.jsp?reload=true&arnumber=5413898&contentType=Conference+Publications]]
+    [[http://www.cim.mcgill.ca/~levine/thesis_SamuelKadoury.pdf]]
+    [[http://www.jatit.org/volumes/Vol36No1/10Vol36No1.pdf]]
+    [[http://visgraph.cs.ust.hk/biometrics/Papers/Face/pr2001-10-3.pdf]]
+    [[http://web.engr.illinois.edu/~qgu3/ecmlpkdd11.pdf]]
+    [[http://www.dia.fi.upm.es/~pcr/publications/icpr2008.pdf]]
+    [[http://hiroshima-u.academia.edu/BisserRaytchev/Papers/820338/Multi-view_face_recognition_by_nonlinear_dimensionality_reduction_and_generalized_linear_models]]
+    [[explore.ieee.org/xpl/login.jsp?tp=&arnumber=4449756&url=http%3A%2F%2Fieeexplore.ieee.org%2Fiel5%2F4446227%2F4449533%2F04449756.pdf%3Farnumber%3D4449756]]
+    [[http://physiology.med.cornell.edu/faculty/nirenberg/lab/marsha/OnDimensionalityOfFaceSpace.pdf]]
+
+  - no 3-image example : 100x100 pixel for image -> study 100 feature face space
+  - PCA usually performed, over techniques investigated, non-linear discarded (recent techniques) especially for unconstrained
+
+  [[http://www.cs.uiuc.edu/~hanj/pdf/icde08_dengcai.pdf][LDA complexity]]
+
+  -writing slides
+  [[http://orgmode.org/worg/org-tutorials/org-beamer/tutorial.html#fn.3]]
+  [[http://emacs-fu.blogspot.co.uk/2009/10/writing-presentations-with-org-mode-and.html]]
+
+  -ditaa
+  [[http://ditaa.sourceforge.net/#download]]
+  [[http://emacs-fu.blogspot.co.uk/2009/01/drawing-pictures.html]]
+  [[http://doc.norang.ca/org-mode.html#playingwithditaa]]
+  [[http://punchagan.wordpress.com/2010/07/21/ditaa-and-org-mode/]]

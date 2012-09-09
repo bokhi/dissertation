@@ -2,101 +2,515 @@
 #+AUTHOR:    Martin RP Boissier
 #+EMAIL:     mrpb201@exeter.ac.uk
 
-#+DESCRIPTION: 
-#+KEYWORDS: 
+#+DESCRIPTION:
+#+KEYWORDS:
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
-#+LINK_UP:   
-#+LINK_HOME: 
+#+LINK_UP:
+#+LINK_HOME:
 
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 
 #+latex_header: \mode<beamer>{\usetheme{Warsaw}}
-
+#+latex_header: \setbeameroption{hide notes}
 #+BEAMER_FRAME_LEVEL: 3
 
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 
+
+
 * Introduction
-
 ** Face Recognition
-
-*** 
-**** Test					      :BMCOL:B_ignoreheading:
+*** Constrained and Unconstrained faces
+**** tilte 					      :BMCOL:B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :BEAMER_env: ignoreheading
+    :END:
+    - wide range of commercial and law enforcement applications
+    - many factors affecting the performance
+    - good results for images taken under certain constraints
+    - No satisfactory method that work under completely unconstrained
+      conditions
+**** test					      :BMCOL:B_ignoreheading:
      :PROPERTIES:
-     :BEAMER_col: 0.5
+     :BEAMER_col: 0.4
      :BEAMER_env: ignoreheading
      :END:
-    - Despite over 30 years of research, still one of the most difficult problem in Computer Vison
-    - Many factors affecting the performance: noisy input, training data collection, expression, illumination, pose, speed-accuracy trade-off etc.
+***** constrained faces 					    :B_block:
+      :PROPERTIES:
+      :BEAMER_env: block
+      :END:
+      #+ATTR_LaTeX: scale=0.2
+      #+begin_center
+      [[file:linear-017.png]]
+      #+end_center
+***** unconstrained faces 					    :B_block:
+      :PROPERTIES:
+      :BEAMER_env: block
+      :END:
+      #+ATTR_LaTeX: scale=0.2
+      #+begin_center
+      [[file:linear-000.png]]
+      #+end_center
+**** note 							     :B_note:
+     :PROPERTIES:
+     :BEAMER_env: note
+     :END:
+     - video games, national ID, TV parental control, CCTV, etc., passport fraud
+     - such as frontal faces
+     - age, pose, lightning, assimilated as non linear
 
-**** Faces						      :BMCOL:B_block:
+** Dimensionality Reduction
+
+*** Face feature space
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+     - raw features/ extracted features : artificially high dimensional space (~10,000 features)
+     - intrinsic dimensionality : under 100 features
+
+**** dimensionality reduction 				      :BMCOL:B_block:
      :PROPERTIES:
      :BEAMER_col: 0.5
      :BEAMER_env: block
      :END:
-#+ATTR_LaTeX: width=\textwidth
-[[file:linear-000.png]]
-
-
-
-*** 
-    - Good result for images taken under certain constraints such as frontal faces
-    - No satisfactory method
-      
-
-*** Different Aspects
-
-    - Face 
-
-
-
-** Dimensionality Reduction
-
-*** 
+     - reduce storage space
+     - diminish time complexity
+     - facilitate visualisation
+     - address the curse of dimensionality
 
 *** Curse of Dimensionality
-
-*** 
-    
-
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+     - distance-based learning algorithms (classification, clustering, etc.) need well-sampled space
+     - in high dimensional data, all objects appear to be sparse and
+       dissimilar
+     - Reduce the dimension to circumvent the problem
+**** sampling 						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_col: 0.5
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:curse.jpg]]
+**** note							     :B_note:
+     :PROPERTIES:
+     :BEAMER_env: note
+     :END:
+     - samples needed to uniformly cover the feature space is
+       exponentially proportional to the number of features *give
+       reference*
+**
+*** Research aims
+**** Observations						    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+      - Principal Component Analysis (PCA) ubiquitously used to reduced dimension
+      - Real face images have many non-linear characteristics not addressed by linear analysis (illumination, pose, expression)
+**** Objectives							    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+      - compare linear and non-linear dimensionality techniques
+      - evaluate the performance on unconstrained faces
 * Labeled Faces in the Wild
+**
+*** Labeled Faces in the Wild
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+     - faces automatically collected from Yahoo! News
+     - contains more than 13,000 target images
+     - aimed at studying the *unconstrained pair matching problem*
+**** Faces from LFW					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:lfw.jpg]]
+*** Testing Methodology
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+     Organised in two *Views* :
 
-*** test
-
+     View1 : algorithm development
+	+ 2200 training pairs
+	+ 1000 testing pairs
+     View2 : formal evaluation
+	+ 10 folds
+	+ 600 pairs per fold
+**** View2 performance report 				      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     - estimated mean accuracy
+       \begin{equation*}
+       \mu = \frac{\sum_{i=1}^{10} p_i}{10}
+       \end{equation*}
+     - standard error of the mean
+       \begin{align*}
+       \sigma &= \sqrt{\frac{\sum_{i = 1}^{10}(p_i - \mu)^2}{9}}\\
+       S_{E} &= \frac{\sigma}{\sqrt{10}}
+       \end{align*}
+     - ROCC diagram
+**** test							     :B_note:
+     :PROPERTIES:
+     :BEAMER_env: note
+     :END:
+     - two paradigms
+     - clear guidelines
 * Dimensionality Reduction
+**
+*** Review of dimensionality reduction methods
 
+    - Data set $\mathbf{X}$
+      - $D \times n$ matrix
+      - $n$ data-vectors $\{\mathbf{x}_1,\dots,\mathbf{x}_n\} \in R^D$
+      - $\boldsymbol{\mu}$ : mean vector of $\mathbf{X}$
+    - new data-set $\mathbf{Y}$ with dimensionality $d$
+      - $d$ intrinsic dimensionality
+      - $d << D$
+    - low-dimensional counterpart of data point $\mathbf{x}_i$ : $\mathbf{y}_i$
 ** Linear Techniques
+*** Principal Component Analysis (PCA)
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+     - Embedding the data into a linear subspace
+     - Maximise the variance of the low-dimensional representation
+     - Compute the $d$ principal eigenvectors of the sample covariance matrix $\mathbf{S_T}$
+     - $\mathbf{Y} = (\mathbf{V}_{D \times d})^T \mathbf{X}$
+**** formulae						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     \begin{align*}
+     \mathbf{S_T} &= \sum_{k=1}^N (\mathbf{x_k} - \boldsymbol{\mu}) \cdot (\mathbf{x_k} - \boldsymbol{\mu}) ^T\\
+     \mathbf{M} &= \operatorname*{arg\,max}_{\mathbf{M} \in SO(D)} trace(\mathbf{M}^T \mathbf{S_T}\mathbf{M}) \\
+     \mathbf{S_T}\mathbf{M} &=\lambda\mathbf{M}\\
+     \mathbf{V} &= eig(\mathbf{S_T})
+     \end{align*}
 
-*** Principal Component Analysis
 
-*** Linear Discriminant Analysis
+*** COMMENT Linear Discriminant Analisys
+    :PROPERTIES:
+    :END:
+**** title					      :BMCOL:B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: ignoreheading
+     :END:
+     - When the set is labeled, use this information to build a more reliable method
+     - PCA does not consider any difference in class
+     - $\mathbf{S}_T = \mathbf{S}_B + \mathbf{S}_W$
+     - between-class and within-class scatter maximised
 
-*** Matching-LDA
+**** PCA and LDA					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:pca-lda.png]]
+*** Linear Discriminant Analysis (LDA)
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.4
+     :END:
+     - $\mathbf{S_T} &= \mathbf{S_B} + \mathbf{S_W}$
 
-** Manifold Learing
+     maximise between-class and within-class scatter ratio with
+       - $N_i$ number of samples in class $i$
+       - $c$ number of classes
+       - $C_i$ samples from class $i$
+       - $\mu_i$ mean vector of class $i$
+     - $\mathbf{Y} = (\mathbf{V}_{D \times d})^T \mathbf{X}$
 
-*** Manifold
 
+**** formulae						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.6
+     :BEAMER_env: block
+     :END:
+     \begin{align*}
+     \mathbf{S_{B}} &= \sum_{i = 1}^c N_i (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}}) \cdot (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}})^T \\
+     \mathbf{S_W} &= \sum_{i = 1}^c \sum_{\mathbf{x}_k \in C_i} (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}}_i) \cdot (\mathbf{x}_i - \mathbf{\boldsymbol{\mu}}_i)^T \\
+     \mathbf{M} &= \operatorname*{arg\,max}_{\mathbf{M} \in SO(D)} \frac{trace(\mathbf{M}^T \mathbf{S_B}\mathbf{M})}{trace(\mathbf{M}^T \mathbf{S_W}\mathbf{M})}\\
+     \mathbf{S_B} \mathbf{M} &= \lambda \mathbf{S_W} \mathbf{M}\\
+     \mathbf{V} & = eig(\mathbf{S_B}, \mathbf{S_W})
+     \end{align*}
+*** Matching-LDA (M-LDA)
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.4
+     :END:
+     - class labels needed to compute $\mu_i$
+     - under LFW settings, no name given
+     - similarity and dissimilarity pairs represent partial knowledge
+       - simmilarity : same class label
+       - dissimilarity : different class label
+     - $\mathbf{Y} = (\mathbf{V}_{D \times d})^T \mathbf{X}$
+**** formulae						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.6
+     :BEAMER_env: block
+     :END:
+     \begin{align*}
+     \mathbf{S_{SP}} &= \sum_{(i, j) \in SP} (\mathbf{x}_i - \mathbf{x}_j) \cdot (\mathbf{x}_i - \mathbf{x}_j)^T\\
+     \mathbf{S_{DP}} &= \sum_{(i, j) \in DP} (\mathbf{x}_i - \mathbf{x}_j) \cdot (\mathbf{x}_i - \mathbf{x}_j)^T\\
+     \mathbf{M} &= \operatorname*{arg\,max}_{\mathbf{M} \in SO(D)} \frac{trace(\mathbf{M}^T \mathbf{S_{DP}}\mathbf{M})}{trace(\mathbf{M}^T \mathbf{S_{SP}}\mathbf{M})}\\
+     \mathbf{S_{DP}} \mathbf{M} &= \lambda \mathbf{S_{SP}} \mathbf{M}\\
+     \mathbf{V} & = eig(\mathbf{S_{DP}}, \mathbf{S_{SP}})
+     \end{align*}
+** Non-linear techniques
+*** COMMENT Non-linear dimensionality reduction : Manifold learning methods
+    :PROPERTIES:
+    :END:
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+     - Linear method require that the data lie on linear subspace
+     - Cannot handle curled plane
+     - Swiss-roll is a two-dimensional manifold : locally "looks like"
+       a copy of $\mathbb{R}^2$
+**** Swiss-roll data set				      :BMCOL:B_block:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:swiss-roll.png]]
 *** Isomap
+**** Graph construction						    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:isomap.jpg]]
+**** title						    :B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :END:
+     - Geodesic distance (distance along a maninfold) is more adapted
+       than Euclian distance for similarity between samples
+     - Isomap consits of two main steps
+       - estimate the geodesic distances using shortest-path algorithm
+       - use MDS to find low-dimensional Euclidean space maintaining
+         interpoint distances
+*** Isomap
+**** Graph						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     - Construct k-neighbourhood graph $\mathbf{G}$
+     - Euclidean distance assimilated to geodesic distance for neighbouring samples
+     - Use Dijktra's algorithm to estimate the remainder of the
+       geodesic distances matrix $\mathbf{D}$
+**** MDS						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     - find points corresponding to $\mathbf{D}$ in a low-dimensional Euclidean space
+     \begin{align*}
+     \Phi(\mathbf{Y}) &= \sum_{ij} d_{ij}^2 - \|\mathbf{y}_i - \mathbf{y}_j\|^2 \\
+     \mathbf{B} &= -\frac{1}{2} \mathbf{H} \mathbf{D} \mathbf{H},\ \mathbf{H} = \mathbf{I} - \frac{1}{n}\mathbf{11}^T \\
+     [\mathbf{V}, \boldsymbol{\Lambda}] &= eig(\mathbf{B}) \\
+     \mathbf{Y} &= (\boldsymbol{\Lambda}_{d \times d}) ^{\frac{1}{2}} (\mathbf{V}_{n \times d}) ^T
+     \end{align*}
 
-*** LLE
+*** COMMENT Local Linear Embedding
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.6
+     :END:
+     - LLE preserves local properties of the data, and manifold assumed locally linear
+     - data points $\mathbf{x}_i$ written as linear combination $\mathbf{w}_i$ of its $k$ nearest neighbours
+     - Under certain constraints, $\mathbf{W}$ invariant to linear
+       transformations. Therefore, any linear mapping of the hyperplane
+       preserves $\mathbf{W}$ in the low-dimensional space
+**** LLE						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.4
+     :BEAMER_env: block
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:lle.png]]
+*** COMMENT Local Linear Embedding
+**** constraints					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :BEAMER_col: 0.5
+     :END:
+     \begin{align*}
+     \sum_{j=1}^n w_{ij} &= 1$, \forall \mathbf{x}_i\\
+     w_{ij} & = 0, \mathbf{x}_j \notin Neighbours(\mathbf{x}_i)\\
+     \mathbf{Y}^T \mathbf{Y} &= \mathbf{I}\\
+     \sum_i \mathbf{Y}_i &= \mathbf{0}
+     \end{align*}
+**** formulae						      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     \begin{align*}
+     \Phi(\mathbf{W}) &= \sum_{i=1}^n \|\mathbf{x}_i - \sum_{j=1}^n w_{ij}\mathbf{x}_{j}\|^2 \\
+     \Phi'(\mathbf{Y}) &= \sum_{i=1}^n \|\mathbf{y}_i - \sum_{j=1}^n w_{ij}\mathbf{y}_{j}\|^2 \\
+     \mathbf{Y} &= \operatorname*{arg\,min}_{\mathbf{Y}} trace(\mathbf{Y}^T \mathbf{M}\mathbf{Y}) \\
+     \mathbf{M} &= (\mathbf{I} - \mathbf{W})^T(\mathbf{I} - \mathbf{W})\\
+     \mathbf{M} \mathbf{Y} &= \lambda \mathbf{Y}
+     \end{align*}
+*** COMMENT k-adaptative
+*** COMMENT out-of-sample extension
+    - linear techniques provide a linear mapping $\mathbf{M}$ such as $\mathbf{Y} = \mathbf{XM}$
+    - Isomap and LLE directly compute $\mathbf{Y}$, new datapoint embedded by recomputing the eigenvectors
+    - out-of-sample extension possible using eigenfunction interpretation
 
 * Experiments
+**
+*** accuracy measurement
+**** accuracy pipeline						    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+
+#+begin_src ditaa :file blue.png 
+
++-----------------+	     +-----------------+	+-------------------+	  +-----------------+
+|cRED  	          |	     |cBLU             |	| cGRE 	            |	  |cPNK             |
+|  Data Set       |--------> |  Dimensionality |------> |Euclidean distance |---->|  accuracy	    |
+|  SIFT-3456      |	     |  Reduction      |	|between pairs      |	  | given threshold |
++-----------------+	     +-----------------+	+-------------------+	  +-----------------+
+
+#+end_src
+
+
+**** title						    :B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :END:
+     - Use training data set to fix the threshold $\theta$ giving the best accuracy
+     - Given $\theta$ evalute the performance on the testing set
 
 ** View 1
+*** COMMENT k-experiment
+**** title					      :BMCOL:B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: ignoreheading
+     :END:
+     - set $k$-neighbourhood parameter
+     - overfit view1
+     - use for following experiments
+**** best $k$ parameter					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+   | method    |  Isomap |     LLE |
+   |-----------+---------+---------|
+   | /         | <       |         |
+   | acc       | 0.64600 | 0.66500 |
+   | k         |     107 |     136 |
+   | dimension |      49 |      12 |
+*** View1 algorithm development
+**** best parameters accuracy 					    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+   | method    | raw-features |    PCA |  M-LDA | Isomap |    LLE |
+   |-----------+--------------+--------+--------+--------+--------|
+   | /         |            < |        |        |        |        |
+   | accuracy  |       0.6680 | 0.6910 | 0.5020 | 0.6150 | 0.6200 |
+   | dimension |         3456 |     96 |      2 |     79 |     12 |
 
-** View 2
+**** title						    :B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :END:
+     - overfitting the data to obtain the best parameters
+     - problem with M-LDA
+       $\mathbf{S_{SP}}$ and $\mathbf{S_{DP}}$ are ill-conditioned :
+       - condition ~ 4.2314e+20 for SIFT-3456
+       - condition ~ 35.8514    for PCA-78
+     - solution : perform a PCA pre-reduction
+*** PCA pre-reduction
+**** best parameters accuracy 					    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+   | method           |   M-LDA |  Isomap | adapt.-Isomap |     LLE |
+   |------------------+---------+---------+---------------+---------|
+   | /                |       < |         |               |         |
+   | accuracy         | 0.81000 | 0.65800 |       0.65100 | 0.68100 |
+   | pca dimension    |      78 |      50 |            20 |      58 |
+   | method dimension |      25 |      42 |            17 |      35 |
+**** title						    :B_ignoreheading:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :END:
+     - perform a pre-reduction using PCA
+     - adaptative method to select Isomap $k$ parameter (intractable without pre-reduction)
+     - perform a second dimensionality reduction
 
+*** 
+    [[file:../experiment/time-result.png]]
+** View2
+*** View2
+**** add view1 parameter selection result for view 2
+**** explain why view2 cross-validation parameter are better
+**** title							    :B_block:
+     :PROPERTIES:
+     :BEAMER_env: block
+     :END:
+   | method |   SIFT |    PCA |  M-LDA | Isomap |    LLE |
+   |--------+--------+--------+--------+--------+--------|
+   | /      |      < |        |        |        |        |
+   | $\mu$  | 0.6755 | 0.6837 | 0.7998 | 0.6327 | 0.6325 |
+   | $S_E$  | 0.0058 | 0.0056 | 0.0055 | 0.0048 | 0.0061 |
+*** View2
+**** title					      :B_ignoreheading:BMCOL:
+     :PROPERTIES:
+     :BEAMER_env: ignoreheading
+     :BEAMER_col: 0.5
+     :END:
+**** ROC diagramm 					      :BMCOL:B_block:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :BEAMER_env: block
+     :END:
+     #+ATTR_LaTeX: width=\textwidth
+     [[file:../experiment/roc/lfw_restricted_roc_curve.png]]
 * Conclusion
 
-** 
+**
 
-*** test
-
-
+***

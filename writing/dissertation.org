@@ -130,11 +130,11 @@ allows a direct comparisons with their methods.
   in a $n \times D$ matrix $\mathbf{X}$ consisting of $n$ data-vectors
   $\{\mathbf{x}_1,\dots,\mathbf{x}_n\} \in R^D$ can be defined as
   follows. By assuming that this data-set has intrinsic dimensionality
-  d (where $d < D$) which means that the points in data-set
-  $\mathbf{X}$ are lying on or near a manifold of dimensionality d
+  $d$ (where $d < D$) which means that the points in data-set
+  $\mathbf{X}$ are lying on or near a manifold of dimensionality $d$
   embedded in the D-dimensional space, dimensionality reduction
   techniques transform data-set $\mathbf{X}$ into a new data-set
-  $\mathbf{Y}$ with dimensionality d.
+  $\mathbf{Y}$ with dimensionality $d$.
 
   In the remainder of this paper we denote the low-dimensional
   counterpart of the data point $\mathbf{x}_i$ by $\mathbf{y}_i$.
@@ -376,7 +376,7 @@ allows a direct comparisons with their methods.
     the cost function
 
     \begin{equation}
-    \Phi(\mathbf{Y}) = \sum_{ij}\(d_{ij}^2 - \|\mathbf{y}_i - \mathbf{y}_j\|^2\),
+    \Phi(\mathbf{Y}) = \sum_{ij}d_{ij}^2 - \|\mathbf{y}_i - \mathbf{y}_j\|^2
     \end{equation}
 
     It can be shown that the minimum of this cost function is given by
