@@ -25,7 +25,7 @@ legend ('pca time', 'reduction time', 'accuracy time', 'accuracy');
 
 figure;
 
-h = bar(1:9, [pca_time; reduction_time])
+h = bar(1:9, [pca_time; reduction_time], 'stack')
 set(h, 'XTick', []);
 ylabel(h, 'seconds');
 
