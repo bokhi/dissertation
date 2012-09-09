@@ -6,8 +6,8 @@ pca_time = [0,0,0,403.690831,403.690831,0,403.690831,0,403.690831]';
 
 figure;
 
-h = bar(1:9, [pca_time reduction_time], 'stack')
-ylabel(h, 'seconds');
+bar(1:9, [pca_time reduction_time], 'stack')
+ylabel('seconds');
 
 Labels = {'SP-LDA', 'ISO', 'LLE','ISO','ISO','SIFT','LLE','PCA','SP-LDA'};
 set(gca, 'xtick', 1:9, 'XTickLabel', Labels);
@@ -17,10 +17,9 @@ legend ('pca time', 'reduction time');
 print ('-dpng', 'time-result.png');
 
 figure;
-h = bar(1:9, accuracy)
-ylabel(h, 'accuracy');
+bar(1:9, accuracy)
+ylabel('accuracy');
 
-Labels = {'SP-LDA', 'ISO', 'LLE','ISO','ISO','SIFT','LLE','PCA','SP-LDA'};
 set(gca, 'XTick', 1:9, 'XTickLabel', Labels);
 
 print ('-dpng', 'accuracy-result.png');
