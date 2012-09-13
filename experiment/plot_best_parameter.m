@@ -42,10 +42,10 @@ function [] = plot_best_parameter (file, epsilon)
 		
   if (~isempty(strfind(file, 'k')))
     xlabel('k-neighbourhood parameter');
-    ylabel([file(3:end) '-reduction dimensionality']);
+    ylabel('dimensionality reduction');
   else%%if (~isempty(strfind(file, 'pca')))
     xlabel('PCA-reduction dimensionality');
-    ylabel([file(5:end) '-reduction dimensionality']);
+    ylabel('second dimensionality reduction');
   end
 
 end    
