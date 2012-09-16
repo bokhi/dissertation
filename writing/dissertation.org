@@ -16,63 +16,97 @@
 \section*{Abstract}
 
 The unconstrained pair matching paradigm is a fundemental problem in
-the field of face recognition. While Principal Component Analysis, a
+the field of Face Recognition. While Principal Component Analysis, a
 well-know linear technique, has been ubiquitously used to perform
 reductions from the high dimensional face feature space, non-linear
-methods, such as manifold learning techniques allegedly able to unfold
-complex data stuctures, are far from being systemacally considedered
-for the task. Using Labeled Faces in the Wild, a database specially
-designed as a benchmark for the unconstrained pair matching problem,
-we investigate the performances of different linear and non-linear
-dimensionality reduction methods on the data set. Our research justify
-the use of Principal Component Analysis as a dimensionality reduction
-technique and shows that, in their current forms, manifold learning
-methods do not deliver their expected high-performances and cannot
-uncover the complex non-linear structure of the unconstrained face
-feature space. Additionaly, we developed a new supervised linear
-dimensionality reduction method, Matching-LDA. While remaining
-relatively simple, Matching-LDA exhibits an excellent computational
-complexity and yields results comparable to those of state-of-the-art
-metric learning techniques, with a mean accuracy of 80\%.
+methods, such as manifold learning techniques, allegedly able to
+unfold complex data stuctures, are far from being systemacally
+considedered for the task. Using Labeled Faces in the Wild, a database
+specially designed as a benchmark for the unconstrained pair matching
+problem, we investigate the performances of different linear and
+non-linear dimensionality reduction methods on the data set. Our
+research justify the use of Principal Component Analysis as a
+dimensionality reduction technique and shows that, in their current
+forms, manifold learning methods do not deliver their expected
+high-performances and cannot uncover the complex non-linear structure
+of the unconstrained face feature space. Additionaly, we developed a
+new supervised linear dimensionality reduction method,
+Matching-LDA. While remaining relatively simple, Matching-LDA exhibits
+an excellent computational complexity and yields results comparable to
+those of state-of-the-art metric learning techniques, with a mean
+accuracy of 80\%.
 
 
 
 #+END_LaTeX:
     
-* COMMENT Introduction
-** Face Verification
-** Dimension Reduction
-   Real-world data such as digital photographs, speech signal
-   etc. usually have a high dimensionality. For instance a 250x250
-   pixels images can be represented as a 62500 raw-feature
-   vector. Though access to an abundance of examples is purely
-   beneficial to an algorithm attempting to generalise from the data,
-   managing a large number of features is typically of burden to the
-   algorithm. Dimensionality reduction techniques were developed to
-   address several problems encountered with high dimensional
-   data. First one cannot have an intuitive feel for what the data
-   looks like in an high dimensional space composed of thousands of
-   features, dimension reduction can be used to facilitate data
-   representation. The overwhelmingly complex feature sets will also
-   slow down most machine learning algorithms and make finding global
-   optima difficult. This problem usually referred to as the curse of
-   dimensionality is directly related to the difficulty of sampling a
-   high dimensional space. The number of training samples needed to
-   uniformly cover the feature space is exponentially proportional to
-   the number of features. Therefore, many learning algorithms based
-   on the distance between samples, such as KNN algorithms and other
-   classifier, do not yield good results on high dimensional data.
+* Introduction
 
-   The general philosophy sustaining dimensionality techniques is the
-   fact that real-life data contain redundancies and noise and that
-   the intrinsic dimensionality of the data, defined as the minimum
-   number of features needed to account for the observed properties of
-   the data. By performing dimensionality reduction, noise can be
-   suppressed and redundancies removed while the new low dimensional
-   representation of the data still captures most of the information
-   needed for clustering, classification or regression algorithms.
+   Face Recognition is a preliminary task to a wide range of
+   commercial and law enforcement applications, from being jointly
+   used with video-surveillance and CCT systems, to features such as
+   automatic tagging on Facebook pictures. Despite over 30 years of
+   research, Face Recognition is still considered as one of the most
+   difficult problem in the field of Computer Vision as many
+   underlying factors, such as variation in expression, pose,
+   lightning, accuracy speed trade-off, etc., greatly affect the
+   performance of a face recognition system. This appearance
+   variability makes it difficult to extract the inherent information
+   that are the identity of face images as usually the variations due
+   to the environment are almost always larger than variations from
+   the change in face identity, \cite{adini1997face}. Fortunately,
+   there exists excellent methods dealing with images taken under
+   specific constraints, such as frontal face and neutral face
+   expression, but there is still no satisfactory technique able to
+   work under completely unconstrained conditions such as with
+   pictures taken from our daily life, and therefore, exposed to a
+   wide and unconstrained range of variation.
 
-* COMMENT Literature Overview
+   The use of dimensionality reduction arises from the way images are
+   represented and manipulated by face recognition algorithms. A
+   100x100 face image corresponds to a 10,000 raw-feature vector and
+   belongs to a high dimensional space. However, this face feature
+   space has alledgely an intrinsic dimensionality -the minimal number
+   of features needed to accuratetly reprensent an object from that
+   space- of less than 100 features, \cite{meytlis2007dimensionality},
+   and therefore, can be depicted as a artificially high dimensional
+   space. Thus, dimensionality reduction is performed for practical
+   reasons such as reducing storage space, diminishing time complexity
+   of face recognition algorithms or even facilitating visualisation
+   of the data in 2 or 3 dimensions. Another problem associated with
+   face recognition and reffered to as the curse of dimensionality is
+   addressed using dimensionality reduction techniques. In effect,
+   most distance-based learning algorithms, such as classifiers,
+   clusterers, etc., used by face recognition methods, need a
+   well-sampled space \cite{radovanovic2010hubs}. Yet, such an
+   assumption, wich theorically implies a number of training samples
+   exponantially proportional with the number of features,
+   neccessitates a number of samples at least ten times the number
+   features in practice, \cite{jain198239}.
+
+   Therefore, it is usually neccesary to perform a reduction of the
+   dimensionality of the data set before applying face recognition
+   techniques. While Principal Component Analysis, a well-know linear
+   technique, has been ubiquitously used to perform those reductions
+   from the high dimensional face feature space, non-linear methods,
+   such as manifold learning techniques, allegedly able to unfold
+   complex data stuctures, are far from being systemacally
+   considedered for the task. Our objective is to investigate the
+   performances of different linear and non-linear dimensionality
+   reduction methods and see whether non-linear characteristics of
+   unconstrained faces can be captured by those techniques. 
+
+   The rest of this paper is organised as follows: Section 2 gives a
+   brief description of early attempts and existant methods combining
+   face recognition and dimensionality reduction methods, Section 3
+   presents Labeled Faces in the Wild, a database and benchmark
+   designed to study unconstrained image face recognition problems,
+   Section 4 details the different dimensionality reduction techniques
+   implemented, Section 5 reports the results and compares it to
+   recently published work, and Section 7 and 8 concludes the paper.
+
+   
+* Literature Overview
   - face recognition
   - Eigen/Fisher-face
   - LFW papers with PCA reduction
