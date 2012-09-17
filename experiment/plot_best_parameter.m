@@ -34,19 +34,23 @@ function [] = plot_best_parameter (file, epsilon)
   for i = 1:length (x)
     best(i) = acc(x(i), y(i));
   end
-  scatter(x, y, 20, best, 's');
+  scatter(x, y, 10, best, 's');
   axis([min(x)-1 max(x)+1 min(y)-1 max(y)+1]);
   colorbar;
   
-  title(sprintf('accuracy greater than %f', maximum-epsilon));
+  title(sprintf('accuracy landscape (greater than %.2f)', maximum-epsilon));
 		
   if (~isempty(strfind(file, 'k')))
     xlabel('k-neighbourhood parameter');
     ylabel('dimensionality reduction');
   else%%if (~isempty(strfind(file, 'pca')))
     xlabel('PCA-reduction dimensionality');
-    ylabel('second dimensionality reduction');
+    ylabel('LDA-reduction dimensionality');
   end
+
+
+  figureHandle = gcf;
+  set(findall(figureHandle,'type','text'),'fontSize',14,'fontWeight','bold')
 
 end    
     

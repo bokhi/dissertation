@@ -7,34 +7,38 @@
 #+LATEX_HEADER: \usepackage{lmodern}
 
 #+OPTIONS: H:3 num:2
+#+OPTIONS: toc:2
+#+OPTIONS: email:off
 
 #+TITLE: Investigating Dimensionality Reduction Techniques on the LFW Data Set
 #+AUTHOR: Martin RP Boissier
 #+EMAIL: mrpb201@exeter.ac.uk
 
+\newpage
+
 #+BEGIN_LaTeX:
 \section*{Abstract}
 
-The unconstrained pair matching paradigm is a fundemental problem in
-the field of Face Recognition. While Principal Component Analysis, a
+The unconstrained pair matching paradigm is a fundamental problem in
+the field of face recognition. While Principal Component Analysis, a
 well-know linear technique, has been ubiquitously used to perform
 reductions from the high dimensional face feature space, non-linear
 methods, such as manifold learning techniques, allegedly able to
-unfold complex data stuctures, are far from being systemacally
-considedered for the task. Using Labeled Faces in the Wild, a database
+unfold complex data structures, are far from being systematically
+considered for the task. Using Labeled Faces in the Wild, a database
 specially designed as a benchmark for the unconstrained pair matching
 problem, we investigate the performances of different linear and
 non-linear dimensionality reduction methods on the data set. Our
-research justify the use of Principal Component Analysis as a
+research justifies the use of Principal Component Analysis as a
 dimensionality reduction technique and shows that, in their current
-forms, manifold learning methods do not deliver their expected
-high-performances and cannot uncover the complex non-linear structure
-of the unconstrained face feature space. Additionaly, we developed a
-new supervised linear dimensionality reduction method,
-Matching-LDA. While remaining relatively simple, Matching-LDA exhibits
-an excellent computational complexity and yields results comparable to
-those of state-of-the-art metric learning techniques, with a mean
-accuracy of 80\%.
+forms, manifold learning methods do not deliver their expected high
+performances and cannot uncover the complex non-linear structure of
+the unconstrained face feature space. Additionally, we developed a new
+supervised linear dimensionality reduction method, Matching-LDA. While
+remaining relatively simple, Matching-LDA exhibits an excellent
+computational complexity and yields results comparable to those of
+state-of-the-art metric learning techniques, with a mean accuracy of
+80\%.
 
 
 
@@ -42,71 +46,78 @@ accuracy of 80\%.
     
 * Introduction
 
-   Face Recognition is a preliminary task to a wide range of
+   Face recognition is a preliminary task to a wide range of
    commercial and law enforcement applications, from being jointly
-   used with video-surveillance and CCT systems, to features such as
+   used with video-surveillance and CCTV systems, to features such as
    automatic tagging on Facebook pictures. Despite over 30 years of
-   research, Face Recognition is still considered as one of the most
+   research, face recognition is still considered as one of the most
    difficult problem in the field of Computer Vision as many
    underlying factors, such as variation in expression, pose,
    lightning, accuracy speed trade-off, etc., greatly affect the
    performance of a face recognition system. This appearance
    variability makes it difficult to extract the inherent information
-   that are the identity of face images as usually the variations due
-   to the environment are almost always larger than variations from
-   the change in face identity, \cite{adini1997face}. Fortunately,
-   there exists excellent methods dealing with images taken under
-   specific constraints, such as frontal face and neutral face
-   expression, but there is still no satisfactory technique able to
-   work under completely unconstrained conditions such as with
-   pictures taken from our daily life, and therefore, exposed to a
-   wide and unconstrained range of variation.
+   of face images as the variations due to those factors are almost
+   always larger than variations from the change in face identity,
+   \cite{adini1997face}. Fortunately, there exist excellent methods
+   for images taken under specific constraints, such as frontal face
+   and neutral face expression, but there is still no satisfactory
+   technique able to operate under completely unconstrained conditions
+   such as with pictures taken from our daily life, and therefore,
+   exposed to a wide and unconstrained range of variation.
 
-   The use of dimensionality reduction arises from the way images are
-   represented and manipulated by face recognition algorithms. A
+   The use of dimensionality reduction arises from the manner images
+   are represented and manipulated by face recognition algorithms. A
    100x100 face image corresponds to a 10,000 raw-feature vector and
    belongs to a high dimensional space. However, this face feature
-   space has alledgely an intrinsic dimensionality -the minimal number
-   of features needed to accuratetly reprensent an object from that
-   space- of less than 100 features, \cite{meytlis2007dimensionality},
-   and therefore, can be depicted as a artificially high dimensional
-   space. Thus, dimensionality reduction is performed for practical
-   reasons such as reducing storage space, diminishing time complexity
-   of face recognition algorithms or even facilitating visualisation
-   of the data in 2 or 3 dimensions. Another problem associated with
-   face recognition and reffered to as the curse of dimensionality is
+   space has allegedly an intrinsic dimensionality of less than 100
+   features, \cite{meytlis2007dimensionality}, and therefore, can be
+   depicted as being a artificially high dimensional space. Thus,
+   dimensionality reduction is performed for practical reasons such as
+   reducing storage space, diminishing time complexity of face
+   recognition algorithms or even facilitating visualisation of the
+   data in 2 or 3 dimensions. Another problem associated with face
+   recognition, and referred to as the curse of dimensionality, is
    addressed using dimensionality reduction techniques. In effect,
    most distance-based learning algorithms, such as classifiers,
-   clusterers, etc., used by face recognition methods, need a
-   well-sampled space \cite{radovanovic2010hubs}. Yet, such an
-   assumption, wich theorically implies a number of training samples
-   exponantially proportional with the number of features,
-   neccessitates a number of samples at least ten times the number
-   features in practice, \cite{jain198239}.
+   clustering algorithms, etc., used by face recognition methods, need
+   a well-sampled space \cite{radovanovic2010hubs}. Yet, such an
+   assumption, which theoretically implies a number of training
+   samples exponentially proportional with the number of features,
+   necessitates in practice a number of samples at least ten times the
+   number of features, \cite{jain198239}. Therefore, it is usually
+   necessary to perform a reduction of the dimensionality of the data
+   set before applying face recognition techniques.
 
-   Therefore, it is usually neccesary to perform a reduction of the
-   dimensionality of the data set before applying face recognition
-   techniques. While Principal Component Analysis, a well-know linear
-   technique, has been ubiquitously used to perform those reductions
-   from the high dimensional face feature space, non-linear methods,
-   such as manifold learning techniques, allegedly able to unfold
-   complex data stuctures, are far from being systemacally
-   considedered for the task. Our objective is to investigate the
-   performances of different linear and non-linear dimensionality
-   reduction methods and see whether non-linear characteristics of
-   unconstrained faces can be captured by those techniques. 
-
-   The rest of this paper is organised as follows: Section 2 gives a
-   brief description of early attempts and existant methods combining
-   face recognition and dimensionality reduction methods, Section 3
-   presents Labeled Faces in the Wild, a database and benchmark
+   While Principal Component Analysis, a well-know linear technique,
+   has been ubiquitously used to perform those reductions from the
+   high dimensional face feature space, non-linear methods, such as
+   manifold learning techniques, allegedly able to unfold complex data
+   structures, are far from being systematically considered for the
+   task. Our objective is to investigate the performances of different
+   linear and non-linear dimensionality reduction methods and see
+   whether non-linear characteristics of unconstrained faces can be
+   harnessed by those techniques in order to produce substantial
+   performance improvements. Labeled Faces in the Wild, a database
    designed to study unconstrained image face recognition problems,
-   Section 4 details the different dimensionality reduction techniques
-   implemented, Section 5 reports the results and compares it to
-   recently published work, and Section 7 and 8 concludes the paper.
+   was selected to assess the performances of the different reduction
+   methods implemented. To this day, no review and comparison of
+   dimensionality reduction techniques using the Labeled Faces in the
+   Wild database have been published.
+
+   The rest of this paper is organised as follows: Section 2 presents
+   Labeled Faces in the Wild, a database and benchmark designed to
+   study unconstrained image face recognition problems, Section 3
+   details the different dimensionality reduction techniques
+   implemented, Section 4 reports the results and compares it to
+   recently published work, and Section 5 and 6 conclude the paper.
 
    
-* Literature Overview
+* COMMENT Literature Overview
+
+  In this section we briefly summarise 
+
+  Principal Components Analysis applied to face recognition, commonly referred to as the use of eigenfaces, it the technique pioneered by Kirby and Sirivich in 1988
+
   - face recognition
   - Eigen/Fisher-face
   - LFW papers with PCA reduction
@@ -115,21 +126,21 @@ accuracy of 80\%.
 
 * Labeled Faces in the Wild
 
-  Labeled Faces in the Wild (LFW), \cite{huang2008labeled}, is a
+  Labeled Faces in the Wild (LFW), \cite{huang2007labeled}, is a
   database of human face images designed as an aid in studying the
-  problem of unconstrained face recognition. While, many databases
-  have been developed under controlled conditions in order to study
-  the influence of specific parameters such as position, pose,
-  lighting, expression, etc., LFW provides an aid in studying face
-  recognition of photographs spanning a range of conditions typically
-  encountered by people in their everyday life. The face images were
-  automatically collected from Yahoo! News in 2002-2003, the only
-  constraint being that they should be detected by the Viola-Jones
-  face detector algorithm. The data set itself contains more than
-  13,000 target images. Each face has been labeled with the name of
-  the person pictured. In total 5749 people appear in the images and
-  1680 of them appear in two or more images. The remaining 4069 people
-  have just a single image in the database.
+  problem of unconstrained face recognition. While many databases have
+  been developed under controlled conditions in order to study the
+  influence of specific parameters such as position, pose, lighting,
+  expression, etc., LFW provides an aid in studying face recognition
+  of photographs spanning a range of conditions typically encountered
+  by people in their everyday life. The face images were automatically
+  collected from Yahoo! News in 2002-2003, the only constraint being
+  that they should be detected by the Viola-Jones face detector
+  algorithm. The data set itself contains more than 13,000 target
+  images. Each face has been labeled with the name of the person
+  pictured. In total 5749 people appear in the images and 1680 of them
+  appear in two or more images. The remaining 4069 people have just a
+  single image in the database.
 
   #+CAPTION: A binary problem: the unconstrained pair matching paradigm
   #+ATTR_LaTeX: scale=1
@@ -176,32 +187,33 @@ accuracy of 80\%.
   cross-validation scheme obtained by successively concatenating nine
   of the subsets to form a training set, and with the tenth subset
   used for testing. This experimental paradigm is referred to as the
-  restricted setting as only the given matching and mismatching pairs
-  can be used to construct the classifier as the name of the persons
+  restricted setting as only matching and mismatching pairs can be
+  used to construct the classifier while the name of the persons
   pictured is not explicitly given. The unrestricted configuration
   gives the experimenter access to the actual names of the people
   (class labels) so that as many similarity and dissimilarity pairs
   should be constructed. This paper solely focuses on the restricted
   configuration.
 
-  As far image representation is concerned, we used SIFT descriptors
-  computed at fixed facial key-points (corners of the mouth, eyes, and
-  nose) which lead to a 3456 dimensional face descriptor. These data
-  are available from \cite{guillaumin2009you} and were also used by
-  \cite{ying2012distance}, therefore, focusing on SIFT features allows
-  a fair and direct comparisons with their methods possible.
+  As far as image representation is concerned, we used SIFT
+  descriptors computed at fixed facial key-points (corners of the
+  mouth, eyes, and nose) which lead to a 3456 dimensional face
+  descriptor. These data are available from \cite{guillaumin2009you}
+  and were also used by \cite{ying2012distance}, therefore, focusing
+  on SIFT features allows fair and direct comparisons with their
+  methods.
 
 
 * Dimensionality Reduction Methods
 
   The problem of dimensionality reduction given a data set represented
-  in a $n \times D$ matrix $\mathbf{X}$ consisting of $n$ data-vectors
+  in a $n \times D$ matrix $\mathbf{X}$ consisting of $n$ data vectors
   $\{\mathbf{x}_1,\dots,\mathbf{x}_n\} \in R^D$ can be defined as
-  follows. By assuming that this data-set has intrinsic dimensionality
-  $d$ (where $d < D$), which means that the points in data-set
+  follows. By assuming that this data set has intrinsic dimensionality
+  $d$ (where $d < D$), which means that the points in data set
   $\mathbf{X}$ are lying on or near a manifold of dimensionality $d$
   embedded in the D-dimensional space, dimensionality reduction
-  techniques transform data-set $\mathbf{X}$ into a new data-set
+  techniques transform data set $\mathbf{X}$ into a new data set
   $\mathbf{Y}$ with dimensionality $d$. In the remainder of this paper
   we denote the low dimensional counterpart of the data point
   $\mathbf{x}_i$ by $\mathbf{y}_i$.
@@ -210,7 +222,7 @@ accuracy of 80\%.
 
    The task of dimensionality reduction is to find a small number of
    features to represent a large number of observed dimensions. One
-   important aspect and undelying assumption of linear dimensionality
+   important aspect and underlying assumption of linear dimensionality
    reduction techniques is that the data set $\mathbf{X}$ lies on a
    linear subspace. Although there exist various techniques to do so,
    we decided to implement one supervised and one unsupervised linear
@@ -222,13 +234,13 @@ accuracy of 80\%.
     e.g. \cite{delac2005comparative}, is a linear technique which
     means that dimensionality reduction is performed by embedding the
     data into a linear subspace of lower dimensionality. The linear
-    subspace is constructed such as the variance of the
-    low dimensional representation of the data is maximised. The
+    subspace is constructed such as the variance of the low
+    dimensional representation of the data is maximised. The
     motivation for performing PCA is often the assumption that
     directions of high variance will contain more information that
-    directions of low variance. The rationale behind this could be
-    that the noise can be assumed to be uniformly spread. Thus,
-    directions of high variance will have a higher signal-to-noise
+    directions of low variance. The rationale behind this is that if
+    the noise can be assumed to be uniformly spread, then, directions
+    of high variance will have a higher signal-to-noise
     ratio. Formally speaking, PCA attempts to find the linear mapping
     matrix $\mathbf{M}$ with orthogonal unit columns ($\mathbf{M}$ is
     an orthonormal matrix, and therefore, $\mathbf{M} \in SO(D)$) that
@@ -266,21 +278,21 @@ accuracy of 80\%.
     information to build a more reliable method for reducing the
     dimensionality of the feature space. Linear Discriminant Analysis
     (LDA) -also known as Fisher's linear discriminant (FLD)-, see
-    e.g. \cite{delac2005comparative}, is closely related to PCA in
-    that they both look for linear combinations of variables which
-    best explain the data. LDA explicitly attempts to model the
-    difference between the classes of data. PCA on the other hand does
-    not take into account any difference in class, a drawback of this
-    approach it that the scatter being maximised is due not only to
-    the between-class scatter that is useful for classification, but
-    also to the within-class scatter, that, for classification
-    purposes, is unwanted information. LDA selects $\mathbf{M}$ in
-    such a way that the ratio of the between-class scatter and the
-    within-class scatter is maximised, in other words, LDA searches
-    for the projection axes on which the data points of different
-    classes are far from each other while data points of the same
-    class are close to each other. This difference can lead PCA to
-    badly cluster the points in the projected space, or worse, to
+    e.g. \cite{nguyen2011linear}, is closely related to PCA in that
+    they both look for linear combinations of variables which best
+    explain the data. LDA explicitly attempts to model the difference
+    between the classes of data. PCA on the other hand does not take
+    into account any difference in class, a drawback of this approach
+    it that the scatter being maximised is due not only to the
+    between-class scatter, that is useful for classification, but also
+    to the within-class scatter, that, for classification purposes, is
+    unwanted information. LDA selects $\mathbf{M}$ in such a way that
+    the ratio of the between-class scatter and the within-class
+    scatter is maximised in the projected space. In other words, LDA
+    searches for the projection axes on which the data points of
+    different classes are far from each other while data points of the
+    same class are close to each other. This difference can lead PCA
+    to badly cluster the points in the projected space, or worse, to
     smear the classes together as exemplified in Figure \ref{fig:pca}
     where although PCA achieves larger total scatter, LDA achieves
     greater between-class scatter, and consequently, a simplified
@@ -317,22 +329,22 @@ accuracy of 80\%.
     \mathbf{M} = \operatorname*{arg\,max}_{\mathbf{M} \in SO(D)} \frac{trace(\mathbf{M}^T \mathbf{S_B}\mathbf{M})}{trace(\mathbf{M}^T \mathbf{S_W}\mathbf{M})}
     \end{equation}
     
-    This time the cost function can be assimilated to a generalised
-    eigenvalue problem, with both $S_B$ and $S_W$ symmetric and
-    positive semi-definite.
+    This time, the cost function can be assimilated to a generalised
+    eigenvalue problem, with both $\mathbf{S_B}$ and $\mathbf{S_W}$
+    symmetric and positive semi-definite.
 
     \begin{equation}
     \mathbf{S_B} \mathbf{M} = \lambda \mathbf{S_W} \mathbf{M} \label{eq:lda}
     \end{equation}
 
     Additionally, the maximum rank of $\mathbf{S_B}$ in this
-    formulation is $c - 1$, \cite{shylajadimensionality}. Thus LDA
+    formulation is $c - 1$, \cite{shylajadimensionality}. Thus, LDA
     cannot produce more than $c - 1$ features. Furthermore, in the
     case that the number of training samples is much smaller that the
     number of features, the rank of $\mathbf{S_W}$ is at most $N - c$,
-    therefore in order to avoid the complication of singular matrices,
-    the training set is usually first projected, using PCA, onto a
-    $N - c$ orthogonal subspace before applying LDA,
+    and therefore, to avoid the complication of singular matrices, the
+    training set is usually first projected, using PCA, onto a $N - c$
+    orthogonal subspace before applying LDA,
     \cite{belhumeur1997eigenfaces}.
 
 *** Matching-LDA    
@@ -344,20 +356,20 @@ accuracy of 80\%.
     paradigm. Nonetheless, similarity and dissimilarity pairs
     constitute partial knowledge of the classes as a matching pair is
     made of two images picturing the same individual and therefore
-    belonging to the same class label, and in a comparable fashion, a
-    dissimilarity pair indicates that the individuals belong to two
+    belonging to the same class label, and as in a comparable fashion,
+    a dissimilarity pair indicates that the individuals belong to two
     different classes. Similarly to LDA, we would like to find
     $\mathbf{M}$ such as that the projections $\mathbf{y_i},
     \mathbf{y_j}$ of the data vectors $\mathbf{x_i}, \mathbf{x_j}$
-    would be close to each other under the metric associated with the
-    projection space when $\mathbf{x_i}$ and $\mathbf{x_j}$ constitute
-    a matching pair, and conversely, that distance between
-    $\mathbf{y_i}$ and $\mathbf{y_j}$ should be "greater" when
-    $\mathbf{x_i}$ and $\mathbf{x_j}$ form a dissimilarity pair. We
-    propose a new supervised linear dimension reduction method closely
-    related to LDA and adapted to the pair matching problem :
-    Matching-LDA (M-LDA). M-LDA is based on the following definition
-    of similarity pair and dissimilarity pair scatter matrices:
+    would be close to each other when $\mathbf{x_i}$ and
+    $\mathbf{x_j}$ constitute a matching pair, and conversely, that
+    the distance between $\mathbf{y_i}$ and $\mathbf{y_j}$ should be
+    "greater" when $\mathbf{x_i}$ and $\mathbf{x_j}$ form a
+    dissimilarity pair. We propose a new supervised linear dimension
+    reduction method closely related to LDA and adapted to the pair
+    matching problem : Matching-LDA (M-LDA). M-LDA is based on the
+    following definition of similarity pair and dissimilarity pair
+    scatter matrices:
    
     \begin{align}
     \mathbf{S_{SP}} &= \sum_{(i, j) \in SP} (\mathbf{x}_i - \mathbf{x}_j) \cdot (\mathbf{x}_i - \mathbf{x}_j)^T\\
@@ -367,7 +379,7 @@ accuracy of 80\%.
     where $SP$ contains the indices of similarity pairs and $SP$ of
     dissimilarity pairs respectively. As for LDA, the definition of
     the low dimensional mapping $\mathbf{M}$ can directly related to
-    another generalised eigenvalue problem:
+    another generalised eigenproblem:
    
     \begin{align}
     \mathbf{M} &= \operatorname*{arg\,max}_{\mathbf{M} \in SO(D)} \frac{trace(\mathbf{M}^T \mathbf{S_{DP}}\mathbf{M})}{trace(\mathbf{M}^T \mathbf{S_{SP}}\mathbf{M})}\\
@@ -383,25 +395,25 @@ accuracy of 80\%.
 
    Linear dimensionality reduction methods, despite their popularity,
    also have a number of limitations. Perhaps the most blatant
-   drawback is the requirement that the data lie on linear
-   subspace. What if the plane was curled as it is in Figure
-   \ref{fig:swiss-roll}? Though the data is still intuitively
-   two-dimensional, PCA, LDA and other linear methods, will not
-   correctly extract this two-dimensional structure. In mathematical
-   term, the swiss-roll structure is called a manifold. A manifold is
-   a topological space that is locally Euclidean, and as such, the
-   swiss-roll is considered to be a two-dimensional manifold because
-   it locally "looks like" a copy of $\mathbb{R}^2$. Manifold learning
-   algorithms essentially attempt to duplicate the behaviour of PCA,
-   but on manifolds instead of linear subspaces. The two manifold
-   learning algorithms presented below require a neighbourhood-size
-   parameter $k$ corresponding to the number of samples neighbouring a
-   given data point $\mathbf{x}_i$. It is important to note that
-   usually manifold learning algorithms assume that within each
-   neighbourhood the manifold is approximately flat and can be seen as
-   locally linear.
+   drawback is the requirement that the data lie on a linear
+   subspace. The swiss roll distribution, depicted in Figure
+   \ref{fig:swiss-roll}, is a curled plane data set. Though the data
+   are still intuitively two-dimensional, PCA, LDA and other linear
+   methods, will not correctly extract this two-dimensional
+   structure. In mathematical term, the swiss-roll structure is called
+   a manifold. A manifold is a topological space that is locally
+   Euclidean, and as such, the swiss-roll is considered to be a
+   two-dimensional manifold because it locally "looks like" a copy of
+   $\mathbb{R}^2$. Manifold learning algorithms essentially attempt to
+   duplicate the behaviour of PCA, but on manifolds instead of linear
+   subspaces. The two manifold learning algorithms presented below
+   require a neighbourhood-size parameter $k$ corresponding to the
+   number of samples neighbouring a given data point
+   $\mathbf{x}_i$. It is important to note that usually, manifold
+   learning algorithms assume that within each neighbourhood the
+   manifold is approximately flat and can be seen as locally linear.
 
-   #+CAPTION: A curled plane: the swiss roll
+   #+CAPTION: A curled plane: the swiss roll data set
    #+ATTR_LaTeX: scale=0.4
    #+LABEL: fig:swiss-roll
    [[file:swiss-roll.png]]
@@ -437,16 +449,15 @@ accuracy of 80\%.
     considered to be a good approximation to the geodesic distances
     between these points. This approximation breaks down as the
     distance between points increases. Thus, to perform that
-    estimation, the Isomap algorithm first constructs $G$, a
-    $k$-nearest neighbour graph weighted by the Euclidean distances of
-    every data point $\mathbf{x}_i$ to its $k$ nearest neighbours
-    $\mathbf{x}_{i_j}\ j\in\{1,\dots,k\}$ in the data set
-    $\mathbf{X}$. Then, the algorithm runs a shortest-path algorithm
-    (such as Dijkstra's or Floyd's) and uses its output as the
-    estimates for the remainder of the geodesic distances.
+    estimation, Isomap first constructs $G$, a $k$-nearest neighbour
+    graph weighted by the Euclidean distances of every data point
+    $\mathbf{x}_i$ to its $k$ nearest neighbours $\mathbf{x}_{i_j}\
+    j\in\{1,\dots,k\}$. Then, the algorithm runs a shortest-path
+    algorithm (such as Dijkstra's or Floyd's) and uses its output as
+    the estimates for the remainder of the geodesic distances.
 
     Once these geodesic distances are calculated, Isomap finds points
-    whose Euclidean distances equal these geodesic distances. MDS is a
+    whose Euclidean distances equal the geodesic distances. MDS is a
     classical technique that may be used to find such points as it
     finds the rank d projection that best preserves the interpoint
     distance matrix $\mathbf{D}$ whose entries represent the Euclidean
@@ -460,10 +471,12 @@ accuracy of 80\%.
     \Phi(\mathbf{Y}) = \sum_{ij}d_{ij}^2 - \|\mathbf{y}_i - \mathbf{y}_j\|^2
     \end{equation}
 
-    It can be shown that the minimum of this cost function is given by
-    the eigendecomposition of the Gram matrix $\mathbf{B}$ which
-    entries are be obtained by double-centring the pairwise geodesic
-    distance matrix $\mathbf{D}$, \cite{cayton2005algorithms}.
+    where $d_{ij}$ represents an element from the matrix
+    $\mathbf{D}$.It can be shown that the minimum of this cost
+    function is given by the eigendecomposition of the Gram matrix
+    $\mathbf{B}$ which entries are obtained by double-centering the
+    pairwise geodesic distance matrix $\mathbf{D}$,
+    \cite{cayton2005algorithms}.
 
     \begin{align}
     \mathbf{B} &= -\frac{1}{2} \mathbf{H} \mathbf{D} \mathbf{H},\ \mathbf{H} = \mathbf{I} - \frac{1}{n}\mathbf{11}^T\\
@@ -482,8 +495,8 @@ accuracy of 80\%.
     and eigenvalues of $\mathbf{B}$ respectively. Therefore, in order
     to obtain the final low dimensional representations $\mathbf{y}_i$
     of the data points $\mathbf{x}_i$, MDS is performed on the
-    interpoint geodesic distance matrix $\mathbf{D}$, which correspond
-    to eigendecomposing the Gram matrix $\mathbf{B}$.
+    interpoint geodesic distance matrix $\mathbf{D}$, which
+    corresponds to eigendecomposing the Gram matrix $\mathbf{B}$.
     
 
 *** Local Linear Embedding
@@ -533,13 +546,13 @@ accuracy of 80\%.
      \Phi'(\mathbf{Y}) = \sum_{i=1}^n \|\mathbf{y}_i - \sum_{j=1}^n w_{ij}\mathbf{y}_{j}\|^2 \label{eq:lle-1}
      \end{equation} 
 
-     There are also a couple of constraints on $\mathbf{Y}$,
+     The embedding $\mathbf{Y}$ is also subjected to constraints,
      \cite{van2007dimensionality}. First, $\mathbf{Y}^T \mathbf{Y} =
      \mathbf{I}$, which forces the solution to be of rank $d$ and to
      exclude the trivial solution $\mathbf{Y} = \mathbf{0}$. Second,
      $\sum_i \mathbf{Y}_i = \mathbf{0}$; this constraint centres the
-     embedding on the origin. The cost function \ref{eq:lle-1} may also
-     be rewritten as:
+     embedding on the origin. The cost function \ref{eq:lle-1} may
+     also be rewritten as:
 
      \begin{equation}
      \mathbf{Y} &= \operatorname*{arg\,min}_{\mathbf{Y}} trace(\mathbf{Y}^T \mathbf{M}\mathbf{Y})
@@ -553,7 +566,7 @@ accuracy of 80\%.
 
      and $\delta_{ij} = 1$ if $i=j$ and 0 otherwise.  As shown in
      Equation \ref{eq:pca}, this problem is equivalent to computing
-     eigenvectors, which this time, corresponds to the smallest $d$
+     eigenvectors, which this time, correspond to the smallest $d$
      nonzero eigenvalues of the matrix $\mathbf{M}$ which can also be
      rewritten as the inproduct $(\mathbf{I} -
      \mathbf{W})^T(\mathbf{I} - \mathbf{W})$,
@@ -608,18 +621,19 @@ accuracy of 80\%.
     distributed and well-sampled. In many applications, however, the
     data set has limited number of records or is unevenly sampled.
 
-    Methods have been developped to tackle those two neighbourhood
-    graph construction problems. In \cite{mekuz2006parameterless}, the
-    authors describe a strategy for selecting a neighbourhood size
-    adaptively, whithout requiring any parameters, based on estimates
-    of intrinsic dimensionality and tangent
-    orientation. Additionality, several algorithms making use of
-    spanning-trees to address the problem of disconnected components
-    in the construction of neighbourhood graphs are presented in
-    \cite{yang2006building}. Unfortunately, adaptative-neighbourhood
-    methods do not guarantee that the constructed neighbourhood graph
-    should be connected, and conversely, the construction of connected
-    graphs are not parameterless methods and still requires a $k$
+    Different methods have been developed to tackle those two
+    neighbourhood graph construction problems. In
+    \cite{mekuz2006parameterless}, the authors describe a strategy for
+    selecting a neighbourhood size adaptively, without requiring any
+    parameters, based on estimates of intrinsic dimensionality and
+    tangent orientation. Additionally, several algorithms making use
+    of spanning-trees to address the problem of disconnected
+    components in the construction of neighbourhood graphs are
+    presented in \cite{yang2006building}. Unfortunately,
+    adaptative-neighbourhood methods do not guarantee that the
+    constructed neighbourhood graph should be connected, and
+    conversely, the construction of connected graphs are not
+    parameterless methods and still requires a $k$-neighbourhood
     parameter. Combining those techniques escapes the scope of the
     present research, and therefore, we decided to only experiment
     with the use of an adaptative neighbourhood graph construction
@@ -642,12 +656,12 @@ accuracy of 80\%.
     dimensional space to the low dimensional space but directly
     compute the data embedding $\mathbf{Y}$ by solving the
     eigenproblems from Equation \ref{eq:isomap} and \ref{eq:lle}. This
-    problem was already mentioned in \cite{shylajadimensionality},
-    which states that although Isomap, LLE and other nonlinear methods
-    do yield impressive results on some artificial dataset, they yield
-    embeddings that are defined only on the training data points and
-    how to to compute the projection of novel test data points remains
-    unclear.
+    problem was already mentioned in
+    \cite{shylajadimensionality}. Although Isomap, LLE and other
+    nonlinear methods do yield impressive results on some artificial
+    dataset, they yield embeddings that are defined only on the
+    training data points and how to to compute the projection of novel
+    test data points remains unclear.
 
     Isomap and LLE can be described as non-parametric dimensionality
     reduction methods, \cite{van2007dimensionality}. This means that
@@ -657,32 +671,32 @@ accuracy of 80\%.
     to generalise to held-out or new test data without performing the
     dimensionality reduction again, which usually consists of the
     tiresome task of recomputing eigenvectors. Fortunately, the
-    Nystrom formula can be used as an out-of-sample extension to
-    obtain an embedding for a new data points, as proposed in
-    \cite{bengio2004learning}. This formula is related to the fact
-    that, given the embedding $\mathbf{Y}$ from the data set
-    $\mathbf{X}$, the eigenvectors and eigenvalues computed from the
-    associated eigenproblem converge as more and more sample points
-    are added to $\mathbf{X}$. Each eigenvector converges to an
-    eigenfunction, and therefore, manifold learning methods based on
-    an eigendecompostion problem can be seen as special cases of a
-    more general learning problem, that of learning the principal
+    Nystrom formula, \cite{bengio2004learning}, can be used as an
+    out-of-sample extension to obtain an embedding for a new data
+    points. This formula is related to the fact that, given the
+    embedding $\mathbf{Y}$ from the data set $\mathbf{X}$, the
+    eigenvectors and eigenvalues computed from the associated
+    eigenproblem converge as more and more sample points are added to
+    $\mathbf{X}$. Each eigenvector converges to an eigenfunction, and
+    therefore, manifold learning methods based on an
+    eigendecomposition problem can be seen as special cases of a more
+    general learning problem, that of learning the principal
     eigenfunctions of a specific kernel characterising the
-    dimensionality reduction method.
+    dimensionality reduction method, \cite{bengio2004out}.
 
     The use that was made of the out-of-sample extension is
     twofold. Training data points that could not have been embedded,
     due to the fact that they were not part of the main connected
     component of the neighbourhood graph, were projected to the low
-    dimensional space using the out-of-sample extension. And
-    similarly, data points from the testing set were embedded by
-    applying the out-of-sample extension without having to recompute
-    the eigenvectors.
+    dimensional space using the out-of-sample extension. Similarly,
+    data points from the testing set were embedded by applying the
+    out-of-sample extension without having to recompute the
+    eigenvectors.
 
 
-** Complexity
+** Computational Complexity
 
-   Theoritical time and memory complexity of the different
+   Theoretical time and memory complexity of the different
    dimensionality reduction methods is reported from
    \cite{van2007dimensionality} and \cite{cai2008training}, and
    presented in Table \ref{tbl:complexity}. PCA complexity solely
@@ -690,7 +704,7 @@ accuracy of 80\%.
    whereas the two manifold learning techniques are based on the
    number of samples. In particular, LLE complexity depends on the
    degree of sparseness $p$ of the matrix that has to
-   eigendecomposed. As far as M-LDA is concerned, its complexity is
+   eigendecomposed. As far as LDA is concerned, its complexity is
    directly related to both the number of samples and their
    dimensionality.
 
@@ -729,9 +743,9 @@ accuracy of 80\%.
     the Euclidean distance between each of the two low dimensional
     vectors constituting a pair was computed and compared to a
     threshold $\theta$. When the distance between the two image
-    vectors is inferior to $\theta$ the pair is classified as a
+    vectors was inferior to $\theta$ the pair was classified as a
     similarity pair, in the same way, a distance superior to the
-    threshold is assimilated to a dissimilarity pair. The value of
+    threshold was assimilated to a dissimilarity pair. The value of
     $\theta$ was fixed using the training data set in order to
     minimise similarity and dissimilarity pairs misclassification, and
     the final accuracy was then measured using the same threshold on
@@ -739,18 +753,18 @@ accuracy of 80\%.
 
     #+CAPTION: Highest accuracy observed on View1 using raw features
     #+LABEL: tbl:view1
-    | method         | raw-features |    PCA |  M-LDA | Isomap |    LLE |
-    |----------------+--------------+--------+--------+--------+--------|
-    | /              |            < |        |        |        |        |
-    | accuracy       |       0.6680 | 0.6910 | 0.5020 | 0.6460 | 0.6650 |
-    | dimension      |         3456 |     96 |      2 |     79 |     12 |
-    | $k$            |              |        |        |    107 |     12 |
-    |----------------+--------------+--------+--------+--------+--------|
-    | sqrt-accuracy  |       0.6830 | 0.6900 | 0.5010 | 0.6480 | 0.6490 |
-    | sqrt-dimension |         3456 |     85 |      7 |     48 |      2 |
-    | $k$            |              |        |        |     93 |     78 |
-    |----------------+--------------+--------+--------+--------+--------|
-    | time (s)       |           12 |    405 |   3591 |   1314 |   1429 |
+    | method              | raw-features |    PCA |  M-LDA | Isomap |    LLE |
+    |---------------------+--------------+--------+--------+--------+--------|
+    | /                   |            < |        |        |        |        |
+    | accuracy            |       0.6680 | 0.6910 | 0.5020 | 0.6460 | 0.6650 |
+    | reduction dimension |         3456 |     96 |      2 |     79 |     12 |
+    | $k$ parameter       |            - |      - |      - |    107 |     12 |
+    |---------------------+--------------+--------+--------+--------+--------|
+    | time (s)            |           12 |    405 |   3591 |   1314 |   1429 |
+
+
+
+
 
     Table \ref{tbl:view1} presents the results that were obtained by
     evaluating the accuracy on View1 testing data set using raw data
@@ -762,30 +776,39 @@ accuracy of 80\%.
     order to maximise the accuracy on the testing set. It was
     therefore possible to obtain a first approximation of the maximal
     performance of those different approaches to the unconstrained
-    pair matching problem. 
+    pair matching problem.
 
     Performing PCA on the data set gave a better accuracy than simply
     using the raw SIFT features. Surprisingly, the performance of the
     two non-linear techniques Isomap and LLE was inferior to PCA, and
     even to the accuracy measured on the raw features, while requiring
     more computational time. The worst performance was given by M-LDA
-    achieving an accuracy of 50.2\%. This result indicates that the
+    achieving an accuracy of 50.2\%. This result indicated that the
     method completely failed to differentiate between the classes in
     the low dimensional space, as in effect, an algorithm randomly
     selecting the output of this binary problem would also have
     obtained an overall accuracy of 50% -the number of similarity and
-    dissimilarity pairs part of the training and testing sets is the
-    same. As suggested in \cite{guillaumin2009you} and
+    dissimilarity pairs part of the training and testing sets being
+    the same. As suggested in \cite{guillaumin2009you} and
     \cite{ying2012distance}, the accuracy was also measured on the
     data set obtained by taking the square root value of the raw
-    features. However, no noticeable improvement of the results were
-    observed.
+    features, see Table \ref{tbl:view1-sqrt}. However, no noticeable
+    improvement of the results were observed.
+    
+    #+CAPTION: Highest accuracy observed on View1 using square root values of the raw features
+    #+LABEL: tbl:view1-sqrt
+    | method                   | raw-features |    PCA |  M-LDA | Isomap |    LLE |
+    |--------------------------+--------------+--------+--------+--------+--------|
+    | /                        |            < |        |        |        |        |
+    | accuracy                 |       0.6830 | 0.6900 | 0.5010 | 0.6480 | 0.6490 |
+    | reduction dimension      |         3456 |     85 |      7 |     48 |      2 |
+    | $k$ parameter            |            - |      - |      - |     93 |     78 |
 
     The poor performance of M-LDA was investigated and it appeared
     that in, its current form, the algorithm leads to an
     ill-conditioned problem. When computed on the SIFT data, which
     dimensionality equates 3456, the conditioning of the two matrices
-    $\mathbf{S_{SP}}$ and $\mathbf{S_{DP}}$ is extremely high. The
+    $\mathbf{S_{SP}}$ and $\mathbf{S_{DP}}$ was extremely high. The
     condition number of a matrix $\mathbf{M}$ represents the
     sensitivity of the solution of the linear algebraic system
     $\mathbf{Mx}=\mathbf{b}$ with respect to changes in vector
@@ -800,7 +823,7 @@ accuracy of 80\%.
     $\mathbf{S_{SP}}$ was about $10^{20}$ which explains the poor
     performance of M-LDA on this data set as the generalised
     eigenproblem could not have been accurately solved. Fortunately,
-    it is possible to circumvent the problem, without modifying the
+    it was possible to circumvent the problem, without modifying the
     definition of $\mathbf{S_{DP}}$ and $\mathbf{S_{SP}}$, by reducing
     the dimensionality of the data set on which the computation is
     performed. While other approaches exist, this one was selected for
@@ -809,14 +832,14 @@ accuracy of 80\%.
     35.8514. In other words, by performing a pre-reduction of the data
     set using PCA, M-LDA could be successfully applied as the method
     did not present ill-conditioned behaviours in the low dimensional
-    space.
+    space any more.
 
 *** PCA Pre-Reduction
 
     The idea of performing a pre-reduction of the data set using PCA
     was further explored to analyse its influence on M-LDA as well as
-    on the two manifold learning techniques and the results are
-    reported in Table \ref{tbl:view1-pca}. In order to select the
+    on the two manifold learning techniques, the results are reported
+    in Table \ref{tbl:view1-pca}. In order to select the
     dimensionality of the PCA reduction as well as the dimension of
     the second reduction technique, an exhaustive search was once more
     performed. Nonetheless, the values of the $k$-neighbourhood
@@ -825,50 +848,57 @@ accuracy of 80\%.
     the PCA pre-reduction and its impact on the complexity of the
     algorithms involved, a computation of the neighbourhood graph
     using the aforementioned adaptative method became possible. This
-    approach was tested for Isomap only.
+    approach was implemented and tested for Isomap only.
 
     #+CAPTION: Highest accuracy observed on View1 after performing a PCA pre-reduction
     #+LABEL: tbl:view1-pca
+    | method                        |   M-LDA |  Isomap | Isomap-adaptative |     LLE |
+    |-------------------------------+---------+---------+-------------------+---------|
+    | /                             |       < |         |                   |         |
+    | accuracy                      | 0.81000 | 0.65800 |           0.65100 | 0.68100 |
+    | PCA dimension                 |      78 |      50 |                20 |      58 |
+    | method dimension              |      25 |      42 |                17 |      35 |
+    |-------------------------------+---------+---------+-------------------+---------|
+    | time (s)                      |       2 |     357 |              2583 |    1043 |
+
+    Performing a PCA pre-reduction proved a success as the accuracy of
+    every single reduction methods was improved. It appeared that
+    performing a PCA pre-reduction followed by an Isomap reduction
+    took less computational time than directly computing the reduction
+    on the raw features while providing a better accuracy. The
+    adaptative method yielded similar results in terms of accuracy and
+    its computational time remained inferior to what would have been
+    obtained by testing a wide range of values of $k$. Nonetheless,
+    one must acknowledge that despite those improvements, both Isomap
+    and LLE failed to perform better than PCA reduction which already
+    provided an accuracy of 69.1\%. The performance of M-LDA was
+    greatly improved by the fact that the method was not subject to
+    ill-conditioning anymore. With an accuracy of 81\% and less than
+    two seconds to perform the second reduction, M-LDA proved an
+    excellent linear supervised dimensionality reduction method. Once
+    more, no further improvement of the accuracy relatively to the use
+    of the square root of the SIFT features was noticed, see Table
+    \ref{tbl:view1-pca-sqrt}.
+
+    #+CAPTION: Highest accuracy observed on View1 after performing a PCA pre-reduction, using square root value of the raw-features
+    #+LABEL: tbl:view1-pca-sqrt
     | method           |   M-LDA |  Isomap | Isomap-adaptative |     LLE |
     |------------------+---------+---------+-------------------+---------|
     | /                |       < |         |                   |         |
-    | accuracy         | 0.81000 | 0.65800 |           0.65100 | 0.68100 |
-    | pca dimension    |      78 |      50 |                20 |      58 |
-    | method dimension |      25 |      42 |                17 |      35 |
-    |------------------+---------+---------+-------------------+---------|
-    | sqrt-acc         | 0.81000 | 0.65500 |            0.6580 | 0.65400 |
-    | pca dimension    |      62 |      55 |                33 |      51 |
+    | accuracy         | 0.81000 | 0.65500 |            0.6580 | 0.65400 |
+    | PCA dimension    |      62 |      55 |                33 |      51 |
     | method dimension |      29 |      44 |                33 |      29 |
-    |------------------+---------+---------+-------------------+---------|
-    | time (s)         |       2 |     357 |              2583 |    1043 |
 
-    Performing a PCA pre-reduction proved a success as the accuracy of
-    every single reduction methods was improved. It appears that
-    performing a PCA pre-reduction followed by an Isomap reduction
-    takes less computational time than directly computing the
-    reduction on the raw features while providing a better
-    accuracy. The adaptative method yields similar results in terms of
-    accuracy and its computational time remains inferior to what would
-    have been obtained by testing a wide range of values of
-    $k$. Nonetheless, one must acknowledge that despite those
-    improvements, both Isomap and LLE failed to perform better than
-    PCA reduction which already provided an accuracy of 69.1\%. The
-    performance of M-LDA was greatly improved by the fact that the
-    method was not subject to ill-conditioning anymore. With an
-    accuracy of 81\% and less than two seconds to perform the second
-    reduction, M-LDA proved an excellent linear surpervised
-    dimensionality reduction method. Once more, no further improvement
-    of the accuracy relatively to the use of the square root of the
-    SIFT features was noticed.
+
 
 ** View2: Formal Evaluation
 
    The different experiments run on View1, the subset of the LFW
    database dedicated to algorithm development, permitted to select
-   the model to was to be formally assesed on View2. Isomap and LLE
+   the model to was to be formally assessed on View2. Isomap and LLE
    proved to be inferior in terms of accuracy to PCA while requiring a
    substantial computational time and were therefore discarded. Only
-   the performances of PCA, M-LDAc as well as the SIFT features were
+   the performances of PCA, M-LDA as well as the SIFT features were
    evaluated using View2 10 cross-validation scheme. Two approaches
    were considered to fix the dimension parameters for both PCA and
    M-LDA: to maintain the different values that were found when
@@ -877,13 +907,13 @@ accuracy of 80\%.
    View2. This second approach was facilitated by the fact that the
    training set was already composed of 9 mutually exclusive folds of
    training samples. Contrary to View1 training data set, which would
-   have been difficult to subdivise in independent partitions, it was
-   easy to use View2 folds in a 9 cross-validation scheme to fix the
-   PCA and M-LDA reduction dimensionality. Parameters providing the
-   greatest mean accuracy over the 9 cross-validation scheme on the
-   training set were selected to run the algorithm on the tenth and
-   remaining fold dedicated to testing. As the square root values of
-   the SIFT features did not present any accuracy improvements on
+   have been difficult to subdivide into independent partitions, it
+   was easy to use View2 folds in a 9 cross-validation scheme to fix
+   the PCA and M-LDA reduction dimensionality. Parameters providing
+   the greatest mean accuracy over the 9 cross-validation scheme on
+   the training set were selected to run the algorithm on the tenth
+   and remaining fold dedicated to testing. As the square root values
+   of the SIFT features did not present any accuracy improvements on
    View1, it was decided not to evaluate their performances on
    View2. Those results are reported in Table \ref{tbl:view2}.
 
@@ -899,11 +929,11 @@ accuracy of 80\%.
 
    The difference in terms of accuracy between the two parameter
    selection approaches is related to the fact that the parameters
-   from View1 were choosed by overfitting the data to obtain the
+   from View1 were chosen by overfitting the data to obtain the
    highest accuracy on the testing data set, and therefore, were not
    likely to produce as good results on View2. This explain why an
    accuracy of 76 and not 81\%, as on View1, was
-   obtained. Cross-validation on View2 to fix the paramaters proved to
+   obtained. Cross-validation on View2 to fix the parameters proved to
    be almost as good as overfitting the data set on View1. One
    plausible explanation could be related to the number of training
    pairs: View1 provided a training set composed of 2200 pairs,
@@ -931,7 +961,7 @@ accuracy of 80\%.
    | *M-LDA* | *0.7998 $\pm$ 0.0055*            |
 
    
-   #+CAPTION: ROC diagram on View2
+   #+CAPTION: ROC diagram of the different methods on View2
    #+ATTR_LaTeX: scale=0.6
    #+LABEL: fig:roc   
    [[file:../experiment/roc/lfw_restricted_roc_curve.png]]
@@ -941,48 +971,51 @@ accuracy of 80\%.
   We investigated the performances of two linear and two non-linear
   dimensionality reduction techniques on the LFW data set. First of
   all, our results give credit to PCA as a technique to perform
-  reduction as well as pre-reduction of data lying on a high
+  reduction as well as pre-reduction of data lying on the high
   dimensional face feature space. PCA remains an indispensable method
-  which allows its user to reduce the dimensionality, and to slightly
+  which allows its user to reduce the dimensionality, to slightly
   improve the performance of the classifier when compared to the use
   of raw features, while remaining relatively simple and providing a
   computational complexity independent from the number of samples. Its
   ubiquitous application as part of many face recognition algorithms,
   or simply as a reduction method, is amply justified.
 
-  One important aspect of our reasearch showed that non-linear
+  One important aspect of our research showed that non-linear
   dimensionality reduction techniques, especially manifold learning
   technique such as Isomap and LLE cannot deal properly with the
-  non-linear characterics of unconstrained images. Those methods
-  provided embeddings that performed worse than the ones obtained by
-  simply using the raw features, while requiring a substancial
-  computational time. These results confirm previous observations that
-  although non-linear dimensionality reduction methods usually
-  outperform linear methods on artifical data set, they systematically
-  fail to uncover the structure of real-world data,
-  \cite{van2007dimensionality}. These poor performances can be related
-  to several aspects of manifold learning techniques. For instance,
-  Isomap's performances heavily rely upon the construction of the
-  neighbourhood graph which is susceptible to the curse of
-  dimensionality, the $k$ parameter, and the presence of outliers
-  preventing the construction of a connected graph. In addition to
-  these problems, Isomap suffers from short-circuiting: a single
-  erroneous connection in the neighbourhood graph may severely affect
-  the pairwise geodesic distances, as a result of which the data are
-  poorly embedded in the low dimensional space. The manifold should
-  also be convex and should not contain holes as the application of a
-  shortest-path algorithm would also lead to biased geodesic
-  distances. Furthermore, local properties of a manifold do not
-  necessarily follow the global structure of the manifold in the
+  non-linear characteristics of unconstrained images. To this day,
+  this is the first LFW-related paper to consider manifold learning
+  techniques instead of PCA as dimensionality reduction methods and to
+  report such inability to address the unconstrained pair matching
+  problem. Those non-linear methods provided embeddings that performed
+  worse than the ones obtained by simply using the raw features, while
+  requiring a substantial time complexity. These results confirm
+  previous observations that although non-linear dimensionality
+  reduction methods usually outperform linear methods on artificial
+  data set, they systematically fail to uncover the structure of
+  real-world data, \cite{van2007dimensionality}. These poor
+  performances can be related to several aspects of manifold learning
+  techniques. First, Isomap performances heavily rely upon the
+  construction of the neighbourhood graph which is susceptible to the
+  curse of dimensionality, the $k$ parameter, and the presence of
+  outliers preventing the construction of a connected graph. In
+  addition to these problems, Isomap suffers from short-circuiting: a
+  single erroneous connection in the neighbourhood graph may severely
+  affect the pairwise geodesic distances, as a result of which the
+  data are poorly embedded in the low dimensional space. The manifold
+  should also be convex and should not contain holes as the
+  application of a shortest-path algorithm would also lead to biased
+  geodesic distances. Furthermore, local properties of a manifold do
+  not necessarily follow the global structure of the manifold in the
   presence of noise around the manifold, and therefore, LLE which
-  modelises those local structures of the manifold could suffer from
+  models those local structures of the manifold could suffer from
   overfitting on the manifold. Additionally, the local linearity
   assumption could also be violated on the face feature space if the
   data density varied over the manifold as a result of a non uniform
-  distribution, and discontinuities. The very structure of the face
-  feature space could also happen not to be a manifold, or at least,
-  far from the smoothness criteria that require manifold learning
-  techniques.
+  distribution and discontinuities. Lastly, the very structure of the
+  face feature space could also happen not to be a manifold, or at
+  least, far from the smoothness criteria required by manifold
+  learning techniques.
 
   Our proposed supervised linear dimensionality reduction method,
   M-LDA, achieved results comparable to two state-of-the-art metric
@@ -1000,11 +1033,11 @@ accuracy of 80\%.
   being a supervised dimensionality reduction technique, it can also
   be seen as a distance metric learning algorithm, which could explain
   the similarity in terms of performance with LDML and
-  DML-eig. Distance metric learning algorithms can be usally seen as
+  DML-eig. Distance metric learning algorithms can be usually seen as
   finding a positive semidefined (PSD) matrix $\mathbf{A}$ such that
   it can be used to induce a Mahalanobis distance $d_A$ over the data
   points $\mathbf{x}_i$ and $\mathbf{x}_j$ from the feature space,
-  \cite{yang2006distance.}
+  \cite{yang2006distance}.
 
   \begin{equation}
   d_A(\mathbf{x}_i, \mathbf{x}_j) = \| \mathbf{x}_i - \mathbf{x}_j \|_A = \sqrt{(\mathbf{x}_i - \mathbf{x}_j)^T \mathbf{A} (\mathbf{x}_i - \mathbf{x}_j)}
@@ -1024,27 +1057,27 @@ accuracy of 80\%.
 * Future Work
 
   We envisage to develop and experiment further some aspects of the
-  present research. Effectual parameter selection, has a great impact
-  on the performance of dimensionality reduction methods and
-  represents a hidden cost as the time allocated to the selection is
-  usually not taken into account the total computational time. Whereas
-  the selection of $k$-neighbourhood parameter is done by exhaustive
+  present research. Parameter selection, has a great impact on the
+  performance of dimensionality reduction methods and represents a
+  hidden cost as the time allocated to the selection is usually not
+  taken into account of the total computational time. Whereas the
+  selection of $k$-neighbourhood parameter is done by exhaustive
   search as the solution landscape presents strong discontinuities, it
   seems that the solution landscape associated with the selection of
   the PCA and M-LDA reduction dimensions exhibits features that could
   be exploited using hill-climbing or genetic algorithms as suggest
   Figure \ref{fig:pca-lda}.
   
-  #+CAPTION: accuracy landscape given PCA and M-LDA reduction dimensions
+  #+CAPTION: View1 accuracy landscape given PCA and M-LDA reduction dimensions
   #+ATTR_LaTeX: scale=0.35
   #+LABEL: fig:pca-lda
-  [[./pca-lda.png]]
+  [[file:../experiment/pca-lda-final.png]]
 
   As the have seen, M-LDA can be seen as a supervised linear
   dimensionality reduction technique but also as a metric learning
   algorithm. DML-eig and LDML use PCA to reduce the dimensionality of
   the data set before performing their main algorithm. Therefore, we
-  would like to investigate whether those techniques could benifit
+  would like to investigate whether those techniques could benefit
   from learning the metric with a data set previously reduced using
   M-LDA.
 
@@ -1053,9 +1086,10 @@ accuracy of 80\%.
   implemented. Under the unrestricted setting, image class labels
   could have been used to form more training data pairs. We would like
   to investigate the relation between the performances of M-LDA and a
-  substancially more important number of training samples, in order to
+  substantially more important number of training samples, in order to
   assess whether the current approach can be scaled up to lead to a
   better accuracy.
+
 
   \bibliography{papers} 
   \bibliographystyle{apalike}
